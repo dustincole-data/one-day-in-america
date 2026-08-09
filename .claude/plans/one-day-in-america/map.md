@@ -63,6 +63,16 @@ or reconcile against it. Separate effort, separate repo, separate map.
 
 <!-- one line per closed ticket: gist + link -->
 
+- **01 · Repo, stack and subdomain set up; deploy path proven.** Own repo at
+  `C:\Users\dusti\Projects\One_Day_In_America\`, remote `dustincole-data/one-day-in-america` (SSH),
+  Vercel project `one-day-in-america` **git-linked to `main`**. Stack = **Astro 7 static → Vercel**,
+  matching the four most recent projects. **`git push` auto-deploys** — measured on a real push, no
+  `npx vercel --prod`. Verify on `one-day-in-america.vercel.app`, never the per-deployment URL (it
+  serves the SSO page under a 200). Subdomain **`oneday.dustincoledata.com`**, attached and verified
+  in Vercel; **one manual step left for Dustin** — Namecheap CNAME `oneday` →
+  `3e4803086c51b69e.vercel-dns-017.com.` (Vercel mints a per-domain target; it is not the shared
+  `cname.vercel-dns.com`).
+  → [ticket 01](issues/01-repo-stack-domain.md)
 - **02 · ATUS interrogated, provenance recorded.** Lexicon comparability closed clean (activity codes
   unchanged since 2013; only 2019→2025 change is a 2023→2024 rename, one-to-one). Weights:
   `TUFINLWGT`, person-days, same method 2006–19 and 2021–present → 2019/2023/2024 directly
@@ -82,7 +92,9 @@ or reconcile against it. Separate effort, separate repo, separate map.
 - **Whether 3D is used at all**, and if so what depth encodes. Fable's call under thin-anchor.
 - **The interaction grammar on touch** — first-tap-is-hover and pointercancel traps apply; can't be
   designed before the mark exists.
-- **Launch surface:** OG card, subdomain DNS, registry entry, any Data Nerve / LinkedIn writeup.
+- **Launch surface:** OG card, registry entry, any Data Nerve / LinkedIn writeup. (Subdomain DNS is
+  no longer open-ended — ticket 01 pinned the exact Namecheap record; it just needs Dustin to add it,
+  and the placeholder page stays `noindex` until the piece ships.)
 - **Whether 2021–22 transition frames earn their weight**, once the spine is picked.
 - **Whether 2025 appears at all.** Ticket 02 found ATUS **2025 exists** (released 2026-06-25) — the
   map was charted assuming 2024 was latest. But 2025 has a 43-day hole (2025-09-30→11-11, Oct 2025
