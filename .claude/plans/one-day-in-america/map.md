@@ -81,6 +81,18 @@ or reconcile against it. Separate effort, separate repo, separate map.
   domain, but the BLS emblem is trademarked. 12 decisions bind tickets 03–07.
   → [ticket 02](issues/02-atus-source-interrogation.md) ·
   [findings](../../../research/02-atus-source/findings.md)
+- **03 · Weighted extract built and proved against BLS.** Gate passed: **637 of 639 published Table
+  A-1 cells reproduce exactly** for 2019/2023/2024 × total/men/women × three statistics (the two
+  misses are 0.09 pp and 22 seconds in one leaf's women slice, documented and pinned). All nine ZIPs
+  re-fetched byte-identical to the ticket-02 hashes. Everything BLS only asserted is now verified in
+  the bytes — `TUCASEID` unique, **every** respondent-day sums to exactly 1440 minutes, episodes
+  chain from the 4 a.m. origin, and per-code minutes match BLS's own pre-summed file on ~8.5 M
+  cells. BLS's published category map is in **no** document and had to be recovered from Table A-1's
+  arithmetic (travel redistributed; tier 1 `10` splits at **tier 3**). Extract =
+  `data/extract/{episodes,respondents}-<year>.csv`, gitignored, `npm run data` rebuilds and
+  re-verifies. 475,635 episodes · 25,652 respondent-days. 7 decisions E1–E7 bind 04–07.
+  → [ticket 03](issues/03-build-validated-extract.md) ·
+  [findings](../../../research/03-extract/findings.md)
 
 ## Not yet specified
 

@@ -7,6 +7,8 @@ dist/
 # Data: the raw ATUS downloads are fetched by the pipeline, never committed.
 # (Ticket 02 pinned their URLs + SHA-256s; ticket 03 re-fetches and re-verifies.)
 data/raw/
+# The validated extract is derived, reproducible with `npm run data`, and ~25 MB.
+data/extract/
 
 # Generated at build, never committed.
 src/data/

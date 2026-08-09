@@ -58,12 +58,25 @@ The source was interrogated before any code:
 weights, universe, lexicon comparability, the 4 a.m. day boundary, licence, and **12 numbered
 decisions (S1–S12) that bind the build**. Read it before touching the data.
 
-Raw ATUS downloads are fetched by the pipeline at build time and never committed; their URLs, byte
-sizes, and SHA-256s are pinned in that record and re-verified on every fetch.
+The data pipeline is a **local step, not part of the Astro build**:
+
+```bash
+npm run data          # fetch → build → verify (~90s cold)
+```
+
+`fetch` downloads the nine pinned ZIPs into `data/raw/` and aborts unless every SHA-256 matches the
+ticket-02 record. `build` checks the invariants BLS only asserts and writes the extract to
+`data/extract/`. `verify` reproduces **BLS Table A-1** from that extract and fails on any mismatch —
+637 of 639 published cells reproduce exactly across 2019, 2023 and 2024. Build and proof:
+[`research/03-extract/findings.md`](research/03-extract/findings.md).
+
+Neither `data/raw/` nor `data/extract/` is committed; the pipeline plus the pinned hashes are the
+reproducible artifact.
 
 ## What's checked in vs generated
 
 - **Checked in:** app source, styles, fonts, the pipeline scripts, the plan (`.claude/plans/`), and
   the provenance record (`research/`).
-- **Gitignored + generated at build:** `data/raw/` (ATUS downloads), `src/data/` and `public/data/`
-  (baked JSON payload), `public/og/` (OG cards).
+- **Gitignored + generated:** `data/raw/` (ATUS downloads) and `data/extract/` (the validated
+  extract), both from `npm run data`; `src/data/` and `public/data/` (baked JSON payload) and
+  `public/og/` (OG cards), from the site build.

@@ -12,6 +12,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "vitest run",
+    "data:fetch": "tsx scripts/fetch-atus.ts",
+    "data:build": "tsx scripts/build-extract.ts",
+    "data:verify": "tsx scripts/verify-extract.ts",
+    "data": "npm run data:fetch && npm run data:build && npm run data:verify",
     "astro": "astro"
   },
   "dependencies": {
@@ -19,6 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
+    "fflate": "^0.8.3",
     "tsx": "^4.23.1",
     "typescript": "^7.0.2",
     "vitest": "^3.2.7"
