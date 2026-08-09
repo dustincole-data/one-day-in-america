@@ -1,0 +1,51 @@
+---
+// Placeholder shell. Ticket 01 set this up to prove the deploy path end to end;
+// the real piece replaces it once the spine is locked (tickets 05–06) and Fable's
+// design lands (ticket 09). Remove the noindex tag when it ships.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>One Day in America</title>
+  </head>
+  <body>
+    <main>
+      <h1>One Day in America</h1>
+      <p>In progress.</p>
+    </main>
+    <style is:global>
+      :root {
+        color-scheme: dark;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #000;
+        color: #eee;
+        font: 400 1rem/1.5 ui-sans-serif, system-ui, sans-serif;
+      }
+      main {
+        height: 100%;
+        display: grid;
+        place-content: center;
+        gap: 0.5rem;
+        text-align: center;
+        padding: 1rem;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+      p {
+        margin: 0;
+        color: #777;
+      }
+    </style>
+  </body>
+</html>

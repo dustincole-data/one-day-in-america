@@ -1,0 +1,26 @@
+{
+  "name": "one-day-in-america",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "description": "One Day in America — an ATUS-grounded data-art piece about the shape of a single American day.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2",
+    "vitest": "^3.2.7"
+  }
+}
