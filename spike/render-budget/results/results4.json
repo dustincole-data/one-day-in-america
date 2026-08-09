@@ -1,0 +1,828 @@
+{
+  "gpu": {
+    "webgl2": true,
+    "vendor": "Google Inc. (Intel)",
+    "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x00009A49) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "maxTexture": 16384
+  },
+  "results": [
+    {
+      "label": "rows msaaoff rep1",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "ns": "2532,10000,25652",
+        "layout": "rows",
+        "msaa": "0",
+        "frames": 40
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 2532,
+            "episodes": 46429,
+            "rep": 1,
+            "layout": "rows",
+            "blend": "alpha",
+            "alpha": 1,
+            "msaa": false,
+            "buildMs": 96,
+            "setupMs": 121.9,
+            "firstDrawMs": 22.1,
+            "drawMs": {
+              "med": 6.2,
+              "p95": 10.1,
+              "min": 3.8,
+              "max": 10.9
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.1,
+              "max": 17.2
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.35,
+            "heapMB": 5.9
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 10000,
+            "episodes": 185359,
+            "rep": 1,
+            "layout": "rows",
+            "blend": "alpha",
+            "alpha": 1,
+            "msaa": false,
+            "buildMs": 42.4,
+            "setupMs": 17.2,
+            "firstDrawMs": 6.4,
+            "drawMs": {
+              "med": 7.8,
+              "p95": 10.7,
+              "min": 5.3,
+              "max": 12.8
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.4,
+              "max": 17
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 1.41,
+            "heapMB": 6.6
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 25652,
+            "episodes": 475635,
+            "rep": 1,
+            "layout": "rows",
+            "blend": "alpha",
+            "alpha": 1,
+            "msaa": false,
+            "buildMs": 107.1,
+            "setupMs": 57.1,
+            "firstDrawMs": 24.7,
+            "drawMs": {
+              "med": 9,
+              "p95": 14,
+              "min": 7.8,
+              "max": 14.6
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.5,
+              "max": 16.8
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 3.63,
+            "heapMB": 12.1
+          }
+        ]
+      }
+    },
+    {
+      "label": "rows msaaoff rep2 n25652",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "n": "25652",
+        "layout": "rows",
+        "msaa": "0",
+        "rep": "2",
+        "frames": 40
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 25652,
+            "episodes": 475635,
+            "rep": 2,
+            "layout": "rows",
+            "blend": "alpha",
+            "alpha": 1,
+            "msaa": false,
+            "buildMs": 75.4,
+            "setupMs": 76.5,
+            "firstDrawMs": 18.9,
+            "drawMs": {
+              "med": 14.7,
+              "p95": 16.9,
+              "min": 11,
+              "max": 17.9
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 33.5,
+              "min": 16.5,
+              "max": 33.5
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 3.63,
+            "heapMB": 16.9
+          }
+        ]
+      }
+    },
+    {
+      "label": "rows msaaoff rep4 n25652",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "n": "25652",
+        "layout": "rows",
+        "msaa": "0",
+        "rep": "4",
+        "frames": 40
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 25652,
+            "episodes": 475635,
+            "rep": 4,
+            "layout": "rows",
+            "blend": "alpha",
+            "alpha": 1,
+            "msaa": false,
+            "buildMs": 69,
+            "setupMs": 125.6,
+            "firstDrawMs": 34.1,
+            "drawMs": {
+              "med": 25.9,
+              "p95": 39.8,
+              "min": 18.6,
+              "max": 93.8
+            },
+            "frameMs": {
+              "med": 33.3,
+              "p95": 49.9,
+              "min": 16.5,
+              "max": 99.9
+            },
+            "fps": 30,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 3.63,
+            "heapMB": 24.7
+          }
+        ]
+      }
+    },
+    {
+      "label": "rows msaaoff rep4 n10000",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "n": "10000",
+        "layout": "rows",
+        "msaa": "0",
+        "rep": "4",
+        "frames": 40
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 10000,
+            "episodes": 185359,
+            "rep": 4,
+            "layout": "rows",
+            "blend": "alpha",
+            "alpha": 1,
+            "msaa": false,
+            "buildMs": 28.3,
+            "setupMs": 78.8,
+            "firstDrawMs": 19.3,
+            "drawMs": {
+              "med": 14.4,
+              "p95": 17.1,
+              "min": 12.4,
+              "max": 18.5
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 33.4,
+              "min": 16.1,
+              "max": 34
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 1.41,
+            "heapMB": 29.8
+          }
+        ]
+      }
+    },
+    {
+      "label": "rows msaaoff rep4 n2532",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "n": "2532",
+        "layout": "rows",
+        "msaa": "0",
+        "rep": "4",
+        "frames": 40
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 2532,
+            "episodes": 46429,
+            "rep": 4,
+            "layout": "rows",
+            "blend": "alpha",
+            "alpha": 1,
+            "msaa": false,
+            "buildMs": 19.5,
+            "setupMs": 58.7,
+            "firstDrawMs": 10.2,
+            "drawMs": {
+              "med": 9.7,
+              "p95": 12.6,
+              "min": 6.9,
+              "max": 13.2
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.9,
+              "min": 16,
+              "max": 17.4
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.35,
+            "heapMB": 29.9
+          }
+        ]
+      }
+    },
+    {
+      "label": "ribbon msaaoff rep1",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "ns": "500,1000,2500,5000",
+        "layout": "ribbon",
+        "alpha": "0.08",
+        "bandH": "6",
+        "msaa": "0",
+        "frames": 40
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 500,
+            "episodes": 9352,
+            "rep": 1,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 12.7,
+            "setupMs": 44.9,
+            "firstDrawMs": 5,
+            "drawMs": {
+              "med": 7.1,
+              "p95": 13.5,
+              "min": 3.4,
+              "max": 14.1
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.5,
+              "max": 16.8
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.07,
+            "heapMB": 30.2
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 1000,
+            "episodes": 18747,
+            "rep": 1,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 6,
+            "setupMs": 15.6,
+            "firstDrawMs": 4.8,
+            "drawMs": {
+              "med": 7.5,
+              "p95": 9.8,
+              "min": 4.4,
+              "max": 10.1
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.5,
+              "max": 16.8
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.14,
+            "heapMB": 31.7
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 2500,
+            "episodes": 46205,
+            "rep": 1,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 5.3,
+            "setupMs": 27.4,
+            "firstDrawMs": 13.8,
+            "drawMs": {
+              "med": 11.5,
+              "p95": 13.6,
+              "min": 7.7,
+              "max": 14
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.5,
+              "max": 16.9
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.35,
+            "heapMB": 33.5
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 5000,
+            "episodes": 92634,
+            "rep": 1,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 20.8,
+            "setupMs": 22.5,
+            "firstDrawMs": 16.2,
+            "drawMs": {
+              "med": 15,
+              "p95": 17.9,
+              "min": 10.1,
+              "max": 19.1
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 33.2,
+              "min": 16.3,
+              "max": 33.4
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.71,
+            "heapMB": 32.5
+          }
+        ]
+      }
+    },
+    {
+      "label": "ribbon msaaoff rep4",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "ns": "250,500,1000,2500",
+        "layout": "ribbon",
+        "alpha": "0.08",
+        "bandH": "6",
+        "msaa": "0",
+        "rep": "4",
+        "frames": 30
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 250,
+            "episodes": 4652,
+            "rep": 4,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 29.8,
+            "setupMs": 49.3,
+            "firstDrawMs": 5.4,
+            "drawMs": {
+              "med": 7,
+              "p95": 9.4,
+              "min": 5.3,
+              "max": 9.6
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.5,
+              "max": 16.8
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.04,
+            "heapMB": 36.3
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 500,
+            "episodes": 9352,
+            "rep": 4,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 2.9,
+            "setupMs": 9.6,
+            "firstDrawMs": 7.2,
+            "drawMs": {
+              "med": 9.6,
+              "p95": 11.4,
+              "min": 7.2,
+              "max": 16.3
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.7,
+              "min": 16.6,
+              "max": 16.8
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.07,
+            "heapMB": 34.6
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 1000,
+            "episodes": 18747,
+            "rep": 4,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 3,
+            "setupMs": 32.5,
+            "firstDrawMs": 16.8,
+            "drawMs": {
+              "med": 13,
+              "p95": 15.3,
+              "min": 10,
+              "max": 15.6
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.9,
+              "min": 16.3,
+              "max": 33.2
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.14,
+            "heapMB": 36
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 2500,
+            "episodes": 46205,
+            "rep": 4,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 4,
+            "setupMs": 25.1,
+            "firstDrawMs": 21,
+            "drawMs": {
+              "med": 25.7,
+              "p95": 29.3,
+              "min": 20.3,
+              "max": 29.4
+            },
+            "frameMs": {
+              "med": 33.3,
+              "p95": 33.5,
+              "min": 16.6,
+              "max": 33.6
+            },
+            "fps": 30,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.35,
+            "heapMB": 37.7
+          }
+        ]
+      }
+    },
+    {
+      "label": "ribbon msaaoff rep2",
+      "device": "phone",
+      "cpu": 4,
+      "params": {
+        "tech": "webgl",
+        "year": "all",
+        "ns": "500,1000,2500",
+        "layout": "ribbon",
+        "alpha": "0.08",
+        "bandH": "6",
+        "msaa": "0",
+        "rep": "2",
+        "frames": 30
+      },
+      "result": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        "dpr": 3,
+        "css": [
+          390,
+          844
+        ],
+        "device": [
+          1170,
+          2532
+        ],
+        "cores": 8,
+        "deviceMemoryGB": 8,
+        "totalDaysAvailable": 25652,
+        "totalEpisodesAvailable": 475635,
+        "runs": [
+          {
+            "tech": "webgl2/instanced",
+            "n": 500,
+            "episodes": 9352,
+            "rep": 2,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 17.7,
+            "setupMs": 42,
+            "firstDrawMs": 5.9,
+            "drawMs": {
+              "med": 7.9,
+              "p95": 11.1,
+              "min": 4.6,
+              "max": 13.9
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.9,
+              "min": 16.4,
+              "max": 17
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.07,
+            "heapMB": 37.4
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 1000,
+            "episodes": 18747,
+            "rep": 2,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 3.6,
+            "setupMs": 9.4,
+            "firstDrawMs": 6,
+            "drawMs": {
+              "med": 10.5,
+              "p95": 13.6,
+              "min": 7.8,
+              "max": 14
+            },
+            "frameMs": {
+              "med": 16.7,
+              "p95": 16.8,
+              "min": 16.5,
+              "max": 16.8
+            },
+            "fps": 59.9,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.14,
+            "heapMB": 38.9
+          },
+          {
+            "tech": "webgl2/instanced",
+            "n": 2500,
+            "episodes": 46205,
+            "rep": 2,
+            "layout": "ribbon",
+            "blend": "alpha",
+            "alpha": 0.08,
+            "msaa": false,
+            "buildMs": 4.9,
+            "setupMs": 36.4,
+            "firstDrawMs": 17,
+            "drawMs": {
+              "med": 16.8,
+              "p95": 33.8,
+              "min": 14.7,
+              "max": 59.2
+            },
+            "frameMs": {
+              "med": 16.8,
+              "p95": 33.6,
+              "min": 16.3,
+              "max": 66.3
+            },
+            "fps": 59.5,
+            "contextLost": false,
+            "canvasPx": 2962440,
+            "canvasMB": 11.3,
+            "gpuBufMB": 0.35,
+            "heapMB": 40.7
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+[
+  { "label": "A dpr3", "device": "phone", "cpu": 4, "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "frames": 30 } },
+  { "label": "A dpr2", "device": "phone", "cpu": 4, "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "dprCap": "2", "frames": 30 } },
+  { "label": "B dpr3", "device": "phone", "cpu": 4, "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "frames": 30 } },
+  { "label": "B dpr2", "device": "phone", "cpu": 4, "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "dprCap": "2", "frames": 30 } },
+  { "label": "C dpr3", "device": "phone", "cpu": 4, "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "frames": 30 } },
+  { "label": "C dpr2", "device": "phone", "cpu": 4, "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "dprCap": "2", "frames": 30 } }
+]

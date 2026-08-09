@@ -18,6 +18,12 @@ public/og/
 # Local scratch — never ship
 .scratch/
 
+# Ticket-04 spike byproducts: the baked binaries are derived (rebuild with bake.mjs),
+# and the driver's Chrome profile is ~120 MB. The spike's own code and its results
+# (JSON + the screenshots the findings cite) are committed as the evidence trail.
+spike/render-budget/data/
+spike/render-budget/.chrome-profile/
+
 # Local Claude settings
 .claude/settings.local.json
 

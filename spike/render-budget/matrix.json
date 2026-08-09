@@ -1,0 +1,47 @@
+[
+  { "label": "canary x1", "device": "phone", "cpu": 1, "params": { "tech": "cpuburn", "frames": 20, "warmup": 3 } },
+  { "label": "canary x4", "device": "phone", "cpu": 4, "params": { "tech": "cpuburn", "frames": 20, "warmup": 3 } },
+  { "label": "canary x6", "device": "phone", "cpu": 6, "params": { "tech": "cpuburn", "frames": 20, "warmup": 3 } },
+
+  { "label": "webgl rows phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "500,1000,2532,5000,10000,25652", "layout": "rows", "frames": 60 } },
+  { "label": "webgl rows phone x6", "device": "phone", "cpu": 6,
+    "params": { "tech": "webgl", "year": "all", "ns": "2532,10000,25652", "layout": "rows", "frames": 60 } },
+  { "label": "webgl ribbon a0.08 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "500,1000,2500,5000,10000,25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "frames": 60 } },
+  { "label": "webgl ribbon bandH24 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "2500,10000,25652", "layout": "ribbon", "alpha": "0.08", "bandH": "24", "frames": 60 } },
+  { "label": "webgl rep-stress all phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "rep": "8", "frames": 40 } },
+  { "label": "webgl rep-stress x16 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "rep": "16", "frames": 40 } },
+
+  { "label": "c2d_rect rows phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "c2d_rect", "year": "all", "ns": "250,500,1000,2000,4000", "layout": "rows", "frames": 30, "warmup": 5 } },
+  { "label": "c2d_batched rows phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "c2d_batched", "year": "all", "ns": "250,500,1000,2000,4000", "layout": "rows", "frames": 30, "warmup": 5 } },
+  { "label": "c2d_baked all phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "c2d_baked", "year": "all", "n": "25652", "layout": "rows", "frames": 60 } },
+  { "label": "c2d_baked rep4 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "c2d_baked", "year": "all", "n": "25652", "layout": "rows", "rep": "4", "frames": 60 } },
+
+  { "label": "webgl rows msaa on n25652", "device": "phone", "cpu": 4, "shot": "rows-25652-msaa-on",
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "msaa": "1", "frames": 40 } },
+  { "label": "webgl rows msaa off n25652", "device": "phone", "cpu": 4, "shot": "rows-25652-msaa-off",
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "msaa": "0", "frames": 40 } },
+  { "label": "webgl rows msaa on n2532", "device": "phone", "cpu": 4, "shot": "rows-2532-msaa-on",
+    "params": { "tech": "webgl", "year": "all", "n": "2532", "layout": "rows", "msaa": "1", "frames": 40 } },
+  { "label": "webgl ribbon shot", "device": "phone", "cpu": 4, "shot": "ribbon-25652-alpha",
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "frames": 40 } },
+  { "label": "webgl ribbon multiply shot", "device": "phone", "cpu": 4, "shot": "ribbon-25652-multiply",
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "ribbon", "alpha": "0.08", "blend": "multiply", "bandH": "6", "frames": 40 } },
+
+  { "label": "blend probe", "device": "phone", "cpu": 1, "params": { "probe": "blend", "tech": "c2d_rect", "year": "2024", "n": "1" } },
+
+  { "label": "webgl rows desk x1", "device": "desk", "cpu": 1,
+    "params": { "tech": "webgl", "year": "all", "ns": "10000,25652", "layout": "rows", "frames": 60 } },
+  { "label": "webgl ribbon desk x1", "device": "desk", "cpu": 1,
+    "params": { "tech": "webgl", "year": "all", "ns": "25652", "layout": "ribbon", "alpha": "0.08", "frames": 60 } },
+  { "label": "c2d_batched rows desk x1", "device": "desk", "cpu": 1,
+    "params": { "tech": "c2d_batched", "year": "all", "ns": "1000,4000,10000", "layout": "rows", "frames": 30, "warmup": 5 } }
+]

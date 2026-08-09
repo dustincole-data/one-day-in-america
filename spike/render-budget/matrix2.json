@@ -1,0 +1,52 @@
+[
+  { "label": "canary x1", "device": "phone", "cpu": 1, "params": { "tech": "cpuburn", "frames": 20, "warmup": 3 } },
+  { "label": "canary x4", "device": "phone", "cpu": 4, "params": { "tech": "cpuburn", "frames": 20, "warmup": 3 } },
+
+  { "label": "webgl rows phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "500,1000,2532,5000,10000,25652", "layout": "rows", "frames": 60 } },
+  { "label": "webgl rows rep2 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "rep": "2", "frames": 40 } },
+  { "label": "webgl rows rep4 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "rep": "4", "frames": 40 } },
+  { "label": "webgl rows rep8 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "rep": "8", "frames": 40 } },
+  { "label": "webgl rows n2532 rep8 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "2532", "layout": "rows", "rep": "8", "frames": 40 } },
+
+  { "label": "webgl ribbon a0.08 h6 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "500,1000,2500,5000,10000,25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "frames": 40 } },
+  { "label": "webgl ribbon a0.08 h24 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "1000,2500,10000,25652", "layout": "ribbon", "alpha": "0.08", "bandH": "24", "frames": 40 } },
+  { "label": "webgl ribbon h2 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "10000,25652", "layout": "ribbon", "alpha": "0.08", "bandH": "2", "frames": 40 } },
+  { "label": "webgl ribbon rep8 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "rep": "8", "frames": 20 } },
+  { "label": "webgl ribbon rep16 phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "rep": "16", "frames": 20 } },
+
+  { "label": "webgl rows msaa on n25652", "device": "phone", "cpu": 4, "shot": "rows-25652-msaa-on",
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "msaa": "1", "frames": 30 } },
+  { "label": "webgl rows msaa off n25652", "device": "phone", "cpu": 4, "shot": "rows-25652-msaa-off",
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "msaa": "0", "frames": 30 } },
+  { "label": "webgl rows msaa on n2532", "device": "phone", "cpu": 4, "shot": "rows-2532-msaa-on",
+    "params": { "tech": "webgl", "year": "all", "n": "2532", "layout": "rows", "msaa": "1", "frames": 30 } },
+  { "label": "webgl rows msaa off n2532", "device": "phone", "cpu": 4, "shot": "rows-2532-msaa-off",
+    "params": { "tech": "webgl", "year": "all", "n": "2532", "layout": "rows", "msaa": "0", "frames": 30 } },
+  { "label": "webgl rows n844 phone", "device": "phone", "cpu": 4, "shot": "rows-844",
+    "params": { "tech": "webgl", "year": "all", "n": "844", "layout": "rows", "frames": 30 } },
+
+  { "label": "webgl ribbon alpha shot", "device": "phone", "cpu": 4, "shot": "ribbon-2500-alpha",
+    "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "frames": 20 } },
+  { "label": "webgl ribbon multiply shot", "device": "phone", "cpu": 4, "shot": "ribbon-2500-multiply",
+    "params": { "tech": "webgl", "year": "all", "n": "2500", "layout": "ribbon", "alpha": "0.08", "blend": "multiply", "bandH": "6", "frames": 20 } },
+
+  { "label": "blend probe", "device": "phone", "cpu": 1, "params": { "probe": "blend", "tech": "c2d_rect", "year": "2024", "n": "1" } },
+
+  { "label": "c2d_baked all phone x4", "device": "phone", "cpu": 4,
+    "params": { "tech": "c2d_baked", "year": "all", "n": "25652", "layout": "rows", "frames": 60 } },
+
+  { "label": "webgl rows desk x1", "device": "desk", "cpu": 1,
+    "params": { "tech": "webgl", "year": "all", "ns": "10000,25652", "layout": "rows", "frames": 60 } },
+  { "label": "webgl ribbon desk x1", "device": "desk", "cpu": 1,
+    "params": { "tech": "webgl", "year": "all", "ns": "2500,25652", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "frames": 40 } }
+]

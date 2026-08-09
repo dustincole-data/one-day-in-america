@@ -93,6 +93,21 @@ or reconcile against it. Separate effort, separate repo, separate map.
   re-verifies. 475,635 episodes · 25,652 respondent-days. 7 decisions E1–E7 bind 04–07.
   → [ticket 03](issues/03-build-validated-extract.md) ·
   [findings](../../../research/03-extract/findings.md)
+- **04 · Render budget measured; the GPU is not the constraint.** All 475,635 episodes draw in **one**
+  WebGL2 instanced call at 60 fps on an emulated phone, and the full three-year payload is **507 KB
+  brotli** (start minutes are free — ticket 03's 1440 invariant). Canvas2D animates ~200 threads and is
+  out. Two levers dwarf the rest: `antialias:false` (up to 8.3×) and capping the backing store at DPR 2
+  (2.05×). **The budget is screens of blended overdraw — ≤2.5 at 60 fps, ≤6 at 30 — not thread count**
+  (70 Mpx costs the same from 2,500 threads or 10,000). **Multiply is out at every opacity** (black by
+  8 overlaps at a=1, by 64 at a=0.1; low opacity only postpones it). The binding finding is
+  **decimation as a truth problem**: weights span 237×, so equal ink per respondent-day is wrong by
+  **8.67 pp at every k including all 25,652** — 23.1% shown working at 2:57 p.m. against a weighted
+  31.7% — and only systematic PPS on `TUFINLWGT` fixes it. Real ceiling is **pixels, not the GPU**: 844
+  traceable threads on a phone. Frames near 1 s kill the WebGL context permanently. **Desktop is the
+  harder target, not the phone.** 7 decisions R1–R7 bind 05–09.
+  → [ticket 04](issues/04-render-feasibility-spike.md) ·
+  [findings](../../../research/04-render-budget/findings.md) ·
+  [spike](../../../spike/render-budget)
 
 ## Not yet specified
 
@@ -102,12 +117,18 @@ or reconcile against it. Separate effort, separate repo, separate map.
   how deep they go, and whether they are a control surface or something you brush through the mark.
   Depends on the spine and on Fable's form.
 - **Whether 3D is used at all**, and if so what depth encodes. Fable's call under thin-anchor.
+  Ticket 04 narrows what the answer costs: geometry is nearly free (~6.5 ms per *million* primitives,
+  so the whole dataset is ~3 ms), but **translucent overdraw is the entire budget** — and depth
+  without opaque occlusion is exactly overdraw. A 3D form that occludes is affordable; one that
+  layers translucently is not.
 - **The interaction grammar on touch** — first-tap-is-hover and pointercancel traps apply; can't be
   designed before the mark exists.
 - **Launch surface:** OG card, registry entry, any Data Nerve / LinkedIn writeup. (Subdomain DNS is
   no longer open-ended — ticket 01 pinned the exact Namecheap record; it just needs Dustin to add it,
   and the placeholder page stays `noindex` until the piece ships.)
-- **Whether 2021–22 transition frames earn their weight**, once the spine is picked.
+- **Whether 2021–22 transition frames earn their weight**, once the spine is picked. Ticket 04 removes
+  cost from that argument: a year is ~150–200 KB brotli, so two more frames are ~350 KB against an
+  800 KB ceiling. It is now purely a question of whether they say anything.
 - **Whether 2025 appears at all.** Ticket 02 found ATUS **2025 exists** (released 2026-06-25) — the
   map was charted assuming 2024 was latest. But 2025 has a 43-day hole (2025-09-30→11-11, Oct 2025
   shutdown), Q4 weights that were **not** adjusted for it, a 25.7% response rate, and a BLS statement

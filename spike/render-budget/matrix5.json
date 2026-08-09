@@ -1,0 +1,10 @@
+[
+  { "label": "ribbon rep4 dpr3", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "1000,2500,5000", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "frames": 30 } },
+  { "label": "ribbon rep4 dpr2", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "1000,2500,5000", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "dprCap": "2", "frames": 30 } },
+  { "label": "ribbon rep4 dpr1", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "1000,2500,5000", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "dprCap": "1", "frames": 30 } },
+  { "label": "rows rep4 dpr2 n25652", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "msaa": "0", "rep": "4", "dprCap": "2", "frames": 30 } }
+]

@@ -1,0 +1,177 @@
+{
+  "days": 25652,
+  "weight": {
+    "min": 820315.956998,
+    "max": 194366929.614834,
+    "median": 8391953.586379,
+    "cvPct": 93.11474889270161,
+    "maxOverMin": 236.94154423879857
+  },
+  "truth": {
+    "personal_care": 585.2096944494132
+  },
+  "table": [
+    {
+      "k": 500,
+      "head": {
+        "maxPP": 6.85,
+        "meanPP": 0.904,
+        "sleepMin": 590.5,
+        "sleepErr": 5.3
+      },
+      "strided": {
+        "maxPP": 12.42,
+        "meanPP": 1.204,
+        "sleepMin": 592.2,
+        "sleepErr": 7
+      },
+      "srs": {
+        "maxPP": 9.85,
+        "meanPP": 1.33,
+        "sleepMin": 589,
+        "sleepErr": 3.8
+      },
+      "pps": {
+        "maxPP": 4.51,
+        "meanPP": 0.629,
+        "sleepMin": 592.1,
+        "sleepErr": 6.9
+      }
+    },
+    {
+      "k": 1000,
+      "head": {
+        "maxPP": 8.75,
+        "meanPP": 0.912,
+        "sleepMin": 587.3,
+        "sleepErr": 2.1
+      },
+      "strided": {
+        "maxPP": 10.86,
+        "meanPP": 1.061,
+        "sleepMin": 589.6,
+        "sleepErr": 4.4
+      },
+      "srs": {
+        "maxPP": 8.62,
+        "meanPP": 1.008,
+        "sleepMin": 585.2,
+        "sleepErr": 0
+      },
+      "pps": {
+        "maxPP": 4.99,
+        "meanPP": 0.536,
+        "sleepMin": 594.8,
+        "sleepErr": 9.6
+      }
+    },
+    {
+      "k": 2532,
+      "head": {
+        "maxPP": 8.58,
+        "meanPP": 0.814,
+        "sleepMin": 587.1,
+        "sleepErr": 1.8
+      },
+      "strided": {
+        "maxPP": 8.4,
+        "meanPP": 0.901,
+        "sleepMin": 588.8,
+        "sleepErr": 3.6
+      },
+      "srs": {
+        "maxPP": 7.15,
+        "meanPP": 0.836,
+        "sleepMin": 588.4,
+        "sleepErr": 3.1
+      },
+      "pps": {
+        "maxPP": 2.17,
+        "meanPP": 0.261,
+        "sleepMin": 587.5,
+        "sleepErr": 2.3
+      }
+    },
+    {
+      "k": 5000,
+      "head": {
+        "maxPP": 8.1,
+        "meanPP": 0.819,
+        "sleepMin": 583.2,
+        "sleepErr": -2
+      },
+      "strided": {
+        "maxPP": 8.66,
+        "meanPP": 0.889,
+        "sleepMin": 590,
+        "sleepErr": 4.7
+      },
+      "srs": {
+        "maxPP": 9.8,
+        "meanPP": 0.979,
+        "sleepMin": 588.1,
+        "sleepErr": 2.8
+      },
+      "pps": {
+        "maxPP": 1.12,
+        "meanPP": 0.145,
+        "sleepMin": 586.2,
+        "sleepErr": 0.9
+      }
+    },
+    {
+      "k": 10000,
+      "head": {
+        "maxPP": 8.16,
+        "meanPP": 0.838,
+        "sleepMin": 582.6,
+        "sleepErr": -2.6
+      },
+      "strided": {
+        "maxPP": 8.61,
+        "meanPP": 0.888,
+        "sleepMin": 588.3,
+        "sleepErr": 3.1
+      },
+      "srs": {
+        "maxPP": 8.18,
+        "meanPP": 0.892,
+        "sleepMin": 588,
+        "sleepErr": 2.8
+      },
+      "pps": {
+        "maxPP": 0.94,
+        "meanPP": 0.111,
+        "sleepMin": 586.2,
+        "sleepErr": 1
+      }
+    },
+    {
+      "k": 25652,
+      "head": {
+        "maxPP": 8.67,
+        "meanPP": 0.898,
+        "sleepMin": 587.5,
+        "sleepErr": 2.3
+      },
+      "strided": {
+        "maxPP": 8.67,
+        "meanPP": 0.898,
+        "sleepMin": 587.5,
+        "sleepErr": 2.3
+      },
+      "srs": {
+        "maxPP": 8.67,
+        "meanPP": 0.898,
+        "sleepMin": 587.5,
+        "sleepErr": 2.3
+      },
+      "pps": {
+        "maxPP": 0.32,
+        "meanPP": 0.041,
+        "sleepMin": 585.4,
+        "sleepErr": 0.2
+      }
+    }
+  ]
+}

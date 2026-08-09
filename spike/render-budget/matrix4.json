@@ -1,0 +1,19 @@
+[
+  { "label": "rows msaaoff rep1", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "2532,10000,25652", "layout": "rows", "msaa": "0", "frames": 40 } },
+  { "label": "rows msaaoff rep2 n25652", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "msaa": "0", "rep": "2", "frames": 40 } },
+  { "label": "rows msaaoff rep4 n25652", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "25652", "layout": "rows", "msaa": "0", "rep": "4", "frames": 40 } },
+  { "label": "rows msaaoff rep4 n10000", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "10000", "layout": "rows", "msaa": "0", "rep": "4", "frames": 40 } },
+  { "label": "rows msaaoff rep4 n2532", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "n": "2532", "layout": "rows", "msaa": "0", "rep": "4", "frames": 40 } },
+
+  { "label": "ribbon msaaoff rep1", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "500,1000,2500,5000", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "frames": 40 } },
+  { "label": "ribbon msaaoff rep4", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "250,500,1000,2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "4", "frames": 30 } },
+  { "label": "ribbon msaaoff rep2", "device": "phone", "cpu": 4,
+    "params": { "tech": "webgl", "year": "all", "ns": "500,1000,2500", "layout": "ribbon", "alpha": "0.08", "bandH": "6", "msaa": "0", "rep": "2", "frames": 30 } }
+]
