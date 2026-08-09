@@ -44,6 +44,10 @@ do need the manual command — this one is not one of them.)
 Verify a deploy landed by fetching the live URL and grepping for a marker in the HTML, not by
 trusting the push.
 
+**DNS** (one-time, Namecheap, `dustincoledata.com` on BasicDNS): CNAME · host `oneday` · value
+`3e4803086c51b69e.vercel-dns-017.com.` — a target Vercel mints **per domain**, not the shared
+`cname.vercel-dns.com`.
+
 ## Data
 
 BLS American Time Use Survey — **U.S. public domain**, redistribution permitted, cite BLS as source.
