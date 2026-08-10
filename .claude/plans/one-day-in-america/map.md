@@ -108,6 +108,17 @@ or reconcile against it. Separate effort, separate repo, separate map.
   → [ticket 04](issues/04-render-feasibility-spike.md) ·
   [findings](../../../research/04-render-budget/findings.md) ·
   [spike](../../../spike/render-budget)
+- **11 · Real-phone check: the ×4 derate was too conservative, not too loose.** Ticket 04's `rep=4`
+  laptop stand-in was the largest untested assumption in the render budget. Measured directly on
+  Dustin's iPhone 16+ over LAN: the phone is dead even with the laptop's own real-time draw on opaque
+  fill (9 ms vs 9.0 ms) and **~2× faster** on blended overdraw, the case the budget is actually
+  denominated in (3–6 ms measured vs 9.6–25.7 ms predicted). **The ≤2.5-screens/60fps budget
+  loosens** — every config tested held 58.8 fps with 45–65% of frame budget unused, and nothing pushed
+  hard enough to find the device's real ceiling. Caveat: iPhone 16+ is flagship-tier, not the
+  "mid-range" device the derate was meant to model — no low/mid Android was tested, and the
+  `antialias:false` parity / R6 watchdog-wall checks ticket 11 also flagged remain unrun.
+  → [ticket 11](issues/11-real-phone-derate-check.md) ·
+  [findings](../../../research/04-render-budget/findings.md)
 
 ## Not yet specified
 

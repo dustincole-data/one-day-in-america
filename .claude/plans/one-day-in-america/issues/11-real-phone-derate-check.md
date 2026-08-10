@@ -1,8 +1,27 @@
 # 11 · Is the ×4 phone derate right?
 
 Type: task (HITL — needs Dustin's actual phone)
-Status: open
+Status: **resolved 2026-08-09** · claude (sonnet)
 Blocked by: 04
+
+## Resolution
+
+**No — it was too conservative.** Measured directly on Dustin's iPhone 16+ (LAN, `rep=1`, no
+stand-in): dead even with the laptop's own real-time draw on opaque fill (9 ms vs 9.0 ms, ratio
+1.00×) and **~2× faster** on blended overdraw — the case the budget is actually denominated in (3–6 ms
+measured vs 9.6–25.7 ms the `rep=4` prediction gave). Every config tested held 58.8 fps with 45–65% of
+frame budget unused.
+
+**The ≤2.5-screens/60fps budget loosens, it does not tighten.** But the device's real ceiling was not
+found — nothing here was pushed hard enough to miss 60 fps — so the existing number stands as a safe
+floor, not a re-measured ceiling. Full numbers, the derate-ratio math, and two caveats (iPhone 16+ is
+flagship-tier, not "mid-range"; iOS's `performance.now()` reads in whole milliseconds) are in
+[research/04-render-budget/findings.md](../../../../research/04-render-budget/findings.md), new
+subsection under "The measured ceiling, derated." R3 updated there and in the map.
+
+**Not run this pass:** the `antialias:false` parity check and the R6 watchdog-wall (~500 ms) check
+ticket 11 also flagged — both need dedicated configs (`msaa=1` comparison; `rep=8`/`16` stress) that
+weren't part of the three the budget turns on. Open.
 
 ## Question
 

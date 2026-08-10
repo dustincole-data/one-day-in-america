@@ -83,7 +83,8 @@ an explicit, stated stand-in for a mid-range phone GPU roughly a quarter the spe
 
 **That factor is an assumption, not a measurement**, and it is the single largest uncertainty in this
 budget. It is cheap to close: the spike serves over LAN and Dustin can open it on his phone. See
-ticket 11.
+ticket 11 — **resolved below**: the real derate is ~1× on opaque fill and ~0.5× (i.e. the phone is
+*faster*) on blended overdraw, not ×4.
 
 ---
 
@@ -219,6 +220,53 @@ The map assumed mobile parity was the binding constraint. On fill-bound work it 
 desktop is the harder target**, purely on pixel count. Budget against the desktop and the phone comes
 free; the reverse does not hold.
 
+### Ticket 11 — the ×4 derate, measured for real
+
+`rep=4` was the single largest assumption in this budget — CDP has no GPU throttle, so `rep=4` stood
+in for "roughly a quarter the speed of an Iris Xe," untested. Ticket 11 closed it: the three configs
+the budget turns on, run at `rep=1` — no stand-in, the device's real GPU — on Dustin's iPhone 16+, over
+LAN, native DPR except where noted.
+
+| config | n | draw (phone) | frame | fps | draw (laptop, `rep=4` prediction) |
+|---|---:|---:|---:|---:|---:|
+| rows, all 25,652 | 25,652 | 9 ms | 17 ms | 58.8 | 25.9 ms |
+| ribbon | 500 | 3 ms | 17 ms | 58.8 | 9.6 ms |
+| ribbon | 1,000 | 4 ms | 17 ms | 58.8 | 13.0 ms |
+| ribbon | 2,500 | 6 ms | 17 ms | 58.8 | 25.7 ms |
+| ribbon @ DPR 2 | 2,500 | 6 ms | 17 ms | 58.8 | 15.0 ms |
+
+Every config lands at 58.8 fps (frame = 17 ms, essentially the 60 Hz vsync ceiling) with 45–65% of the
+frame budget unused. **The true derate is not ×4.** Measured against the laptop's own *undivided*
+(`rep=1`) numbers — the fair comparison, not the `rep=4` stand-in — the phone is dead even on opaque
+fill (rows: 9 ms vs 9.0 ms, ratio **1.00×**) and roughly **2× faster** on blended overdraw, the case the
+budget is actually denominated in (ribbon: 3/7.1, 4/7.5, 6/11.5 → ratios **0.42–0.53×**). Apple's
+tile-based deferred renderer appears to eat translucent overdraw more cheaply than the Iris Xe's
+architecture does — the overdraw-screens cost curve measured on the laptop is not guaranteed to
+transfer 1:1 across GPU architectures.
+
+**The ≤2.5-screens/60fps budget loosens. It does not tighten.** Every number ticket 04 flagged as
+uncertain came back better than assumed, by 2–4×. But the device's real ceiling was **not found** —
+nothing here was pushed hard enough to miss 60 fps — so ≤2.5 screens stands as a safe, conservative
+floor, not a re-measured ceiling. Extrapolating a new number (e.g. "~16 screens" from the 2.78× of
+headroom the 5.9-screen ribbon config showed) would be modeling, not measuring — the thing this record
+has avoided everywhere else.
+
+**Scope caveat.** iPhone 16+ is a current-generation flagship, not the "mid-range phone" the derate
+was meant to model. No low- or mid-tier Android was tested. This result licenses more confidence the
+budget is *not too tight* on modern hardware; it says nothing about a genuinely cheap device, where
+the untested ×4 assumption could still be closer to true.
+
+**A precision note.** iOS Safari's `performance.now()` reads in whole milliseconds here — every
+`frame` value across five different configs and loads reads exactly `17`, and `fps` is exactly
+`1000/17 = 58.8` every time — consistent with WebKit's known timer-resolution coarsening, not a
+coincidence of the workload. Sub-millisecond claims from this device should not be trusted. It does
+not change the conclusion: the gaps between measured and predicted (9 vs 25.9 ms, 6 vs 25.7 ms) are
+15–20× the ±1 ms rounding noise.
+
+**Not run.** Ticket 11 also flagged `antialias:false` parity and the R6 watchdog wall (~500 ms) as
+worth checking on real iOS — neither was tested this pass (would need an `msaa=1` comparison and a
+`rep=8`/`rep=16` stress run). Open, not closed.
+
 ---
 
 ## Blending — multiply reaches black at every opacity
@@ -344,7 +392,7 @@ Total ≈ 30 MB on a phone. Not a constraint, and not worth designing around.
 |---|---|---|---|
 | R1 | **WebGL2 instanced quads, one draw call**, per-instance `(start, dur, row, major)` as four `uint16` | Canvas2D animates ~200 threads; WebGL animates all 25,652. Primitives cost ~6.5 ms per million. | Canvas2D per-rect (2.7 fps at 4,000 threads); Canvas2D batched by colour (only 2× better) |
 | R2 | **`antialias: false`, backing store capped at DPR 2** | Measured 1.85–8.3× and 2.05× respectively — the two largest levers by a wide margin | The WebGL default (`antialias: true`) at native DPR 3 |
-| R3 | **The budget is denominated in screens of blended overdraw: ≤ 2.5 at 60 fps, ≤ 6 at 30 fps** | Confirmed independently — 70 Mpx costs the same from 2,500 threads or 10,000. Thread count is not the currency. | A thread-count ceiling, which is layout-dependent and misleading |
+| R3 | **The budget is denominated in screens of blended overdraw: ≤ 2.5 at 60 fps, ≤ 6 at 30 fps** | Confirmed independently — 70 Mpx costs the same from 2,500 threads or 10,000. Thread count is not the currency. Ticket 11: real iPhone 16+ ran the same configs 2–4× *better* than the `rep=4` laptop stand-in predicted — the number is a safe floor, not a measured ceiling. | A thread-count ceiling, which is layout-dependent and misleading |
 | R4 | **Alpha blending only**, premultiplied | Multiply reaches black at every opacity tested; lowering opacity only postpones it. Alpha saturates at the ink and stops. | Multiply (measurably faster, visually unusable past ~4 overlaps) |
 | R5 | **If fewer than all 25,652 threads are drawn, choose them by systematic PPS on cumulative `TUFINLWGT`** | Equal ink is only correct when every thread stands for an equal slice. PPS at 2,532 (2.17 pp) beats all 25,652 unweighted (8.67 pp). | Head-N, strided, uniform random — all pinned at ~8.7 pp regardless of k |
 | R6 | **Never let a frame exceed ~500 ms; ship a `webglcontextlost` handler with a static fallback** | The driver watchdog kills the context permanently — a black screen that survives until reload. Reproduced twice. | Treating slow frames as merely slow |
@@ -361,5 +409,6 @@ Total ≈ 30 MB on a phone. Not a constraint, and not worth designing around.
   honest under PPS sampling (R5). A single headline *number* is robust to any sampling.
 - **Ticket 07 (freeze the claim):** unaffected. S12 still stands — a 2019-vs-2024 change still needs
   the replicate weights before it is printed.
-- **New: ticket 11.** The ×4 mid-range-phone derate is the one assumption in this budget that was not
-  measured. It costs two minutes on a real phone to close.
+- **Ticket 11, resolved.** The ×4 mid-range-phone derate was the one assumption in this budget that
+  was not measured. Real iPhone 16+: true derate ~1× on opaque fill, ~0.5× (faster) on blended
+  overdraw. The budget loosens; see the subsection above.
