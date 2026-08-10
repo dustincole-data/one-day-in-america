@@ -40,6 +40,9 @@ respondent-day microdata. Project #1 of the three-project round from the 2026-08
   (normal file names, special weight variable), and 2020 is **not** unusable: BLS built `TU20FWGT`
   for 2019 as well, expressly to support a matched partial-year 2019-vs-2020 comparison. The
   exclusion stands; the honest note is now accurate.
+  *Superseded in scope by ticket 06 (L3, 2026-08-10):* the years remain separable **in the extract**,
+  but **only 2024 is drawn**. The spine asserts the shape of one day, so no year is compared, no
+  transition frame ships, and 2025 never enters. 2019 and 2023 stay built and unused.
 
 **Standing preferences for this effort:**
 
@@ -137,17 +140,55 @@ or reconcile against it. Separate effort, separate repo, separate map.
   `antialias:false` parity / R6 watchdog-wall checks ticket 11 also flagged remain unrun.
   → [ticket 11](issues/11-real-phone-derate-check.md) ·
   [findings](../../../research/04-render-budget/findings.md)
+- **06 · The spine is locked: the braid.** *Everyone's 3 a.m. looks the same. Nobody's noon does.* The
+  comparison is within one day — the tightest minute against the loosest: **96.2 % asleep at 3:27 a.m.
+  against 24.3 % working at 12:02 p.m.**, a 72 pp effect at **14× the worst PPS error**. Pre-touch the
+  viewer sees a rope of **7,669 threads, one per real 2024 diary day**, 4 a.m.→4 a.m., coloured by
+  activity: solid at night, frayed through the middle of the day, nothing else on screen. The
+  possessive in the headline binds the claim to each respondent's own clock, so **S8 is satisfied with
+  no footnote**. Exploration = **filter the rope + pull one thread**. Candidate 1 (the workday moved
+  indoors) was the real contender and **lost on the wordless test** — its claim lives inside the work
+  colour, so it needs a legend, a toggle and a re-encode, and its surprise is a null result. Dropped,
+  not deferred. **2024 only is drawn**; year deltas are ~1 % of the day so a toggle would be an
+  anticlimax, and pooling adds no density because decimation binds at any year count. **S12 is off the
+  board — no replicate weights, no error bars, ever, on this build.** 7 decisions L1–L7 bind 07–10.
+  → [ticket 06](issues/06-lock-the-spine.md)
+- **07 · The claim is frozen and the headline survives unchanged.** **96.5 % → 25.8 %, a 70.8 pp
+  gap** — 2024, n = 7,669, `TUFINLWGT`, S9 universe, 12 published majors, **at the hour**: the median
+  specification of a 60-spec curve, and the resolution the copy's own words assert. Register
+  associational, kind exploratory, 146 ledger cells. **"3 a.m." stays** — it costs 0.21 pp against a
+  ± 0.72 pp floor, and the *minute* is the indefensible statistic: the peak wanders 2:55 → 3:11 →
+  3:34 a.m. across three annual samples while the 3:00 value moves 0.64 pp, on an axis where **85.3 %
+  of reported episode starts land on a multiple of five minutes**. The real object is a **120-minute
+  ≥95 % plateau, 2:00–3:59 a.m.**; "3:27 a.m." and "12:02 p.m." are now forbidden, as is any error
+  bar and the personal-care/asleep swap (96.5 % vs 96.0 %). **The gate's binding surprise: the claim
+  is partition-dependent** — under a coarse three-way scale the loosest hour moves to 6 p.m. (39.1 %)
+  and the headline becomes *false* (trough stability 40/40 on a fine partition, 0/20 on the coarse
+  one), so a simplified palette is forbidden. **Job 2 closed the map's open item: "worked that day"
+  tightens noon to 57.4 %** (65.4 % at 6 h+, peaking **86.4 % at 2 p.m.**) and moves every worker
+  slice's loosest minute to **6:00–6:22 p.m.** — 2.20× a rotation null, so coordination, not the
+  filter or the tautology. The adversarial pass caught two causal leaks D1's keyword scan had passed,
+  and one real framing defect: the estimand is a modal **maximum**, so "Nobody's" asserts a dispersion
+  it cannot carry — safe over the mark, unsafe in text, hence a mandatory standing sentence for any
+  surface quoting the claim without the picture. 11 decisions C1–C11 bind 08–10; ticket 09 inherits
+  six verbatim.
+  → [ticket 07](issues/07-freeze-the-claim.md) ·
+  [record](../../../research/07-claim/findings.md) ·
+  [adversarial pass](../../../research/07-claim/adversarial-pass.md) ·
+  [harness](../../../spike/claim)
 
 ## Not yet specified
 
 - **Implementation breakdown.** Cannot be sliced until Fable's design lands. Expect: data bake,
   desktop build, phone build, perf hardening, deploy verify, project card.
-- **The exploration layer.** What filters exist (parents / renters / night shift / remote / age),
-  how deep they go, and whether they are a control surface or something you brush through the mark.
-  Depends on the spine and on Fable's form. Ticket 05 adds one binding constraint: the most
-  interesting filter cells are **too thin to draw as traceable threads** — worked + child under 6 is
-  761 sample days, single parents who worked 443, women in the under-6 cell 343, all under the 844
-  ceiling. Those groups can be *stated* as numbers; they cannot be *drawn* as individuals.
+- **The exploration layer — narrowed by 06 and 07, not closed.** *What* it does is settled (L5) and
+  *which groups* is now settled too (C8, the 2024-only drawable set: worked/didn't, worked 6 h+, sex,
+  weekday/weekend, 65+, 25–54, children <18 — **school enrolment is out at n = 466**). Still open:
+  how the controls are surfaced (a control strip vs brushing the mark itself) and the touch grammar
+  for pulling a thread. Binding constraints: **L6/P4's 844-sample-day line** applied to 2024 alone;
+  **per-thread hit testing on touch**, where first-tap-is-hover and pointercancel traps apply; and
+  **C11 — the layer must be discoverable without instruction**, because it is what shows noon is
+  stratified rather than scattered.
 - **Whether 3D is used at all**, and if so what depth encodes. Fable's call under thin-anchor.
   Ticket 04 narrows what the answer costs: geometry is nearly free (~6.5 ms per *million* primitives,
   so the whole dataset is ~3 ms), but **translucent overdraw is the entire budget** — and depth
@@ -158,15 +199,9 @@ or reconcile against it. Separate effort, separate repo, separate map.
 - **Launch surface:** OG card, registry entry, any Data Nerve / LinkedIn writeup. (Subdomain DNS is
   no longer open-ended — ticket 01 pinned the exact Namecheap record; it just needs Dustin to add it,
   and the placeholder page stays `noindex` until the piece ships.)
-- **Whether 2021–22 transition frames earn their weight**, once the spine is picked. Ticket 04 removes
-  cost from that argument: a year is ~150–200 KB brotli, so two more frames are ~350 KB against an
-  800 KB ceiling. It is now purely a question of whether they say anything.
-- **Whether 2025 appears at all.** Ticket 02 found ATUS **2025 exists** (released 2026-06-25) — the
-  map was charted assuming 2024 was latest. But 2025 has a 43-day hole (2025-09-30→11-11, Oct 2025
-  shutdown), Q4 weights that were **not** adjusted for it, a 25.7% response rate, and a BLS statement
-  that the effect "is not possible to quantify." Recommendation: keep **2023+2024** as the "after"
-  frame; 2025 may appear as a later frame with an honest note, but must not carry the headline.
-  **Dustin's ruling needed.**
+*(Closed by ticket 06, by consequence of L3 — **2024 only is drawn**: whether 2021–22 transition
+frames earn their weight (no), and whether 2025 appears at all (no, so its 43-day hole and 25.7 %
+response rate never have to be adjudicated).)*
 
 ## Out of scope
 

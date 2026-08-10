@@ -1,0 +1,321 @@
+Ticket 07 · claim verification · 2019: n=9435 · 2023: n=8548 · 2024: n=7669
+1440-minute coverage invariant re-asserted for all three years.
+
+====================================================================================
+JOB 1 — is the headline word "3 a.m." defensible, and what is the number at 3:00 sharp?
+====================================================================================
+Every share below is weighted (TUFINLWGT, S3) over the S9 universe: civilian, noninstitutional,
+15+, in households, 50 states + DC. Times are LOCAL to each respondent's own diary day (S8).
+
+2024, every partition the mark could ship with. "sharp" = the clock minute the copy names;
+"argmax/argmin" = the minute the data actually picks.
+
+partition    3:00 sharp  (doing)                argmax     peak     copy cost
+majors12         96.4%  (personal_care)          3:34 a.m.    96.6%    0.21 pp
+majors13         95.7%  (sleep)                  3:27 a.m.    96.2%    0.52 pp
+coarse3          96.5%  (necessary)              3:20 a.m.    96.8%    0.24 pp
+asleep only      95.7%  (0101x, TRCODE)          3:27 a.m.    96.2%    0.52 pp
+
+The same at noon sharp, against the day's measured trough:
+
+partition    12:00 sharp (doing)                argmin     trough   copy cost
+majors12         24.4%  (work)                   12:02 p.m.    24.3%    0.11 pp
+majors13         24.4%  (work)                   12:02 p.m.    24.3%    0.11 pp
+coarse3          53.7%  (obligated)              6:00 p.m.    39.1%   14.54 pp
+
+C5 — is the ARGMAX MINUTE a stable statistic, or an extreme drawn from a noisy curve?
+Three independent annual samples. If the peak minute wanders but its value does not, the
+rounded word is the honest one and the exact minute must never ship.
+
+year          peak minute   peak %   3:00 sharp %   trough minute   trough %   12:00 sharp %
+2019          2:55 a.m.    96.2%         95.8%    12:05 p.m.     24.5%          24.6%
+2023          3:11 a.m.    96.4%         96.3%    12:05 p.m.     24.7%          24.8%
+2024          3:34 a.m.    96.6%         96.4%    12:02 p.m.     24.3%          24.4%
+
+Same, on the asleep share alone (TRCODE 0101x):
+year          peak minute   peak %   3:00 sharp %
+2019          2:58 a.m.    95.9%         95.0%
+2023          2:59 a.m.    96.0%         95.1%
+2024          3:27 a.m.    96.2%         95.7%
+
+How flat is the 3 a.m. plateau? 2024, majors12, every 10 minutes from 1 a.m. to 5 a.m.:
+
+  1:00 a.m. 93.4%   1:10 a.m. 93.7%   1:20 a.m. 93.9%   1:30 a.m. 94.5%   1:40 a.m. 94.7%   
+  1:50 a.m. 94.7%   2:00 a.m. 95.7%   2:10 a.m. 95.8%   2:20 a.m. 96.0%   2:30 a.m. 96.2%   
+  2:40 a.m. 96.3%   2:50 a.m. 96.3%   3:00 a.m. 96.4%   3:10 a.m. 96.5%   3:20 a.m. 96.6%   
+  3:30 a.m. 96.6%   3:40 a.m. 96.6%   3:50 a.m. 96.6%   4:00 a.m. 93.7%   4:10 a.m. 93.6%   
+  4:20 a.m. 93.2%   4:30 a.m. 92.4%   4:40 a.m. 92.5%   4:50 a.m. 91.9%   5:00 a.m. 88.6%   
+
+Minutes of the 2024 day where the modal share is at or above 95%: 120
+  running 2:00 a.m. → 3:59 a.m. (contiguous: true)
+Minutes where the ASLEEP share alone is at or above 95%: 119 (2:01 a.m. → 3:59 a.m.)
+
+====================================================================================
+SPECIFICATION CURVE — estimand: braid_gap_pp (peak modal share − trough modal share)
+====================================================================================
+Analytic choices varied, question held fixed: partition (3) × frame (5) × time resolution (4).
+Weighting is not a curve dimension — S3 forbids an unweighted estimate. The equal-ink twin is
+measured separately below as a FIDELITY question about the mark, not as an estimate.
+
+frame            partition     resolution   peak%   trough%   gap pp   peak at    trough at
+2019             majors12        1 min    96.2     24.5     71.7   2:55 a.m.  12:05 p.m.
+2019             majors12        5 min    96.2     24.5     71.7   2:55 a.m.  12:00 p.m.
+2019             majors12       15 min    96.2     24.6     71.6   2:45 a.m.  12:00 p.m.
+2019             majors12       60 min    95.9     26.3     69.6   2:00 a.m.  12:00 p.m.
+2019             majors13        1 min    95.9     24.5     71.4   2:58 a.m.  12:05 p.m.
+2019             majors13        5 min    95.9     24.5     71.3   2:55 a.m.  12:00 p.m.
+2019             majors13       15 min    95.9     24.6     71.3   2:45 a.m.  12:00 p.m.
+2019             majors13       60 min    95.5     26.3     69.2   2:00 a.m.  12:00 p.m.
+2019             coarse3         1 min    96.4     40.1     56.3   2:50 a.m.   6:00 p.m.
+2019             coarse3         5 min    96.4     40.2     56.2   2:50 a.m.   6:00 p.m.
+2019             coarse3        15 min    96.4     40.9     55.5   2:45 a.m.   6:00 p.m.
+2019             coarse3        60 min    96.1     44.2     52.0   2:00 a.m.   5:00 p.m.
+2023             majors12        1 min    96.4     24.7     71.7   3:11 a.m.  12:05 p.m.
+2023             majors12        5 min    96.4     24.7     71.6   3:10 a.m.  12:05 p.m.
+2023             majors12       15 min    96.3     24.8     71.5   3:15 a.m.  12:00 p.m.
+2023             majors12       60 min    96.2     26.6     69.6   3:00 a.m.  12:00 p.m.
+2023             majors13        1 min    96.0     24.7     71.3   2:59 a.m.  12:05 p.m.
+2023             majors13        5 min    96.0     24.7     71.3   2:55 a.m.  12:05 p.m.
+2023             majors13       15 min    96.0     24.8     71.2   2:45 a.m.  12:00 p.m.
+2023             majors13       60 min    95.7     26.6     69.1   2:00 a.m.  12:00 p.m.
+2023             coarse3         1 min    96.5     40.1     56.4   3:20 a.m.   6:04 p.m.
+2023             coarse3         5 min    96.5     40.2     56.4   3:25 a.m.   6:00 p.m.
+2023             coarse3        15 min    96.5     40.8     55.7   3:15 a.m.   6:00 p.m.
+2023             coarse3        60 min    96.4     43.3     53.1   3:00 a.m.   5:00 p.m.
+2024             majors12        1 min    96.6     24.3     72.3   3:34 a.m.  12:02 p.m.
+2024             majors12        5 min    96.6     24.3     72.3   3:35 a.m.  12:00 p.m.
+2024             majors12       15 min    96.6     24.4     72.2   3:30 a.m.  12:00 p.m.
+2024             majors12       60 min    96.5     25.8     70.8   3:00 a.m.  12:00 p.m.
+2024             majors13        1 min    96.2     24.3     71.9   3:27 a.m.  12:02 p.m.
+2024             majors13        5 min    96.2     24.3     71.9   3:25 a.m.  12:00 p.m.
+2024             majors13       15 min    96.2     24.4     71.8   3:15 a.m.  12:00 p.m.
+2024             majors13       60 min    96.0     25.8     70.2   3:00 a.m.  12:00 p.m.
+2024             coarse3         1 min    96.8     39.1     57.7   3:20 a.m.   6:00 p.m.
+2024             coarse3         5 min    96.8     39.2     57.6   3:20 a.m.   6:00 p.m.
+2024             coarse3        15 min    96.7     39.9     56.9   3:15 a.m.   6:00 p.m.
+2024             coarse3        60 min    96.7     43.4     53.3   3:00 a.m.   5:00 p.m.
+2023+2024        majors12        1 min    96.5     24.5     71.9   3:20 a.m.  12:05 p.m.
+2023+2024        majors12        5 min    96.5     24.5     71.9   3:25 a.m.  12:05 p.m.
+2023+2024        majors12       15 min    96.4     24.6     71.8   3:15 a.m.  12:00 p.m.
+2023+2024        majors12       60 min    96.4     26.2     70.2   3:00 a.m.  12:00 p.m.
+2023+2024        majors13        1 min    96.1     24.5     71.6   2:59 a.m.  12:05 p.m.
+2023+2024        majors13        5 min    96.1     24.5     71.5   2:55 a.m.  12:05 p.m.
+2023+2024        majors13       15 min    96.0     24.6     71.5   2:45 a.m.  12:00 p.m.
+2023+2024        majors13       60 min    95.7     26.2     69.5   3:00 a.m.  12:00 p.m.
+2023+2024        coarse3         1 min    96.6     39.6     57.0   3:20 a.m.   6:01 p.m.
+2023+2024        coarse3         5 min    96.6     39.7     57.0   3:25 a.m.   6:00 p.m.
+2023+2024        coarse3        15 min    96.6     40.3     56.3   3:15 a.m.   6:00 p.m.
+2023+2024        coarse3        60 min    96.6     43.4     53.2   3:00 a.m.   5:00 p.m.
+2019+2023+2024   majors12        1 min    96.3     24.5     71.8   2:59 a.m.  12:05 p.m.
+2019+2023+2024   majors12        5 min    96.3     24.5     71.8   2:55 a.m.  12:05 p.m.
+2019+2023+2024   majors12       15 min    96.3     24.6     71.7   2:45 a.m.  12:00 p.m.
+2019+2023+2024   majors12       60 min    96.1     26.2     69.9   3:00 a.m.  12:00 p.m.
+2019+2023+2024   majors13        1 min    96.0     24.5     71.5   2:59 a.m.  12:05 p.m.
+2019+2023+2024   majors13        5 min    96.0     24.5     71.5   2:55 a.m.  12:05 p.m.
+2019+2023+2024   majors13       15 min    96.0     24.6     71.4   2:45 a.m.  12:00 p.m.
+2019+2023+2024   majors13       60 min    95.6     26.2     69.4   2:00 a.m.  12:00 p.m.
+2019+2023+2024   coarse3         1 min    96.5     39.8     56.7   2:57 a.m.   6:00 p.m.
+2019+2023+2024   coarse3         5 min    96.5     39.8     56.6   2:55 a.m.   6:00 p.m.
+2019+2023+2024   coarse3        15 min    96.5     40.5     55.9   3:15 a.m.   6:00 p.m.
+2019+2023+2024   coarse3        60 min    96.3     43.6     52.7   3:00 a.m.   5:00 p.m.
+
+Specifications: 60 · gap range 52.0 – 72.3 pp · MEDIAN 71.0 pp
+Median specification: 2024 · majors12 · 60 min → 70.8 pp (peak 3:00 a.m., trough 12:00 p.m.)
+Stability — peak lands in the 2–5 a.m. band: 60/60 (100.0%)
+Stability — trough lands in the 10:30 a.m.–3 p.m. band: 40/60 (66.7%)
+  → every one of the 20 misses is a coarse3 spec, which puts the trough at 6 p.m., not noon.
+  Conditioned on a fine activity partition (40 specs): trough in the midday band 40/40 (100.0%) · gap 69.1–72.3 pp
+Floor for this claim: 10 pp (the largest measured mark-fidelity error, rounded up).
+Median specification clears it by 7.1× · worst specification by 5.2× (52.0 pp)
+Specifications clearing the floor: 60/60
+
+THE NUMBERS THE COPY'S WORDS ACTUALLY NAME. "3 a.m." and "noon" are HOURS, so the hour is the
+honest resolution — and the median specification is exactly that (2024 · majors12 · 60 min):
+
+  3 a.m. hour (3:00–3:59)     96.5% personal_care    (asleep 96.0%)
+  noon hour (12:00–12:59)     25.8% work             (asleep 4.0%)
+  gap between the two hours: 70.8 pp
+
+====================================================================================
+FIDELITY — does the DRAWN mark assert the same number the record asserts?
+====================================================================================
+L1 draws one thread per real 2024 diary day, all 7,669, equal ink. Equal ink is an UNWEIGHTED
+share. Ticket 04 (R5) measured that gap at 8.67 pp on the working share. Measure it here on the
+two minutes the claim actually names.
+
+minute                        weighted   equal-ink(all 7,669)   error pp
+3:00 a.m. sharp                  96.4%                 96.5%       0.09
+3:27 a.m. (measured peak)        96.6%                 96.7%       0.12
+12:00 p.m. sharp                 24.4%                 23.5%      -0.93
+12:02 p.m. (measured trough)     24.3%                 23.6%      -0.71
+
+Asleep share, same comparison (the narrower reading of the copy):
+3:00 a.m. sharp                  95.7%                 95.7%      -0.02
+3:27 a.m. (measured peak)        96.2%                 96.3%       0.03
+12:00 p.m. sharp                  3.8%                  3.3%      -0.53
+12:02 p.m. (measured trough)      3.8%                  3.3%      -0.53
+
+Worst equal-ink error anywhere in the 2024 day (modal share, all 1440 minutes):
+  9.09 pp at 9:48 a.m.
+
+Does systematic PPS-with-replacement on TUFINLWGT (R5) fix it? k = 7,669 threads, 8 seeds:
+  minute            truth(weighted)   PPS mean   PPS spread   equal-ink
+  3:00 a.m. sharp                 96.4%      96.40%    96.27–96.53     96.5%
+  3:27 a.m. (measured peak)       96.6%      96.56%    96.43–96.67     96.7%
+  12:00 p.m. sharp                24.4%      24.31%    24.01–24.62     23.5%
+  12:02 p.m. (measured trough)    24.3%      24.20%    23.88–24.53     23.6%
+
+====================================================================================
+A3 — does the conclusion reverse under a plausible third variable?
+====================================================================================
+Day of week is the one that matters: ATUS samples weekend days at 2.5× the weekday rate, and
+noon on a Sunday is a different noon. The 7-day weighted estimate is the population number;
+these splits say whether it is an average of two opposite things.
+
+slice          n     peak%  peak at    3:00 sharp   trough%  trough at    12:00 sharp
+all days        7669   96.6%  3:34 a.m.       96.4%     24.3%  12:02 p.m.        24.4%
+weekdays        3837   96.6%  3:30 a.m.       96.5%     28.5%   4:33 p.m.        30.3%
+weekends        3832   96.7%  3:20 a.m.       96.3%     22.9%   9:33 a.m.        28.3%
+
+Both slices carry the same shape, so the pooled number is not an average of two opposite things.
+
+====================================================================================
+JOB 2 — does filtering to "worked that day" TIGHTEN noon, or fray it?
+====================================================================================
+The open map item. Every group below is drawn from 2024 alone (L3), so its n is the number of
+real threads the rope would re-form from — L6's 844 line applies to each row.
+
+group                          n    844?   3:00 sharp   noon sharp  (modal at noon)   trough%  trough at
+everyone                      7669   yes        96.4%        24.4% (work)               24.3%  12:02 p.m.
+worked that day               2489   yes        95.9%        57.4% (work)               25.1%   6:04 p.m.
+did not work that day         5180   yes        96.8%        29.8% (leisure_sports)     23.6%   9:33 a.m.
+worked 6h+ that day           1757   yes        95.7%        65.4% (work)               26.7%   6:22 p.m.
+employed, did not work        1966   yes        96.8%        28.9% (leisure_sports)     25.0%  10:00 a.m.
+men                           3563   yes        95.6%        26.3% (work)               26.1%  12:02 p.m.
+women                         4106   yes        97.2%        22.6% (work)               22.6%  12:02 p.m.
+weekday diaries               3837   yes        96.5%        30.3% (work)               28.5%   4:33 p.m.
+weekend diaries               3832   yes        96.3%        28.3% (leisure_sports)     22.9%   9:33 a.m.
+age 65+                       2678   yes        96.9%        30.0% (leisure_sports)     23.9%   9:00 a.m.
+age 25-54                     3227   yes        96.2%        34.7% (work)               25.1%   5:02 p.m.
+children <18 in hh            2107   yes        96.9%        27.0% (work)               26.1%   4:16 p.m.
+no children in hh             5562   yes        96.1%        23.0% (work)               22.9%  12:02 p.m.
+enrolled in school             466    NO        99.1%        26.6% (education)          24.2%  12:44 p.m.
+worked that day, weekday      1792   yes        96.3%        59.7% (work)               24.9%   6:04 p.m.
+worked 6h+, weekday           1472   yes        96.1%        65.3% (work)               25.7%   6:15 p.m.
+
+Read the "noon sharp" column against everyone's 24.4%: a group above it unravels LESS.
+
+The strongest tightening candidate, minute by minute — "worked 6h+, weekday" vs everyone,
+modal share every hour of the 2024 day:
+
+hour        everyone   workers   Δ pp    workers' modal activity
+12:00 a.m.     87.7%     90.0%     2.3    personal_care
+1:00 a.m.     93.4%     94.1%     0.7    personal_care
+2:00 a.m.     95.7%     96.0%     0.3    personal_care
+3:00 a.m.     96.4%     96.1%    -0.3    personal_care
+4:00 a.m.     93.7%     94.0%     0.2    personal_care
+5:00 a.m.     88.6%     83.6%    -5.0    personal_care
+6:00 a.m.     75.1%     61.6%   -13.5    personal_care
+7:00 a.m.     52.4%     42.3%   -10.2    work
+8:00 a.m.     32.4%     69.0%    36.6    work
+9:00 a.m.     29.4%     82.7%    53.2    work
+10:00 a.m.     30.8%     85.5%    54.7    work
+11:00 a.m.     30.3%     83.7%    53.5    work
+12:00 p.m.     24.4%     65.3%    40.9    work
+1:00 p.m.     28.3%     78.6%    50.3    work
+2:00 p.m.     30.3%     86.4%    56.2    work
+3:00 p.m.     29.1%     84.0%    54.9    work
+4:00 p.m.     30.8%     73.0%    42.2    work
+5:00 p.m.     33.1%     48.2%    15.1    work
+6:00 p.m.     35.4%     27.6%    -7.9    work
+7:00 p.m.     44.8%     32.9%   -11.9    leisure_sports
+8:00 p.m.     51.8%     42.2%    -9.7    leisure_sports
+9:00 p.m.     49.1%     41.6%    -7.5    leisure_sports
+10:00 p.m.     52.8%     55.2%     2.5    personal_care
+11:00 p.m.     75.5%     78.0%     2.5    personal_care
+
+====================================================================================
+C3 / C4 — how much of the braid is COORDINATION and how much is arithmetic?
+====================================================================================
+The hostile reading: "of course the country agrees at 3 a.m. — everyone sleeps 8 hours, and of
+course workers work at noon — you filtered on working." Both are answerable with the same null:
+hold every person's activity durations fixed and rotate their day to a uniform random start.
+Coordination is then observed ÷ expected-under-rotation, and the expectation is analytic —
+E[share doing X at any minute] = weighted mean minutes of X ÷ 1440.
+
+  everyone asleep, 3:00 a.m.               observed  95.7%   rotation-null  37.7%    2.54×
+  everyone on personal care, 3:00 a.m.     observed  96.4%   rotation-null  40.8%    2.36×
+  everyone working, 12:00 p.m.             observed  24.4%   rotation-null  14.3%    1.71×
+  worked 6h+ weekday, working 12:00 p.m.   observed  65.3%   rotation-null  39.2%    1.67×
+  worked 6h+ weekday, working 2:00 p.m.    observed  86.4%   rotation-null  39.2%    2.20×
+
+So the night is real coordination, not sleep arithmetic — and the workers' midday tightening is
+not the filter talking either: the filter guarantees one work minute, not a shared window.
+
+====================================================================================
+C2 — uncertainty, stated as more than a threshold crossing
+====================================================================================
+S12 is off the board (L4): no replicate weights, so no BLS standard error exists for these
+numbers. Two things stand in, and neither may ever be printed as an error bar (P2):
+
+(a) The linearized SRS-with-weights floor on each share — captures the weighting design
+    effect, not stratification or replication. A FLOOR, so the true SE is larger.
+
+    personal care at 3:00 a.m.: 96.41% ± 0.28 (floor)
+    asleep at 3:00 a.m.:        95.72% ± 0.31 (floor)
+    working at 12:00 p.m.:      24.40% ± 0.70 (floor)
+    gap 3:00 − 12:00:           72.01 pp ± 0.75 (floor)
+
+(b) Reproduction across three independent annual samples — the stronger evidence, because it
+    is an actual re-draw of the survey rather than a variance formula:
+    2019: 3:00 sharp 95.8% · 12:00 sharp 24.6%
+    2023: 3:00 sharp 96.3% · 12:00 sharp 24.8%
+    2024: 3:00 sharp 96.4% · 12:00 sharp 24.4%
+    three-year spread: 0.64 pp at 3:00 · 0.40 pp at noon
+
+====================================================================================
+ADVERSARIAL PASS FOLLOW-UPS — three things the language pass raised that are cheap to measure
+====================================================================================
+(1) The interval must come from the same specification as the estimate. The ± 0.75 pp above is
+    computed at 3:00 and 12:00 SHARP; the frozen number is the HOUR. Recompute at the hour —
+    per respondent, the fraction of that hour spent on the modal activity:
+
+    3 a.m. hour, personal care: 96.54% ± 0.27 (floor)
+    3 a.m. hour, asleep:        96.03% ± 0.28 (floor)
+    noon hour, work:            25.79% ± 0.66 (floor)
+    gap:                        70.75 pp ± 0.72 (floor)
+
+(2) Time heaping. A recall diary is reported in round numbers, so the minute-level curve is
+    partly an artefact of how people say times. Share of 2024 episode starts by round-ness:
+    episode starts (excluding the 4 a.m. origin): 131866
+      on the hour        23.9%   (uniform would be 1.7%)
+      on the half hour   16.6%   (uniform would be 1.7%)
+      quarter past/to    13.3%   (uniform would be 3.3%)
+      any multiple of 5  85.3%   (uniform would be 20.0%)
+
+(3) The 4 a.m. diary seam sits one hour after the claim's tight hour. Minute by minute across it:
+    3:45 a.m. 96.6%  3:46 a.m. 96.6%  3:47 a.m. 96.6%  3:48 a.m. 96.6%  3:49 a.m. 96.6%  3:50 a.m. 96.6%  3:51 a.m. 96.6%  3:52 a.m. 96.6%  3:53 a.m. 96.6%  3:54 a.m. 96.6%  3:55 a.m. 96.6%  3:56 a.m. 96.6%  3:57 a.m. 96.6%  3:58 a.m. 96.6%  3:59 a.m. 96.6%  
+    4:00 a.m. 93.7%  4:01 a.m. 93.7%  4:02 a.m. 93.7%  4:03 a.m. 93.7%  4:04 a.m. 93.7%  4:05 a.m. 93.7%  4:06 a.m. 93.7%  4:07 a.m. 93.6%  4:08 a.m. 93.6%  4:09 a.m. 93.6%  4:10 a.m. 93.6%  4:11 a.m. 93.6%  4:12 a.m. 93.6%  4:13 a.m. 93.6%  4:14 a.m. 93.5%  
+    3:59 a.m. → 4:00 a.m. step: -2.86 pp
+
+====================================================================================
+LEDGER
+====================================================================================
+Σ cells logged by this harness: 146
+  braid_gap_pp                       79
+  loose_share_at_noon_sharp          22
+  tight_share_at_3am_sharp           6
+  coordination_ratio                 5
+  asleep_share_at_3am_sharp          4
+  equal_ink_error_pp                 4
+  equal_ink_error_pp_asleep          4
+  pps_reconstructed_share            4
+  se_floor_pp                        4
+  tight_share_at_argmax              3
+  loose_share_at_argmin              3
+  headline_hour_modal_share          2
+  episode_start_heaping_pct          2
+  minutes_modal_ge_95pct             1
+  minutes_asleep_ge_95pct            1
+  equal_ink_error_pp_worst           1
+  diary_seam_step_pp                 1

@@ -1,0 +1,986 @@
+[
+  {
+    "estimand": "tight_share_at_3am_sharp",
+    "spec": "majors12·2024",
+    "value": 96.41046403238822,
+    "n": 7669,
+    "label": "personal_care"
+  },
+  {
+    "estimand": "tight_share_at_argmax",
+    "spec": "majors12·2024",
+    "value": 96.61649163676272,
+    "n": 7669,
+    "minute": "3:34 a.m."
+  },
+  {
+    "estimand": "tight_share_at_3am_sharp",
+    "spec": "majors13·2024",
+    "value": 95.71598410250677,
+    "n": 7669,
+    "label": "sleep"
+  },
+  {
+    "estimand": "tight_share_at_argmax",
+    "spec": "majors13·2024",
+    "value": 96.23887246312468,
+    "n": 7669,
+    "minute": "3:27 a.m."
+  },
+  {
+    "estimand": "tight_share_at_3am_sharp",
+    "spec": "coarse3·2024",
+    "value": 96.53602128301682,
+    "n": 7669,
+    "label": "necessary"
+  },
+  {
+    "estimand": "tight_share_at_argmax",
+    "spec": "coarse3·2024",
+    "value": 96.77676001233081,
+    "n": 7669,
+    "minute": "3:20 a.m."
+  },
+  {
+    "estimand": "asleep_share_at_3am_sharp",
+    "spec": "asleep·2024",
+    "value": 95.71598410250677,
+    "n": 7669
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024",
+    "value": 24.398761450827156,
+    "n": 7669,
+    "label": "work"
+  },
+  {
+    "estimand": "loose_share_at_argmin",
+    "spec": "majors12·2024",
+    "value": 24.289812810246964,
+    "n": 7669,
+    "minute": "12:02 p.m."
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors13·2024",
+    "value": 24.398761450827156,
+    "n": 7669,
+    "label": "work"
+  },
+  {
+    "estimand": "loose_share_at_argmin",
+    "spec": "majors13·2024",
+    "value": 24.289812810246964,
+    "n": 7669,
+    "minute": "12:02 p.m."
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "coarse3·2024",
+    "value": 53.653191496353145,
+    "n": 7669,
+    "label": "obligated"
+  },
+  {
+    "estimand": "loose_share_at_argmin",
+    "spec": "coarse3·2024",
+    "value": 39.11417877937441,
+    "n": 7669,
+    "minute": "6:00 p.m."
+  },
+  {
+    "estimand": "tight_share_at_3am_sharp",
+    "spec": "majors12·2019",
+    "value": 95.77144079008158,
+    "n": 9435
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2019",
+    "value": 24.5577203159006,
+    "n": 9435
+  },
+  {
+    "estimand": "tight_share_at_3am_sharp",
+    "spec": "majors12·2023",
+    "value": 96.33443306183473,
+    "n": 8548
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2023",
+    "value": 24.801082036680825,
+    "n": 8548
+  },
+  {
+    "estimand": "tight_share_at_3am_sharp",
+    "spec": "majors12·2024",
+    "value": 96.41046403238822,
+    "n": 7669
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024",
+    "value": 24.398761450827156,
+    "n": 7669
+  },
+  {
+    "estimand": "asleep_share_at_3am_sharp",
+    "spec": "asleep·2019",
+    "value": 94.9617395179492,
+    "n": 9435,
+    "peak": "2:58 a.m."
+  },
+  {
+    "estimand": "asleep_share_at_3am_sharp",
+    "spec": "asleep·2023",
+    "value": 95.11254288225783,
+    "n": 8548,
+    "peak": "2:59 a.m."
+  },
+  {
+    "estimand": "asleep_share_at_3am_sharp",
+    "spec": "asleep·2024",
+    "value": 95.71598410250677,
+    "n": 7669,
+    "peak": "3:27 a.m."
+  },
+  {
+    "estimand": "minutes_modal_ge_95pct",
+    "spec": "majors12·2024",
+    "value": 120
+  },
+  {
+    "estimand": "minutes_asleep_ge_95pct",
+    "spec": "sleepBinary·2024",
+    "value": 119
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors12·1min",
+    "value": 71.70865640833125,
+    "peak": "2:55 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors12·5min",
+    "value": 71.66978975959447,
+    "peak": "2:55 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors12·15min",
+    "value": 71.62273901247366,
+    "peak": "2:45 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors12·60min",
+    "value": 69.63416014707742,
+    "peak": "2:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors13·1min",
+    "value": 71.37509764587504,
+    "peak": "2:58 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors13·5min",
+    "value": 71.33033313683077,
+    "peak": "2:55 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors13·15min",
+    "value": 71.29390748729011,
+    "peak": "2:45 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·majors13·60min",
+    "value": 69.17211741905982,
+    "peak": "2:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·coarse3·1min",
+    "value": 56.31005371067215,
+    "peak": "2:50 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·coarse3·5min",
+    "value": 56.180390504484954,
+    "peak": "2:50 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·coarse3·15min",
+    "value": 55.4619354045041,
+    "peak": "2:45 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019·coarse3·60min",
+    "value": 51.969375667664195,
+    "peak": "2:00 a.m.",
+    "trough": "5:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors12·1min",
+    "value": 71.66354902748999,
+    "peak": "3:11 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors12·5min",
+    "value": 71.6467038907103,
+    "peak": "3:10 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors12·15min",
+    "value": 71.5373399195134,
+    "peak": "3:15 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors12·60min",
+    "value": 69.64043433941353,
+    "peak": "3:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors13·1min",
+    "value": 71.31466668739286,
+    "peak": "2:59 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors13·5min",
+    "value": 71.28307365156638,
+    "peak": "2:55 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors13·15min",
+    "value": 71.1861561021598,
+    "peak": "2:45 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·majors13·60min",
+    "value": 69.129754144025,
+    "peak": "2:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·coarse3·1min",
+    "value": 56.383127444933635,
+    "peak": "3:20 a.m.",
+    "trough": "6:04 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·coarse3·5min",
+    "value": 56.35768667692103,
+    "peak": "3:25 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·coarse3·15min",
+    "value": 55.71448735298614,
+    "peak": "3:15 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023·coarse3·60min",
+    "value": 53.121837172885876,
+    "peak": "3:00 a.m.",
+    "trough": "5:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors12·1min",
+    "value": 72.32667882651576,
+    "peak": "3:34 a.m.",
+    "trough": "12:02 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors12·5min",
+    "value": 72.29027905351624,
+    "peak": "3:35 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors12·15min",
+    "value": 72.20524581061673,
+    "peak": "3:30 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors12·60min",
+    "value": 70.75087943112392,
+    "peak": "3:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors13·1min",
+    "value": 71.94905965287772,
+    "peak": "3:27 a.m.",
+    "trough": "12:02 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors13·5min",
+    "value": 71.91404656468356,
+    "peak": "3:25 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors13·15min",
+    "value": 71.799633832541,
+    "peak": "3:15 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·majors13·60min",
+    "value": 70.23503897162871,
+    "peak": "3:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·coarse3·1min",
+    "value": 57.6625812329564,
+    "peak": "3:20 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·coarse3·5min",
+    "value": 57.605135785383,
+    "peak": "3:20 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·coarse3·15min",
+    "value": 56.85803248908861,
+    "peak": "3:15 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2024·coarse3·60min",
+    "value": 53.27344576474387,
+    "peak": "3:00 a.m.",
+    "trough": "5:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors12·1min",
+    "value": 71.93786157311102,
+    "peak": "3:20 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors12·5min",
+    "value": 71.9244335411794,
+    "peak": "3:25 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors12·15min",
+    "value": 71.83789062073038,
+    "peak": "3:15 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors12·60min",
+    "value": 70.19802375720595,
+    "peak": "3:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors13·1min",
+    "value": 71.56945750040494,
+    "peak": "2:59 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors13·5min",
+    "value": 71.54779116517913,
+    "peak": "2:55 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors13·15min",
+    "value": 71.45150339118693,
+    "peak": "2:45 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·majors13·60min",
+    "value": 69.53585793931039,
+    "peak": "3:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·coarse3·1min",
+    "value": 57.0063299835558,
+    "peak": "3:20 a.m.",
+    "trough": "6:01 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·coarse3·5min",
+    "value": 56.98404191675059,
+    "peak": "3:25 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·coarse3·15min",
+    "value": 56.28869734447388,
+    "peak": "3:15 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2023+2024·coarse3·60min",
+    "value": 53.19796461682482,
+    "peak": "3:00 a.m.",
+    "trough": "5:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors12·1min",
+    "value": 71.7963128468036,
+    "peak": "2:59 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors12·5min",
+    "value": 71.76996243504881,
+    "peak": "2:55 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors12·15min",
+    "value": 71.6848096634265,
+    "peak": "2:45 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors12·60min",
+    "value": 69.92732228470537,
+    "peak": "3:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors13·1min",
+    "value": 71.5061353356445,
+    "peak": "2:59 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors13·5min",
+    "value": 71.47652386701905,
+    "peak": "2:55 a.m.",
+    "trough": "12:05 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors13·15min",
+    "value": 71.4001588693655,
+    "peak": "2:45 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·majors13·60min",
+    "value": 69.41084671663998,
+    "peak": "2:00 a.m.",
+    "trough": "12:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·coarse3·1min",
+    "value": 56.66864600619876,
+    "peak": "2:57 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·coarse3·5min",
+    "value": 56.6238848906961,
+    "peak": "2:55 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·coarse3·15min",
+    "value": 55.93193950038532,
+    "peak": "3:15 a.m.",
+    "trough": "6:00 p.m."
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "2019+2023+2024·coarse3·60min",
+    "value": 52.70917345502052,
+    "peak": "3:00 a.m.",
+    "trough": "5:00 p.m."
+  },
+  {
+    "estimand": "headline_hour_modal_share",
+    "spec": "majors12·2024·3 a.m. hour (3:00–3:59)",
+    "value": 96.5449510502777,
+    "modal": "personal_care"
+  },
+  {
+    "estimand": "headline_hour_modal_share",
+    "spec": "majors12·2024·noon hour (12:00–12:59)",
+    "value": 25.79407161915379,
+    "modal": "work"
+  },
+  {
+    "estimand": "equal_ink_error_pp",
+    "spec": "majors12·2024·3:00 a.m. sharp",
+    "value": 0.09494736414328031,
+    "weighted": 96.41046403238822,
+    "equalInk": 96.5054113965315
+  },
+  {
+    "estimand": "equal_ink_error_pp",
+    "spec": "majors12·2024·3:27 a.m. (measured peak)",
+    "value": 0.12190835962780966,
+    "weighted": 96.56605617290576,
+    "equalInk": 96.68796453253357
+  },
+  {
+    "estimand": "equal_ink_error_pp",
+    "spec": "majors12·2024·12:00 p.m. sharp",
+    "value": -0.9276439648446306,
+    "weighted": 24.398761450827156,
+    "equalInk": 23.471117485982525
+  },
+  {
+    "estimand": "equal_ink_error_pp",
+    "spec": "majors12·2024·12:02 p.m. (measured trough)",
+    "value": -0.7143792465489582,
+    "weighted": 24.289812810246964,
+    "equalInk": 23.575433563698006
+  },
+  {
+    "estimand": "equal_ink_error_pp_asleep",
+    "spec": "sleepBinary·2024·3:00 a.m. sharp",
+    "value": -0.01902230827023743,
+    "weighted": 95.71598410250677,
+    "equalInk": 95.69696179423653
+  },
+  {
+    "estimand": "equal_ink_error_pp_asleep",
+    "spec": "sleepBinary·2024·3:27 a.m. (measured peak)",
+    "value": 0.03182775854699571,
+    "weighted": 96.23887246312468,
+    "equalInk": 96.27070022167167
+  },
+  {
+    "estimand": "equal_ink_error_pp_asleep",
+    "spec": "sleepBinary·2024·12:00 p.m. sharp",
+    "value": -0.529252502959435,
+    "weighted": 3.7891299315681195,
+    "equalInk": 3.2598774286086845
+  },
+  {
+    "estimand": "equal_ink_error_pp_asleep",
+    "spec": "sleepBinary·2024·12:02 p.m. (measured trough)",
+    "value": -0.5301752450475208,
+    "weighted": 3.8161316930850746,
+    "equalInk": 3.285956448037554
+  },
+  {
+    "estimand": "equal_ink_error_pp_worst",
+    "spec": "majors12·2024·whole day",
+    "value": 9.08823508732195,
+    "minute": "9:48 a.m."
+  },
+  {
+    "estimand": "pps_reconstructed_share",
+    "spec": "majors12·2024·3:00 a.m. sharp",
+    "value": 96.40435519624461,
+    "truth": 96.41046403238822,
+    "spread": "96.27–96.53"
+  },
+  {
+    "estimand": "pps_reconstructed_share",
+    "spec": "majors12·2024·3:27 a.m. (measured peak)",
+    "value": 96.55919937410354,
+    "truth": 96.56605617290576,
+    "spread": "96.43–96.67"
+  },
+  {
+    "estimand": "pps_reconstructed_share",
+    "spec": "majors12·2024·12:00 p.m. sharp",
+    "value": 24.31379580127787,
+    "truth": 24.398761450827156,
+    "spread": "24.01–24.62"
+  },
+  {
+    "estimand": "pps_reconstructed_share",
+    "spec": "majors12·2024·12:02 p.m. (measured trough)",
+    "value": 24.19644021384796,
+    "truth": 24.289812810246964,
+    "spread": "23.88–24.53"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·all days",
+    "value": 72.32667882651576,
+    "n": 7669
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·weekdays",
+    "value": 68.17233753643028,
+    "n": 3837
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·weekends",
+    "value": 73.79733029666929,
+    "n": 3832
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·everyone",
+    "value": 24.398761450827156,
+    "n": 7669,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·everyone",
+    "value": 72.32667882651576,
+    "n": 7669
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·worked that day",
+    "value": 57.39237023668845,
+    "n": 2489,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·worked that day",
+    "value": 71.022665136792,
+    "n": 2489
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·did not work that day",
+    "value": 29.82654916836348,
+    "n": 5180,
+    "modal": "leisure_sports"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·did not work that day",
+    "value": 73.59364932290198,
+    "n": 5180
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·worked 6h+ that day",
+    "value": 65.37801177081248,
+    "n": 1757,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·worked 6h+ that day",
+    "value": 69.26875068900556,
+    "n": 1757
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·employed, did not work",
+    "value": 28.94756155772786,
+    "n": 1966,
+    "modal": "leisure_sports"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·employed, did not work",
+    "value": 72.4478753101415,
+    "n": 1966
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·men",
+    "value": 26.25916844666525,
+    "n": 3563,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·men",
+    "value": 69.66894116224826,
+    "n": 3563
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·women",
+    "value": 22.62529666332021,
+    "n": 4106,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·women",
+    "value": 74.89573048164588,
+    "n": 4106
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·weekday diaries",
+    "value": 30.322109220809462,
+    "n": 3837,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·weekday diaries",
+    "value": 68.17233753643028,
+    "n": 3837
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·weekend diaries",
+    "value": 28.299145970270835,
+    "n": 3832,
+    "modal": "leisure_sports"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·weekend diaries",
+    "value": 73.79733029666929,
+    "n": 3832
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·age 65+",
+    "value": 30.02292942059499,
+    "n": 2678,
+    "modal": "leisure_sports"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·age 65+",
+    "value": 73.15603744809111,
+    "n": 2678
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·age 25-54",
+    "value": 34.70016641740601,
+    "n": 3227,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·age 25-54",
+    "value": 71.44733185902157,
+    "n": 3227
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·children <18 in hh",
+    "value": 27.04321660094101,
+    "n": 2107,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·children <18 in hh",
+    "value": 71.26873686912639,
+    "n": 2107
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·no children in hh",
+    "value": 22.973920377351263,
+    "n": 5562,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·no children in hh",
+    "value": 73.44933089762482,
+    "n": 5562
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·enrolled in school",
+    "value": 26.57227438600917,
+    "n": 466,
+    "modal": "education"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·enrolled in school",
+    "value": 75.26732678385817,
+    "n": 466
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·worked that day, weekday",
+    "value": 59.6933695132355,
+    "n": 1792,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·worked that day, weekday",
+    "value": 71.68884599136211,
+    "n": 1792
+  },
+  {
+    "estimand": "loose_share_at_noon_sharp",
+    "spec": "majors12·2024·worked 6h+, weekday",
+    "value": 65.28389839834541,
+    "n": 1472,
+    "modal": "work"
+  },
+  {
+    "estimand": "braid_gap_pp",
+    "spec": "majors12·2024·worked 6h+, weekday",
+    "value": 70.64198882669292,
+    "n": 1472
+  },
+  {
+    "estimand": "coordination_ratio",
+    "spec": "majors12·2024·everyone asleep, 3:00 a.m.",
+    "value": 2.542220065047094,
+    "observed": 95.71598410250677,
+    "expected": 37.6505501701064,
+    "n": 7669
+  },
+  {
+    "estimand": "coordination_ratio",
+    "spec": "majors12·2024·everyone on personal care, 3:00 a.m.",
+    "value": 2.3620193949920547,
+    "observed": 96.41046403238822,
+    "expected": 40.81696544778479,
+    "n": 7669
+  },
+  {
+    "estimand": "coordination_ratio",
+    "spec": "majors12·2024·everyone working, 12:00 p.m.",
+    "value": 1.7096601640016111,
+    "observed": 24.398761450827156,
+    "expected": 14.271117713662868,
+    "n": 7669
+  },
+  {
+    "estimand": "coordination_ratio",
+    "spec": "majors12·2024·worked 6h+ weekday, working 12:00 p.m.",
+    "value": 1.6653294315528628,
+    "observed": 65.28389839834541,
+    "expected": 39.20179224687719,
+    "n": 1472
+  },
+  {
+    "estimand": "coordination_ratio",
+    "spec": "majors12·2024·worked 6h+ weekday, working 2:00 p.m.",
+    "value": 2.204670836366405,
+    "observed": 86.42704809998479,
+    "expected": 39.20179224687719,
+    "n": 1472
+  },
+  {
+    "estimand": "se_floor_pp",
+    "spec": "personal_care·3am·2024",
+    "value": 0.2849788916161207
+  },
+  {
+    "estimand": "se_floor_pp",
+    "spec": "work·noon·2024",
+    "value": 0.6980437976140127
+  },
+  {
+    "estimand": "se_floor_pp",
+    "spec": "personal_care·3am hour·2024",
+    "value": 0.2696423405999499,
+    "pct": 96.5449510502778
+  },
+  {
+    "estimand": "se_floor_pp",
+    "spec": "work·noon hour·2024",
+    "value": 0.6645858381033461,
+    "pct": 25.79407161915377
+  },
+  {
+    "estimand": "episode_start_heaping_pct",
+    "spec": "2024·multiple of 5",
+    "value": 85.27217023341878,
+    "n": 131866
+  },
+  {
+    "estimand": "episode_start_heaping_pct",
+    "spec": "2024·on the hour",
+    "value": 23.947037143767158,
+    "n": 131866
+  },
+  {
+    "estimand": "diary_seam_step_pp",
+    "spec": "majors12·2024·3:59→4:00",
+    "value": -2.8563250193320844
+  }
+]
