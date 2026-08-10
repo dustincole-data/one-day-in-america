@@ -71,6 +71,7 @@ export async function boot(root) {
     selected: -1,
     samples: phone ? 241 : 361,
     alpha: 0.97,
+    onlyMajor: -1,
     dirty: true,
   };
   const first = getWeave('everyone');
@@ -89,7 +90,7 @@ export async function boot(root) {
   }
 
   function setDim(win) {
-    state.dimTarget = win ? [win[0] / 1439, win[1] / 1439, 0.14] : [0, 1, 1];
+    state.dimTarget = win ? [win[0] / 1439, win[1] / 1439, 0.20] : [0, 1, 1];
     state.dirty = true;
   }
 
@@ -141,7 +142,7 @@ export async function boot(root) {
         pad: [PAD.l, PAD.r, PAD.t, PAD.b],
         dim: state.dim, reveal: state.reveal,
         globalDim: 0.22, alpha: state.alpha * state.gAlpha,
-        selected: state.selected, drawCount: K,
+        selected: state.selected, drawCount: K, onlyMajor: state.onlyMajor,
       });
       state.dirty = false;
     }
@@ -269,6 +270,20 @@ export async function boot(root) {
   // ---- filter chips
   root.querySelectorAll('.chip').forEach((c) =>
     c.addEventListener('click', () => setFilter(c.dataset.filter)));
+
+  // ---- legend: hover (or tap) a category to isolate its threads
+  root.querySelectorAll('.legend [data-major]').forEach((el) => {
+    const mi = MAJORS.indexOf(el.dataset.major);
+    const on = () => { state.onlyMajor = mi; state.dirty = true; el.classList.add('iso'); };
+    const off = () => { state.onlyMajor = -1; state.dirty = true; el.classList.remove('iso'); };
+    el.addEventListener('pointerenter', (ev) => { if (ev.pointerType !== 'touch') on(); });
+    el.addEventListener('pointerleave', off);
+    el.addEventListener('pointercancel', off);
+    el.addEventListener('click', () => {
+      if (state.onlyMajor === mi) off();
+      else { root.querySelectorAll('.legend .iso').forEach((o) => o.classList.remove('iso')); on(); }
+    });
+  });
 
   // ---- scroll narrative
   const steps = [...root.querySelectorAll('.step')];

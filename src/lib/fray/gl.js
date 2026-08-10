@@ -9,6 +9,7 @@ uniform float uT, uMinStep, uThickPx, uCanvasW, uCanvasH, uReveal, uGlobalDim, u
 uniform vec4 uPad;      // l, r, t, b fractions of canvas
 uniform vec3 uDim;      // xNorm0, xNorm1, outside-factor
 uniform int uForceRow;
+uniform int uOnlyMajor;
 uniform float uForceThick, uForceAlpha;
 uniform vec3 uPal[12];
 out vec4 vColor;
@@ -39,6 +40,7 @@ void main() {
   float dimF = mix(uDim.z, 1.0, inside);
   float reveal = smoothstep(xNorm, xNorm + 0.10, uReveal * 1.10);
   float alpha = (uForceRow >= 0 ? uForceAlpha : uAlpha) * a * dimF * reveal * uGlobalDim;
+  if (uOnlyMajor >= 0 && major != uOnlyMajor) alpha *= 0.08;
   vColor = vec4(uPal[major], alpha);
 }`;
 
@@ -66,7 +68,7 @@ export function createRenderer(canvas, K, palette, bg) {
 
   const U = {};
   for (const name of ['uTex0', 'uTex1', 'uT', 'uMinStep', 'uThickPx', 'uCanvasW', 'uCanvasH', 'uReveal',
-    'uGlobalDim', 'uAlpha', 'uPad', 'uDim', 'uForceRow', 'uForceThick', 'uForceAlpha', 'uPal'])
+    'uGlobalDim', 'uAlpha', 'uPad', 'uDim', 'uForceRow', 'uForceThick', 'uForceAlpha', 'uPal', 'uOnlyMajor'])
     U[name] = gl.getUniformLocation(prog, name);
 
   const palFlat = new Float32Array(36);
@@ -97,7 +99,7 @@ export function createRenderer(canvas, K, palette, bg) {
   }
 
   function draw(state) {
-    const { tex0, tex1, t, samples, thickPx, pad, dim, reveal, globalDim, alpha, selected, drawCount } = state;
+    const { tex0, tex1, t, samples, thickPx, pad, dim, reveal, globalDim, alpha, selected, drawCount, onlyMajor = -1 } = state;
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.activeTexture(gl.TEXTURE0);
@@ -115,11 +117,13 @@ export function createRenderer(canvas, K, palette, bg) {
     gl.uniform4fv(U.uPad, pad);
     gl.uniform3fv(U.uDim, dim);
     gl.uniform1i(U.uForceRow, -1);
+    gl.uniform1i(U.uOnlyMajor, onlyMajor);
     gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, samples * 2, drawCount);
 
     if (selected >= 0) {
       // halo pass then the thread itself, forced to one row
       gl.uniform1f(U.uGlobalDim, 1.0);
+      gl.uniform1i(U.uOnlyMajor, -1);
       gl.uniform1i(U.uForceRow, selected);
       gl.uniform1f(U.uForceThick, thickPx * 7 + 6);
       gl.uniform1f(U.uForceAlpha, 0.0);

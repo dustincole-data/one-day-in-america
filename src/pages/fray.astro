@@ -4,6 +4,11 @@ import '@fontsource/fragment-mono';
 import stats from '../gen/stats.json';
 import { MAJORS, LABELS, DARK, BAND_ORDER } from '../lib/atus/meta.js';
 
+const avg = Object.fromEntries(stats.ledger.byMajor.map((r) => [r.major, r.y2024]));
+const fmtAvg = (min) => {
+  const r = Math.round(min), hh = Math.floor(r / 60), mm = r % 60;
+  return hh ? `${hh}h ${String(mm).padStart(2, '0')}m` : `${mm}m`;
+};
 const h = Object.fromEntries(stats.headline.hourly.map((r) => [r.hour, r]));
 const hw = Object.fromEntries(stats.headline.hourlyWorkers.map((r) => [r.hour, r]));
 const title = 'The Fray — One Day in America';
@@ -36,18 +41,13 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
         </header>
         <button class="keybtn" aria-expanded="false">key</button>
         <aside class="legend" inert>
+          <p class="lhead">average day, 2024</p>
           {BAND_ORDER.map((m) => (
-            <span><i style={`background:${DARK[m]}`}></i>{LABELS[m]}</span>
+            <button data-major={m}>
+              <i style={`background:${DARK[m]}`}></i><span>{LABELS[m]}</span><b>{fmtAvg(avg[m])}</b>
+            </button>
           ))}
         </aside>
-        <div class="chips" inert>
-          <button class="chip on" data-filter="everyone">Everyone</button>
-          <button class="chip" data-filter="worked">Worked that day</button>
-          <button class="chip" data-filter="weekend">Weekend</button>
-          <button class="chip" data-filter="kids">Kids at home</button>
-          <button class="chip" data-filter="age65">65 and over</button>
-        </div>
-        <aside class="daycard" inert></aside>
       </div>
 
       <section class="step hero" data-galpha="0.42">
@@ -105,7 +105,7 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
         </div>
       </section>
 
-      <section class="step" data-filter="workers6wd" data-dim="540,900">
+      <section class="step" data-filter="workers6wd" data-dim="540,960">
         <div class="card">
           <h2>Work is the great synchronizer</h2>
           <p>
@@ -122,6 +122,15 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
           <p>Tap a thread to follow one whole day. Or re-weave the fabric:</p>
         </div>
       </section>
+
+      <div class="chips" inert>
+        <button class="chip on" data-filter="everyone">Everyone</button>
+        <button class="chip" data-filter="worked">Worked that day</button>
+        <button class="chip" data-filter="weekend">Weekend</button>
+        <button class="chip" data-filter="kids">Kids at home</button>
+        <button class="chip" data-filter="age65">65 and over</button>
+      </div>
+      <aside class="daycard" inert></aside>
     </div>
 
     <footer>
@@ -168,11 +177,11 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
         --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
       }
       * { box-sizing: border-box; }
-      html, body { margin: 0; background: var(--bg); color: var(--ink); }
+      html, body { margin: 0; background: var(--bg); color: var(--ink); overflow-x: clip; }
       body { font: 400 1rem/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
       a { color: inherit; }
 
-      .scrolly { position: relative; }
+      .scrolly { position: relative; padding-bottom: 58vh; }
       .stage { position: sticky; top: 0; height: 100dvh; overflow: hidden; }
       canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
       .loading {
@@ -225,14 +234,20 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
         font: 11px var(--mono); color: var(--muted); letter-spacing: 0.02em;
       }
       .legend.show { display: flex; }
-      .legend span { display: flex; gap: 8px; align-items: center; }
-      .legend i { width: 14px; height: 3px; border-radius: 2px; flex: none; }
+      .legend .lhead { margin: 0 0 2px; font-size: 10px; letter-spacing: 0.1em; opacity: 0.6; }
+      .legend button {
+        display: flex; gap: 8px; align-items: baseline; background: none; border: none;
+        font: inherit; color: inherit; padding: 1px 0; cursor: pointer; text-align: left;
+      }
+      .legend button:hover, .legend button.iso { color: var(--ink); }
+      .legend i { width: 14px; height: 3px; border-radius: 2px; flex: none; align-self: center; }
+      .legend b { font-weight: 400; color: var(--ink); opacity: 0.75; margin-left: auto; padding-left: 12px; }
 
       .step { position: relative; min-height: 108vh; display: flex; align-items: center; padding: 0 6vw; z-index: 1; pointer-events: none; }
       .step.hero { margin-top: -100dvh; }
       .step.hero .card { position: relative; }
       .step.hero .card::before {
-        content: ''; position: absolute; inset: -22% -30%; z-index: -1; pointer-events: none;
+        content: ''; position: absolute; inset: -22% -12%; z-index: -1; pointer-events: none;
         background: radial-gradient(ellipse 70% 60% at 38% 42%, rgba(11, 13, 22, 0.88), rgba(11, 13, 22, 0.55) 55%, transparent 78%);
       }
       .step .card {
@@ -257,7 +272,7 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
       .step b { color: var(--ink); font-weight: 560; }
 
       .chips {
-        position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(14% + 16px);
+        position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14% + 16px);
         display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; z-index: 3;
         opacity: 0; transition: opacity 0.4s; max-width: min(94vw, 720px);
       }
@@ -272,7 +287,7 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
 
       .daycard {
         position: fixed; z-index: 5; right: 20px; top: 18%; width: 320px;
-        background: var(--card); border: 1px solid var(--hair); border-radius: 10px;
+        background: rgba(13, 16, 27, 0.96); border: 1px solid var(--hair); border-radius: 10px;
         padding: 16px 18px 14px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         opacity: 0; translate: 0 8px; transition: opacity 0.25s, translate 0.25s; pointer-events: none;
       }
@@ -301,13 +316,21 @@ const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the mos
       footer nav a[aria-current] { text-decoration: none; color: var(--muted); }
 
       @media (max-width: 719px) {
-        .axis span:last-child { display: none; }
-        .step { padding: 0 4vw; }
-        .step .card { padding: 18px 18px; }
-        .step.hero { padding-top: 16vh; }
+        .axis span:last-child, .axis span:nth-child(2), .axis span:nth-child(4) { display: none; }
+        .step { padding: 0 4vw; align-items: flex-end; }
+        .step .card { padding: 16px 16px; margin-bottom: 24vh; }
+        .step .card p { font-size: 0.88rem; }
+        h2 { font-size: 1rem; }
+        .step.hero { padding-top: 19vh; align-items: flex-start; }
+        .step.hero .card { margin-bottom: 0; }
         .daycard { right: 3vw; left: 3vw; width: auto; top: auto; bottom: calc(14% + 12px); }
-        .chips { bottom: calc(14% + 12px); }
-        .chips.show ~ .daycard.show { bottom: calc(14% + 64px); }
+        .chips.show ~ .daycard.show { bottom: calc(14% + 62px); }
+        .chips {
+          flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
+          left: 3vw; right: 3vw; transform: none; max-width: none;
+          padding-bottom: 4px; scrollbar-width: none;
+        }
+        .chip { flex: none; }
         .legend { right: 12px; top: 48px; }
       }
       @media (prefers-reduced-motion: reduce) {
