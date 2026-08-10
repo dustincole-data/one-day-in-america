@@ -1,0 +1,648 @@
+{
+ "meta": {
+  "universe": "civilian, noninstitutional, age 15+, in households, 50 states + DC",
+  "sourceLine": "7,669 real diary days · American Time Use Survey 2024 · each on its own local clock, 4 a.m. to 4 a.m.",
+  "n2024": 7669,
+  "n2023": 8548,
+  "n2019": 9435,
+  "nPooled": 16217,
+  "majors": [
+   "personal_care",
+   "eating_drinking",
+   "household",
+   "care_household",
+   "care_nonhousehold",
+   "work",
+   "education",
+   "purchasing",
+   "org_civic_religious",
+   "leisure_sports",
+   "phone_mail_email",
+   "other_nec"
+  ]
+ },
+ "headline": {
+  "at3am": 96.5,
+  "atNoon": 25.8,
+  "gapPp": 70.8,
+  "asleepAt3am": 96,
+  "asleepAtNoon": 4,
+  "plateauMinutes": 120,
+  "hourly": [
+   {
+    "hour": 4,
+    "share": 92.8,
+    "major": "personal_care"
+   },
+   {
+    "hour": 5,
+    "share": 86,
+    "major": "personal_care"
+   },
+   {
+    "hour": 6,
+    "share": 69.8,
+    "major": "personal_care"
+   },
+   {
+    "hour": 7,
+    "share": 47.5,
+    "major": "personal_care"
+   },
+   {
+    "hour": 8,
+    "share": 29.1,
+    "major": "personal_care"
+   },
+   {
+    "hour": 9,
+    "share": 30.7,
+    "major": "work"
+   },
+   {
+    "hour": 10,
+    "share": 31.6,
+    "major": "work"
+   },
+   {
+    "hour": 11,
+    "share": 30.2,
+    "major": "work"
+   },
+   {
+    "hour": 12,
+    "share": 25.8,
+    "major": "work"
+   },
+   {
+    "hour": 13,
+    "share": 29.7,
+    "major": "work"
+   },
+   {
+    "hour": 14,
+    "share": 30.7,
+    "major": "work"
+   },
+   {
+    "hour": 15,
+    "share": 29.5,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 16,
+    "share": 32.8,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 17,
+    "share": 35,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 18,
+    "share": 39.9,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 19,
+    "share": 49.5,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 20,
+    "share": 54.1,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 21,
+    "share": 46.6,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 22,
+    "share": 60.9,
+    "major": "personal_care"
+   },
+   {
+    "hour": 23,
+    "share": 79.9,
+    "major": "personal_care"
+   },
+   {
+    "hour": 0,
+    "share": 90.1,
+    "major": "personal_care"
+   },
+   {
+    "hour": 1,
+    "share": 94.2,
+    "major": "personal_care"
+   },
+   {
+    "hour": 2,
+    "share": 96.1,
+    "major": "personal_care"
+   },
+   {
+    "hour": 3,
+    "share": 96.5,
+    "major": "personal_care"
+   }
+  ],
+  "hourlyWorkers": [
+   {
+    "hour": 4,
+    "share": 91.8,
+    "major": "personal_care"
+   },
+   {
+    "hour": 5,
+    "share": 78.6,
+    "major": "personal_care"
+   },
+   {
+    "hour": 6,
+    "share": 53.3,
+    "major": "personal_care"
+   },
+   {
+    "hour": 7,
+    "share": 52.9,
+    "major": "work"
+   },
+   {
+    "hour": 8,
+    "share": 75.9,
+    "major": "work"
+   },
+   {
+    "hour": 9,
+    "share": 85.8,
+    "major": "work"
+   },
+   {
+    "hour": 10,
+    "share": 87.7,
+    "major": "work"
+   },
+   {
+    "hour": 11,
+    "share": 83.6,
+    "major": "work"
+   },
+   {
+    "hour": 12,
+    "share": 69.9,
+    "major": "work"
+   },
+   {
+    "hour": 13,
+    "share": 83.4,
+    "major": "work"
+   },
+   {
+    "hour": 14,
+    "share": 87.9,
+    "major": "work"
+   },
+   {
+    "hour": 15,
+    "share": 83,
+    "major": "work"
+   },
+   {
+    "hour": 16,
+    "share": 66.1,
+    "major": "work"
+   },
+   {
+    "hour": 17,
+    "share": 39.4,
+    "major": "work"
+   },
+   {
+    "hour": 18,
+    "share": 28,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 19,
+    "share": 38,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 20,
+    "share": 44.6,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 21,
+    "share": 39.1,
+    "major": "leisure_sports"
+   },
+   {
+    "hour": 22,
+    "share": 64.2,
+    "major": "personal_care"
+   },
+   {
+    "hour": 23,
+    "share": 82.4,
+    "major": "personal_care"
+   },
+   {
+    "hour": 0,
+    "share": 92,
+    "major": "personal_care"
+   },
+   {
+    "hour": 1,
+    "share": 94.7,
+    "major": "personal_care"
+   },
+   {
+    "hour": 2,
+    "share": 96.1,
+    "major": "personal_care"
+   },
+   {
+    "hour": 3,
+    "share": 95.9,
+    "major": "personal_care"
+   }
+  ],
+  "wakingUnder33": 522,
+  "wakingUnder40": 630,
+  "wakingTotal": 840,
+  "workerNoon": 57.4,
+  "worker6hNoon": 65.4,
+  "worker6h2pm": 86.4
+ },
+ "ledger": {
+  "years": [
+   2019,
+   2023,
+   2024
+  ],
+  "byMajor": [
+   {
+    "major": "personal_care",
+    "y2019": 577.4,
+    "y2023": 590.2,
+    "y2024": 587.8,
+    "delta": 10.4
+   },
+   {
+    "major": "eating_drinking",
+    "y2019": 70.9,
+    "y2023": 71.9,
+    "y2024": 74.2,
+    "delta": 3.3
+   },
+   {
+    "major": "household",
+    "y2019": 107.1,
+    "y2023": 114.9,
+    "y2024": 120.8,
+    "delta": 13.7
+   },
+   {
+    "major": "care_household",
+    "y2019": 29.2,
+    "y2023": 30.2,
+    "y2024": 30.6,
+    "delta": 1.4
+   },
+   {
+    "major": "care_nonhousehold",
+    "y2019": 11.2,
+    "y2023": 10.3,
+    "y2024": 10,
+    "delta": -1.2
+   },
+   {
+    "major": "work",
+    "y2019": 216.8,
+    "y2023": 213.8,
+    "y2024": 205.5,
+    "delta": -11.3
+   },
+   {
+    "major": "education",
+    "y2019": 27.5,
+    "y2023": 23.5,
+    "y2024": 25.2,
+    "delta": -2.3
+   },
+   {
+    "major": "purchasing",
+    "y2019": 44.7,
+    "y2023": 39.4,
+    "y2024": 40.5,
+    "delta": -4.2
+   },
+   {
+    "major": "org_civic_religious",
+    "y2019": 18,
+    "y2023": 14.5,
+    "y2024": 18.3,
+    "delta": 0.3
+   },
+   {
+    "major": "leisure_sports",
+    "y2019": 311.1,
+    "y2023": 309.1,
+    "y2024": 303.9,
+    "delta": -7.2
+   },
+   {
+    "major": "phone_mail_email",
+    "y2019": 9.4,
+    "y2023": 9.8,
+    "y2024": 10.7,
+    "delta": 1.3
+   },
+   {
+    "major": "other_nec",
+    "y2019": 16.5,
+    "y2023": 12.4,
+    "y2024": 12.5,
+    "delta": -4
+   }
+  ]
+ },
+ "indoors": {
+  "peakShare2019": 32.5,
+  "peakShare2024": 32.2,
+  "peakHomeShare2019": 9.7,
+  "peakHomeShare2024": 22.4,
+  "homeMinuteShare2019": 11.6,
+  "homeMinuteShare2024": 22.6,
+  "commuteShare2019": 35.5,
+  "commuteShare2024": 30,
+  "commutersM2019": 93.6,
+  "commutersM2024": 81.8,
+  "popM2019": 263.4,
+  "popM2024": 272.9,
+  "commuteLen2019": 47.1,
+  "commuteLen2024": 49.2
+ },
+ "freeTime": {
+  "everyone": {
+   "free": 345.5,
+   "obligated": 432.4,
+   "under3h": 26.2,
+   "majors": [
+    589,
+    73.1,
+    117.9,
+    30.4,
+    10.2,
+    209.6,
+    24.4,
+    40,
+    16.4,
+    306.5,
+    10.2,
+    12.4
+   ],
+   "sleep": 543.2,
+   "tv": 158,
+   "nDays": 16217
+  },
+  "worked": {
+   "free": 210.5,
+   "obligated": 621.9,
+   "under3h": 44.5,
+   "majors": [
+    543.1,
+    64.5,
+    69.9,
+    28.2,
+    4.9,
+    485.6,
+    8.3,
+    25.1,
+    8.2,
+    186.6,
+    6.6,
+    9
+   ],
+   "sleep": 496.3,
+   "tv": 93.3,
+   "nDays": 5382
+  },
+  "workedKids": {
+   "free": 182.2,
+   "obligated": 658.2,
+   "under3h": 54,
+   "majors": [
+    537.2,
+    62.3,
+    71.8,
+    68.8,
+    3.6,
+    476,
+    12.8,
+    25.3,
+    8.1,
+    158.4,
+    4.9,
+    10.8
+   ],
+   "sleep": 492.2,
+   "tv": 76.6,
+   "nDays": 1926
+  },
+  "workedKidsU6": {
+   "free": 159.2,
+   "obligated": 685,
+   "under3h": 61,
+   "majors": [
+    530.9,
+    65,
+    71.9,
+    107,
+    4.1,
+    469.6,
+    11.1,
+    21.3,
+    5.7,
+    136.7,
+    4.2,
+    12.5
+   ],
+   "sleep": 488.3,
+   "tv": 66.8,
+   "nDays": 761
+  },
+  "age65": {
+   "free": 476.4,
+   "obligated": 285.9,
+   "under3h": 8.4,
+   "majors": [
+    593.8,
+    83.9,
+    158.8,
+    7.9,
+    15,
+    53.7,
+    0.9,
+    49.7,
+    27.5,
+    420.4,
+    15.3,
+    13.2
+   ],
+   "sleep": 548.9,
+   "tv": 254.7,
+   "nDays": 5668
+  },
+  "noWorkNoKids": {
+   "free": 485.7,
+   "obligated": 250.7,
+   "under3h": 8.1,
+   "majors": [
+    623,
+    80.6,
+    160.1,
+    5.5,
+    16.7,
+    0,
+    15.4,
+    53,
+    23.3,
+    433.8,
+    14.4,
+    14.2
+   ],
+   "sleep": 577.8,
+   "tv": 241.7,
+   "nDays": 8325
+  },
+  "men": {
+   "free": 364.2,
+   "obligated": 426.2,
+   "under3h": 24.1,
+   "majors": [
+    575.1,
+    74.5,
+    94.9,
+    22.8,
+    8.7,
+    242.7,
+    23,
+    34.1,
+    13.7,
+    331.3,
+    7.8,
+    11.3
+   ],
+   "sleep": 537.9,
+   "tv": 170.7,
+   "nDays": 7555
+  },
+  "women": {
+   "free": 327.7,
+   "obligated": 438.3,
+   "under3h": 28.2,
+   "majors": [
+    602.3,
+    71.7,
+    139.9,
+    37.6,
+    11.6,
+    178,
+    25.7,
+    45.5,
+    19,
+    282.8,
+    12.5,
+    13.4
+   ],
+   "sleep": 548.3,
+   "tv": 145.9,
+   "nDays": 8662
+  },
+  "weekday": {
+   "free": 312.5,
+   "obligated": 481.6,
+   "under3h": 30.9,
+   "majors": [
+    575.6,
+    70.4,
+    107.8,
+    31.8,
+    9.7,
+    264.4,
+    29.9,
+    38,
+    12.5,
+    277.7,
+    10.7,
+    11.6
+   ],
+   "sleep": 529.7,
+   "tv": 143.7,
+   "nDays": 8203
+  },
+  "weekend": {
+   "free": 428.1,
+   "obligated": 309.5,
+   "under3h": 14.5,
+   "majors": [
+    622.5,
+    79.8,
+    143.1,
+    26.9,
+    11.5,
+    72.7,
+    10.7,
+    44.7,
+    26.1,
+    378.4,
+    9.2,
+    14.4
+   ],
+   "sleep": 576.9,
+   "tv": 193.9,
+   "nDays": 8014
+  }
+ },
+ "tv": {
+  "mean": 158,
+  "watchedShare": 73.2,
+  "amongWatchers": 215.8,
+  "shareOfFree": 45.7,
+  "socialMean": 34.7,
+  "socialShare": 29.6,
+  "zeroDays": {
+   "social": 70.4,
+   "exercise": 78.7,
+   "careHH": 78.2,
+   "work": 56.8,
+   "free": 4
+  }
+ },
+ "gap": {
+  "menLeisure": 331.3,
+  "womenLeisure": 282.8,
+  "gapMin": 48.5,
+  "tvPortion": 24.8,
+  "menTv": 170.7,
+  "womenTv": 145.9
+ },
+ "week": {
+  "weekday": {
+   "sleep": 529.7,
+   "free": 312.5,
+   "obligated": 481.6
+  },
+  "weekend": {
+   "sleep": 576.9,
+   "free": 428.1,
+   "obligated": 309.5
+  }
+ }
+}

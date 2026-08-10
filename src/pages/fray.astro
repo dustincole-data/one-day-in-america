@@ -1,0 +1,318 @@
+---
+import '@fontsource-variable/schibsted-grotesk';
+import '@fontsource/fragment-mono';
+import stats from '../gen/stats.json';
+import { MAJORS, LABELS, DARK, BAND_ORDER } from '../lib/atus/meta.js';
+
+const h = Object.fromEntries(stats.headline.hourly.map((r) => [r.hour, r]));
+const hw = Object.fromEntries(stats.headline.hourlyWorkers.map((r) => [r.hour, r]));
+const title = 'The Fray — One Day in America';
+const desc = `2,600 real American diary days drawn as threads. At 3 a.m. the most common single activity holds ${stats.headline.at3am}% of the country; at noon, ${stats.headline.atNoon}%.`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:image" content="/og/fray.png" />
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="scrolly" id="fray">
+      <div class="stage">
+        <canvas aria-label="2,600 real diary days drawn as horizontal threads across one day, grouped by activity"></canvas>
+        <p class="loading">weaving 2,600 days…</p>
+        <div class="hairline" aria-hidden="true"></div>
+        <div class="readout" aria-hidden="true"></div>
+        <div class="axis" aria-hidden="true"></div>
+        <header class="brand">
+          <a href="/">One Day in America</a><span>·</span><b>The Fray</b>
+        </header>
+        <button class="keybtn" aria-expanded="false">key</button>
+        <aside class="legend" inert>
+          {BAND_ORDER.map((m) => (
+            <span><i style={`background:${DARK[m]}`}></i>{LABELS[m]}</span>
+          ))}
+        </aside>
+        <div class="chips" inert>
+          <button class="chip on" data-filter="everyone">Everyone</button>
+          <button class="chip" data-filter="worked">Worked that day</button>
+          <button class="chip" data-filter="weekend">Weekend</button>
+          <button class="chip" data-filter="kids">Kids at home</button>
+          <button class="chip" data-filter="age65">65 and over</button>
+        </div>
+        <aside class="daycard" inert></aside>
+      </div>
+
+      <section class="step hero" data-galpha="0.42">
+        <div class="card">
+          <h1>Everyone’s 3&nbsp;a.m. looks the same.<br />Nobody’s noon does.</h1>
+          <p>
+            {stats.meta.n2024.toLocaleString()} Americans each wrote down one whole day for the
+            Bureau of Labor Statistics in 2024. 2,600 of those days are drawn here as threads,
+            4&nbsp;a.m. to 4&nbsp;a.m. Color is what that person was doing.
+          </p>
+          <p class="cue" aria-hidden="true">scroll ↓</p>
+        </div>
+      </section>
+
+      <section class="step" data-dim="1320,1439">
+        <div class="card">
+          <h2>The quietest hour in America</h2>
+          <p>
+            In the 3&nbsp;a.m. hour, <b>{stats.headline.at3am}%</b> of the country shares a single
+            activity — {stats.headline.asleepAt3am}% are simply asleep. From 2 to 4&nbsp;a.m.,
+            agreement never drops below 95%.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-dim="60,360">
+        <div class="card">
+          <h2>Then it frays</h2>
+          <p>
+            At 6&nbsp;a.m., <b>{h[6].share}%</b> are still on the same thing. Two hours later no
+            single activity holds even 30% — and the fabric stays loose until dark.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-dim="480,540">
+        <div class="card">
+          <h2>Noon is the loosest hour</h2>
+          <p>
+            The most common activity at noon — work — holds <b>{stats.headline.atNoon}%</b> of the
+            country. The other three quarters are spread across eleven other bands. The gap between
+            3&nbsp;a.m. and noon: <b>{stats.headline.gapPp} points</b>.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-dim="960,1200">
+        <div class="card">
+          <h2>Evening pulls the threads back</h2>
+          <p>
+            By 8&nbsp;p.m., the biggest band is leisure — <b>{h[20].share}%</b> of the country, and
+            most of those minutes are television. By 11&nbsp;p.m., <b>{h[23].share}%</b> agree
+            again.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-filter="workers6wd" data-dim="540,900">
+        <div class="card">
+          <h2>Work is the great synchronizer</h2>
+          <p>
+            Just the people who put in six or more hours on a weekday: <b>{hw[14].share}%</b> are
+            inside the same hour of work at 2&nbsp;p.m. Their loosest hour isn’t noon — it’s
+            6&nbsp;p.m., when the office lets out and the day scatters one last time.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-filter="everyone" data-explore>
+        <div class="card">
+          <h2>Every thread is a real person</h2>
+          <p>Tap a thread to follow one whole day. Or re-weave the fabric:</p>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p class="source">{stats.meta.sourceLine}</p>
+      <p class="fine">
+        Civilian, noninstitutional population age 15 and over, living in households, 50 states and
+        D.C. Activities are the 12 published ATUS categories; every share is weighted with BLS
+        person-day weights. The 2,600 drawn days are a systematic probability-proportional-to-size
+        sample of all {stats.meta.n2024.toLocaleString()} — so equal ink per thread draws an honest
+        picture. Hour figures are the share of that clock hour spent on the most common single
+        activity.
+      </p>
+      <nav>
+        <span>Three ways to read the same day:</span>
+        <a aria-current="page" href="/fray">The Fray</a>
+        <a href="/ledger">The Ledger</a>
+        <a href="/terrain">The Terrain</a>
+      </nav>
+    </footer>
+
+    <script>
+      import { boot } from '../lib/fray/main.js';
+      boot(document.getElementById('fray'));
+      // legend / key toggle
+      const btn = document.querySelector('.keybtn');
+      const legend = document.querySelector('.legend');
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', String(open));
+        legend.classList.toggle('show', open);
+        legend.inert = !open;
+      });
+    </script>
+
+    <style is:global>
+      :root {
+        color-scheme: dark;
+        --bg: #0b0d16;
+        --ink: #e9eaf2;
+        --muted: #a0a3b8;
+        --hair: rgba(233, 234, 242, 0.14);
+        --card: rgba(13, 16, 27, 0.86);
+        --mono: 'Fragment Mono', ui-monospace, monospace;
+        --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; background: var(--bg); color: var(--ink); }
+      body { font: 400 1rem/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+      a { color: inherit; }
+
+      .scrolly { position: relative; }
+      .stage { position: sticky; top: 0; height: 100dvh; overflow: hidden; }
+      canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .loading {
+        position: absolute; inset: 0; display: grid; place-content: center;
+        font: 12px var(--mono); color: var(--muted); letter-spacing: 0.06em;
+      }
+
+      .brand {
+        position: absolute; top: 14px; left: 18px; display: flex; gap: 8px; align-items: baseline;
+        font: 12px var(--mono); letter-spacing: 0.04em; color: var(--muted); z-index: 3;
+      }
+      .brand a { text-decoration: none; opacity: 0.75; }
+      .brand a:hover { opacity: 1; }
+      .brand b { color: var(--ink); font-weight: 400; }
+
+      .axis { position: absolute; left: 0; right: 0; bottom: calc(14% - 30px); height: 20px; z-index: 2; pointer-events: none; }
+      .axis span {
+        position: absolute; transform: translateX(-50%);
+        font: 10.5px var(--mono); color: var(--muted); letter-spacing: 0.05em;
+      }
+      .axis span::before {
+        content: ''; position: absolute; left: 50%; top: -7px; width: 1px; height: 5px; background: var(--hair);
+      }
+
+      .hairline {
+        position: absolute; top: 10%; bottom: 14%; width: 1px; background: rgba(233, 234, 242, 0.28);
+        opacity: 0; transition: opacity 0.15s; pointer-events: none; z-index: 2;
+      }
+      .hairline.show { opacity: 1; }
+      .readout {
+        position: absolute; top: calc(10% - 34px); transform: translateX(-50%);
+        font: 12px var(--mono); color: var(--ink); white-space: nowrap;
+        background: var(--card); border: 1px solid var(--hair); border-radius: 4px;
+        padding: 5px 10px; opacity: 0; transition: opacity 0.15s; pointer-events: none; z-index: 2;
+      }
+      .readout.show { opacity: 1; }
+      .readout b { font-weight: 400; color: #fff; }
+
+      .keybtn {
+        position: absolute; top: 12px; right: 16px; z-index: 4;
+        font: 11px var(--mono); letter-spacing: 0.08em; color: var(--muted);
+        background: none; border: 1px solid var(--hair); border-radius: 999px; padding: 5px 12px;
+        cursor: pointer;
+      }
+      .keybtn:hover { color: var(--ink); }
+      .legend {
+        position: absolute; right: 16px; top: 52px; z-index: 3; display: none;
+        flex-direction: column; gap: 7px; padding: 14px 16px;
+        background: var(--card); border: 1px solid var(--hair); border-radius: 8px;
+        font: 11px var(--mono); color: var(--muted); letter-spacing: 0.02em;
+      }
+      .legend.show { display: flex; }
+      .legend span { display: flex; gap: 8px; align-items: center; }
+      .legend i { width: 14px; height: 3px; border-radius: 2px; flex: none; }
+
+      .step { position: relative; min-height: 108vh; display: flex; align-items: center; padding: 0 6vw; z-index: 1; pointer-events: none; }
+      .step.hero { margin-top: -100dvh; }
+      .step.hero .card { position: relative; }
+      .step.hero .card::before {
+        content: ''; position: absolute; inset: -22% -30%; z-index: -1; pointer-events: none;
+        background: radial-gradient(ellipse 70% 60% at 38% 42%, rgba(11, 13, 22, 0.88), rgba(11, 13, 22, 0.55) 55%, transparent 78%);
+      }
+      .step .card {
+        pointer-events: auto; max-width: 30rem;
+        background: var(--card); border: 1px solid var(--hair); border-radius: 10px;
+        padding: 22px 26px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      }
+      .step.hero { min-height: 130vh; align-items: flex-start; padding-top: 24vh; }
+      .step.hero .card { max-width: 36rem; background: none; border: none; backdrop-filter: none; padding: 0; }
+      h1 {
+        margin: 0 0 0.7em; font-size: clamp(1.65rem, 4.2vw, 2.5rem); line-height: 1.16;
+        font-weight: 560; letter-spacing: -0.015em; text-wrap: balance;
+        text-shadow: 0 1px 22px rgba(11, 13, 22, 0.9), 0 1px 4px rgba(11, 13, 22, 0.8);
+      }
+      .hero p {
+        color: #c9ccdd; max-width: 44ch;
+        text-shadow: 0 1px 14px rgba(11, 13, 22, 0.95), 0 1px 3px rgba(11, 13, 22, 0.9);
+      }
+      .cue { font: 11px var(--mono); letter-spacing: 0.14em; color: var(--muted); margin-top: 2.4em; }
+      h2 { margin: 0 0 0.45em; font-size: 1.06rem; font-weight: 560; letter-spacing: 0.002em; }
+      .step p { margin: 0; font-size: 0.94rem; color: var(--muted); }
+      .step b { color: var(--ink); font-weight: 560; }
+
+      .chips {
+        position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(14% + 16px);
+        display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; z-index: 3;
+        opacity: 0; transition: opacity 0.4s; max-width: min(94vw, 720px);
+      }
+      .chips.show { opacity: 1; }
+      .chip {
+        font: 12px var(--mono); letter-spacing: 0.03em; color: var(--muted);
+        background: var(--card); border: 1px solid var(--hair); border-radius: 999px;
+        padding: 7px 14px; cursor: pointer;
+      }
+      .chip:hover { color: var(--ink); }
+      .chip.on { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+
+      .daycard {
+        position: fixed; z-index: 5; right: 20px; top: 18%; width: 320px;
+        background: var(--card); border: 1px solid var(--hair); border-radius: 10px;
+        padding: 16px 18px 14px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        opacity: 0; translate: 0 8px; transition: opacity 0.25s, translate 0.25s; pointer-events: none;
+      }
+      .daycard.show { opacity: 1; translate: 0 0; pointer-events: auto; }
+      .daycard .close {
+        position: absolute; top: 6px; right: 10px; background: none; border: none;
+        color: var(--muted); font-size: 18px; cursor: pointer; line-height: 1;
+      }
+      .daycard .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; padding-right: 20px; }
+      .daycard .tags span {
+        font: 10.5px var(--mono); letter-spacing: 0.04em; color: var(--ink);
+        border: 1px solid var(--hair); border-radius: 999px; padding: 3px 9px;
+      }
+      .daycard svg { width: 100%; height: 26px; border-radius: 4px; display: block; }
+      .daycard .spans { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
+      .daycard .spans span { display: flex; align-items: center; gap: 8px; font: 11.5px var(--mono); color: var(--muted); }
+      .daycard .spans i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+      .daycard .note { margin-top: 10px; font: 10px var(--mono); color: var(--muted); opacity: 0.7; letter-spacing: 0.04em; }
+
+      footer { position: relative; z-index: 2; background: var(--bg); border-top: 1px solid var(--hair); padding: 46px 6vw 60px; }
+      .source { font: 12.5px var(--mono); letter-spacing: 0.02em; color: var(--ink); margin: 0 0 14px; }
+      .fine { color: var(--muted); font-size: 0.85rem; max-width: 68ch; margin: 0 0 26px; }
+      footer nav { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.9rem; align-items: baseline; }
+      footer nav span { color: var(--muted); font-size: 0.85rem; }
+      footer nav a { text-decoration-color: var(--hair); text-underline-offset: 4px; }
+      footer nav a[aria-current] { text-decoration: none; color: var(--muted); }
+
+      @media (max-width: 719px) {
+        .axis span:last-child { display: none; }
+        .step { padding: 0 4vw; }
+        .step .card { padding: 18px 18px; }
+        .step.hero { padding-top: 16vh; }
+        .daycard { right: 3vw; left: 3vw; width: auto; top: auto; bottom: calc(14% + 12px); }
+        .chips { bottom: calc(14% + 12px); }
+        .chips.show ~ .daycard.show { bottom: calc(14% + 64px); }
+        .legend { right: 12px; top: 48px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cue { display: none; }
+      }
+    </style>
+  </body>
+</html>
