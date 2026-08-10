@@ -165,7 +165,7 @@ export async function boot(root) {
     labelDefs.forEach((d, i) => {
       proj.copy(d.pos).project(camera);
       const el = labelEls[i];
-      if (proj.z > 1 || proj.x < -1.1 || proj.x > 1.1) { el.style.opacity = '0'; return; }
+      if (proj.z > 1 || proj.x < -0.96 || proj.x > 0.97) { el.style.opacity = '0'; return; }
       el.style.opacity = d.ridge && focusSet && !focusSet.has(d.ridge) ? '0.18' : '';
       el.style.transform = `translate(-50%,-50%) translate(${(proj.x * 0.5 + 0.5) * wpx}px, ${(-proj.y * 0.5 + 0.5) * hpx}px)`;
     });
