@@ -631,7 +631,9 @@
   "gapMin": 48.5,
   "tvPortion": 24.8,
   "menTv": 170.7,
-  "womenTv": 145.9
+  "womenTv": 145.9,
+  "menTotal": 369,
+  "womenTotal": 367.1
  },
  "week": {
   "weekday": {

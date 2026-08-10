@@ -387,6 +387,13 @@ expect('women leisure', womenLeis, 282.8, 0.5);
 const menTv = wMean(pooled, (r) => r.tv, (r) => r.sex === 1);
 const womenTv = wMean(pooled, (r) => r.tv, (r) => r.sex === 2);
 expect('TV share of gap', menTv - womenTv, 24.8, 0.8);
+// paid + unpaid work on the published majors (work + household + both care majors) —
+// our verifiable stand-in for the brief's "total work barely differs" null result
+const totalWork = (r) => r.maj[MI.work] + r.maj[MI.household] + r.maj[MI.care_household] + r.maj[MI.care_nonhousehold];
+const menTotal = wMean(pooled, totalWork, (r) => r.sex === 1);
+const womenTotal = wMean(pooled, totalWork, (r) => r.sex === 2);
+expect('total work men', menTotal, 369.0, 0.5);
+expect('total work women', womenTotal, 367.1, 0.5);
 
 // ---- weekday / weekend (§5.7, 2024? try pooled first)
 const wkSleep = wMean(pooled, (r) => r.sleep, (r) => !isWeekend(r));
@@ -536,6 +543,7 @@ const stats = {
     menLeisure: +menLeis.toFixed(1), womenLeisure: +womenLeis.toFixed(1),
     gapMin: +(menLeis - womenLeis).toFixed(1), tvPortion: +(menTv - womenTv).toFixed(1),
     menTv: +menTv.toFixed(1), womenTv: +womenTv.toFixed(1),
+    menTotal: +menTotal.toFixed(1), womenTotal: +womenTotal.toFixed(1),
   },
   week: {
     weekday: { sleep: +wkSleep.toFixed(1), free: +wkFree.toFixed(1), obligated: +wkObl.toFixed(1) },
