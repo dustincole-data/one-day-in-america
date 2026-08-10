@@ -1,8 +1,12 @@
 # 08 · Build the reference wall and the honest positioning
 
 Type: research
-Status: **resolved 2026-08-10** · claude (opus) — wall built, positioning ruled, thin anchor intact
+Status: **resolved then REJECTED 2026-08-10** — do not read, do not feed to Fable
 Blocked by: 06
+
+> **Dustin, same day: *"I don't want a reference wall."*** The thin-anchor route this ticket served is
+> superseded; the operative spec is [`fable-brief.md`](../fable-brief.md). The wall and its findings
+> stay on disk as record only. Nothing below binds anything.
 
 ## Resolution
 

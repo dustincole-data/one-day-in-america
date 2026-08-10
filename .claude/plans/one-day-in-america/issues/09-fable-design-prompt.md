@@ -1,10 +1,29 @@
 # 09 · Write the Fable design prompt — and tell Dustin to send it
 
 Type: task (HITL)
-Status: open
-Blocked by: 04, 07, 08
+Status: **resolved 2026-08-10** · claude (opus) — brief written to the redrawn destination
+Blocked by: 04, 07
 
-## Question
+## Resolution
+
+**The brief is [`fable-brief.md`](../fable-brief.md).** Dustin redrew the destination the same day:
+three premium interactive variations, three iteration passes each, live on Vercel, built
+autonomously with no approvals — not one near-wordless mark, and not a thin anchor.
+
+The Question below is **superseded**: it was written for a brief that carried a spine, a reference
+wall, and a request for 3–4 directions to judge. The wall is rejected and Fable now builds and ships,
+so the brief carries the full data and findings instead and hands over every decision about form.
+
+What it carries: the ask verbatim · the tool + credential block (gpt-image-1 script and key path,
+Higgsfield with a credit check first, Pinterest login, and the puppeteer-core fallback with
+`protocolTimeout: 180000` because a heavy WebGL page kills CDP at the default) · the extract's schema,
+location and rebuild command · **all nine findings with real weighted numbers** · the five unbreakable
+truth constraints (C3, C10, C11, no error bars or minute-level numbers, PPS on `TUFINLWGT`) · the
+measured render budget · the anti-references · nine deploy and verification traps already paid for.
+
+**Ticket 10 is void** — there is no pick-and-deepen HITL round; Fable ships three finished sites.
+
+## Question *(superseded — see Resolution)*
 
 What exactly goes to Fable, so it can invent a site that wows?
 

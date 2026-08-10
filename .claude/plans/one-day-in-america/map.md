@@ -4,10 +4,30 @@ Label: `wayfinder:map` · Charted 2026-08-08
 
 ## Destination
 
-**One Day in America live on a dustincoledata subdomain**: a near-wordless, ATUS-grounded data-art
-site that lands one true gut-punch in the first five seconds and rewards exploration after it.
-Beautiful and fully functional on phone *and* desktop. Visual design invented by Fable.
-Portfolio-grade or not shipped — the "$10,000 site" bar.
+> ### ⚠ REDRAWN 2026-08-10 by Dustin — read this before anything below
+>
+> **Three premium interactive sites, not one wordless mark.** Verbatim: *"I don't want a reference
+> wall… we want to fully explore the data and take all of the understandable pieces and present it to
+> users in a way that makes sense, but it also has to be interactive and premium… beautiful and
+> eye-popping and easily understandable."* Then: *"give Fable the data and findings and let him
+> present it in the best possible way… freedom to create the most premium thing that he can."*
+>
+> **Done = 3 different variations, 3 iteration passes each, all live on Vercel, built autonomously
+> by Fable with no approvals.** The whole ask, the data, every finding and the five unbreakable
+> constraints are in **[fable-brief.md](fable-brief.md)** — that file is now the operative spec.
+>
+> **Superseded by this:** the near-wordless five-second single-mark destination · the 2024-only draw
+> (L3 — cross-year is wanted now) · thin-anchor / reference-wall (ticket 08, dead) · tickets 09 and
+> 10 as written. **Still binding:** every *truth* constraint — C3, C10, C11, no error bars, no
+> minute-level numbers, PPS on `TUFINLWGT`, and the ticket-04 render budget.
+>
+> His live references now: **The Shape of Help** (structure), **Cause of Death / Ember** (object
+> quality), **Bremer** (colour).
+
+*Original charting (2026-08-08), kept for the record:* One Day in America live on a dustincoledata
+subdomain — a near-wordless, ATUS-grounded data-art site that lands one true gut-punch in the first
+five seconds and rewards exploration after it. Beautiful and fully functional on phone *and* desktop.
+Visual design invented by Fable. Portfolio-grade or not shipped — the "$10,000 site" bar.
 
 Done = live, verified on a real phone, added to the dustincoledata project registry.
 
@@ -192,6 +212,19 @@ or reconcile against it. Separate effort, separate repo, separate map.
   → [ticket 08](issues/08-reference-wall.md) ·
   [wall](../../../research/08-reference-wall/wall.html) ·
   [findings](../../../research/08-reference-wall/findings.md)
+  **← REJECTED the same day. Dustin: *"I don't want a reference wall."* Do not read it or feed it to
+  Fable.**
+- **09 · The Fable brief is written, and it carries the whole project.** Rewritten to the redrawn
+  destination: three variations, three iteration passes each, live on Vercel, fully autonomous, no
+  approvals. It carries the ask verbatim, the tool + credential block (gpt-image-1 script and key
+  path, Higgsfield with a credit check first, Pinterest login, the puppeteer fallback for anything
+  scripted), the extract's schema and location, **all nine findings with real weighted numbers**
+  (the 96.5→25.8 headline, the 1,440-minute ledger, work-moved-indoors, free time by group, the
+  48-minute leisure gap and the total-work tie that kills its usual framing, television against
+  everything, weekday/weekend, and rest-inequality-is-dead so it is not rediscovered), the five
+  unbreakable truth constraints, the measured render budget, the anti-references, and the nine
+  deploy/verification traps already paid for in earlier tickets.
+  → [ticket 09](issues/09-fable-design-prompt.md) · **[the brief](fable-brief.md)**
 
 ## Not yet specified
 

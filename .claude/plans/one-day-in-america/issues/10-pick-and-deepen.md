@@ -1,8 +1,13 @@
 # 10 · Pick one direction, send Fable deep
 
 Type: task (HITL)
-Status: open
+Status: **void 2026-08-10** — destination redrawn; Fable ships three finished sites autonomously
 Blocked by: 09
+
+> There is no pick-and-deepen round any more. Dustin's instruction is three variations, three
+> iteration passes each, live on Vercel, *"completely completely autonomously, and do not ask me for
+> anything until all are done."* The operative spec is [`fable-brief.md`](../fable-brief.md).
+> Everything below is the superseded plan.
 
 ## Question
 
