@@ -108,6 +108,24 @@ or reconcile against it. Separate effort, separate repo, separate map.
   → [ticket 04](issues/04-render-feasibility-spike.md) ·
   [findings](../../../research/04-render-budget/findings.md) ·
   [spike](../../../spike/render-budget)
+- **05 · Candidate spines mined: four survive, one killed.** Ranked, with real weighted numbers and
+  a renderability verdict each. **(1) The workday moved indoors** — peak working minute holds at
+  10:45→10:55 a.m. and ~32 % of the 15+ population while the at-home share of *every paid-work minute*
+  goes **11.6 % → 22.6 %**; 11.8 M fewer commuters a day from a population that grew, and those still
+  commuting go 47.1 → 49.3 min. The 1440 ledger confirms the map's suspicion — the time went to
+  housework and personal care, **not** leisure. **(2) The braid** — 96.2 % asleep at 3:27 a.m. against
+  24.3 % at the loosest minute, stable across all three years, and in the 840 waking minutes the most
+  common activity holds under a third of the country for 522 of them. **(3) A 48.5 ± 4.8 min leisure
+  gap by sex, half of it television** — but total paid + unpaid work does *not* differ (5.1 ± 5.7), so
+  a sex-gap spine is a leisure gap, never a total-work gap. **(4) 61 % of workers with a child under 6
+  get under three hours free.** **Killed: rest inequality** (76-min total spread; the education
+  gradient runs backwards). **The ranking turns on two axes:** candidate 1 is the only one that asserts
+  a *change*, so it alone buys the S12 replicate-weight work; and **844 sample days per drawn cell** is
+  now a hard renderability screen — candidates 1 and 2 clear it everywhere, 4's punch cell (761) and
+  3's whole-day legibility (48 min = 3.3 % of a day) do not. 7 decisions P1–P7 bind 06–09.
+  → [ticket 05](issues/05-candidate-spines.md) ·
+  [findings](../../../research/05-spines/findings.md) ·
+  [harness](../../../spike/spines)
 - **11 · Real-phone check: the ×4 derate was too conservative, not too loose.** Ticket 04's `rep=4`
   laptop stand-in was the largest untested assumption in the render budget. Measured directly on
   Dustin's iPhone 16+ over LAN: the phone is dead even with the laptop's own real-time draw on opaque
@@ -126,7 +144,10 @@ or reconcile against it. Separate effort, separate repo, separate map.
   desktop build, phone build, perf hardening, deploy verify, project card.
 - **The exploration layer.** What filters exist (parents / renters / night shift / remote / age),
   how deep they go, and whether they are a control surface or something you brush through the mark.
-  Depends on the spine and on Fable's form.
+  Depends on the spine and on Fable's form. Ticket 05 adds one binding constraint: the most
+  interesting filter cells are **too thin to draw as traceable threads** — worked + child under 6 is
+  761 sample days, single parents who worked 443, women in the under-6 cell 343, all under the 844
+  ceiling. Those groups can be *stated* as numbers; they cannot be *drawn* as individuals.
 - **Whether 3D is used at all**, and if so what depth encodes. Fable's call under thin-anchor.
   Ticket 04 narrows what the answer costs: geometry is nearly free (~6.5 ms per *million* primitives,
   so the whole dataset is ~3 ms), but **translucent overdraw is the entire budget** — and depth
