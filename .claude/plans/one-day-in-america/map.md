@@ -176,6 +176,22 @@ or reconcile against it. Separate effort, separate repo, separate map.
   [record](../../../research/07-claim/findings.md) ·
   [adversarial pass](../../../research/07-claim/adversarial-pass.md) ·
   [harness](../../../spike/claim)
+- **08 · The anchor exists and it points at nothing.** 22 real references in five zones (a rope made of
+  individual records · one record pulled from the mass · twelve categories that stay separable · ground, ink and
+  density · the first five seconds), 4 gpt-image-1 mood frames, 3 anti-references — with **no mark, palette,
+  ground, layout, type or dimensionality prescribed anywhere**. Thin anchor intact; Impeccable/Intent untouched.
+  **The positioning ruling: this plays the *beautiful object*, and the difference is that the object's
+  coming-apart _is_ the finding** — no shipped project has a mark whose structural failure carries the claim. It
+  borrows the scale gasp's *timing* (one instant, no interaction) but not its subject. Not a rerun of Climate
+  Fingerprint (atlas of per-city posters, comparison *across* objects), Where America Moves (explore-first),
+  Why Do They (its punch is words), Deep Time (magnitude), or Namesake / By Example (both need input). Only
+  **C3/C10/C11** are quoted on the wall; render budget and data shape stay in the 09 brief. Mood frames are
+  labelled synthetic and each carries a **defect line** — m1's spectrum ramp would violate C3 if read as a spec.
+  Anti-references are justified by locked decisions, not taste; the canonical **2009 NYT ATUS interactive is a
+  dead Flash object and is captured as dead**. 6 decisions W1–W6 bind 09.
+  → [ticket 08](issues/08-reference-wall.md) ·
+  [wall](../../../research/08-reference-wall/wall.html) ·
+  [findings](../../../research/08-reference-wall/findings.md)
 
 ## Not yet specified
 

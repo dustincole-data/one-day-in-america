@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Day in America — reference wall &amp; positioning (ticket 08)</title>
+<style>
+  :root{
+    --bg:#111315; --panel:#191c1f; --line:#2a2f34; --ink:#e8e6e3; --dim:#9aa1a8; --faint:#6f767d;
+    --accent:#d8c48a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:48px 24px 120px}
+  h1{font-size:26px;font-weight:600;letter-spacing:-0.01em;margin:0 0 6px}
+  h2{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+     margin:64px 0 6px;padding-top:20px;border-top:1px solid var(--line)}
+  h3{font-size:17px;font-weight:600;margin:34px 0 8px}
+  p{margin:0 0 12px;max-width:78ch}
+  .lede{color:var(--dim);max-width:78ch}
+  .meta{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--faint)}
+  a{color:#9fc6e8}
+  a:hover{color:#cfe4f6}
+  .quote{border-left:2px solid var(--accent);padding:2px 0 2px 16px;margin:18px 0;max-width:78ch}
+  .quote b{font-weight:600}
+  table{border-collapse:collapse;margin:14px 0 6px;font-size:14px;width:100%;max-width:1000px}
+  th,td{border-bottom:1px solid var(--line);padding:8px 12px 8px 0;text-align:left;vertical-align:top}
+  th{color:var(--faint);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  ul{margin:0 0 12px;padding-left:20px;max-width:78ch}
+  li{margin:0 0 6px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin:22px 0 8px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .card .shot{display:block;position:relative;height:330px;overflow:hidden;background:#000}
+  .card .shot img{width:100%;display:block}
+  .card .body{padding:14px 16px 16px}
+  .card .title{font-size:15px;font-weight:600;margin:0 0 2px}
+  .card .src{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--faint);margin:0 0 8px}
+  .card .steal{margin:0;font-size:14px;color:var(--ink)}
+  .card .steal b{color:var(--accent);font-weight:600}
+  .zone{margin-top:34px}
+  .zone .why{color:var(--dim);max-width:78ch;margin:0 0 4px}
+  figure{margin:26px 0 0}
+  figure img{width:100%;display:block;border:1px solid var(--line);border-radius:6px}
+  figcaption{margin-top:10px;color:var(--dim);font-size:14px;max-width:78ch}
+  figcaption b{color:var(--ink)}
+  .warn{background:#1d1a15;border:1px solid #3a3323;border-radius:6px;padding:14px 16px;margin:18px 0;max-width:1000px}
+  .anti .card .shot{height:280px}
+  .foot{margin-top:80px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+  code{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:#0d0f11;padding:1px 5px;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>One Day in America — reference wall &amp; honest positioning</h1>
+<p class="meta">Wayfinder ticket 08 · assembled 2026-08-10 · 22 references, 4 generated mood frames, 3 anti-references</p>
+<p class="lede">This is the anchor Fable reacts to. It is <b>not</b> a style guide and it prescribes no form.
+Every image here can be rejected. It exists so the first round of design has gravity instead of starting blind.</p>
+
+<div class="quote">
+  <b>Everyone's 3 a.m. looks the same. Nobody's noon does.</b><br>
+  96.5 % → 25.8 %, a 70.8 pp gap. 2024, n = 7,669 respondent-days, weighted, 12 published majors, at the hour.
+  <span class="meta">(frozen in ticket 07)</span>
+</div>
+
+<h2>1 · What this site is</h2>
+<p>One page. One mark. <b>7,669 real 2024 diary days</b>, one thread each, running 4 a.m. → 4 a.m.,
+coloured by what that person was actually doing. The rope is solid at 3 a.m. and comes apart through the
+middle of the day. That contrast is the whole argument, and it has to land before anyone touches anything.
+Filtering the rope and pulling a single thread is the second act.</p>
+
+<h3>What it is not</h3>
+<ul>
+  <li><b>Not an atlas.</b> There is no set of things to browse. One view asserts, then you may mine it.</li>
+  <li><b>Not about you.</b> No name, no city, no input, no personalisation.</li>
+  <li><b>Not a scroll story.</b> No chapters, no narrated sequence, no reveal-on-scroll argument.</li>
+  <li><b>Not a year comparison.</b> 2024 only. Year deltas are ~1 % of the day and were dropped, not deferred.</li>
+  <li><b>Not live.</b> No clock, no ticker, no "right now" — every thread runs on its own local clock.</li>
+  <li><b>Not a chart whose legend does the work.</b> The mark carries proportional volume itself.</li>
+  <li><b>Not near-wordless as a style choice.</b> It is near-wordless because the picture is the only surface
+      on which the claim is safe (see C11 below).</li>
+</ul>
+
+<h2>2 · Where it sits in the portfolio</h2>
+<p>Four mechanics carry the existing work. This piece plays exactly one of them.</p>
+<table>
+  <tr><th>Mechanic</th><th>Already shipped as</th><th>What it does to the viewer</th></tr>
+  <tr><td>Scale gasp</td><td>Deep Time — 115,000 px at true scale</td><td>a magnitude you cannot argue with</td></tr>
+  <tr><td>It's-about-you</td><td>Namesake (type a name) · Climate Fingerprint (type a city)</td><td>the data becomes yours</td></tr>
+  <tr><td>You-produce-the-insight</td><td>Statistical Illusions · By Example · The Real Price of Everything</td><td>you cause the finding yourself</td></tr>
+  <tr><td><b>Beautiful object</b></td><td>Climate Fingerprint's posters · Why Do They's blooms · Where America Moves' chord</td><td>worth looking at before it is read</td></tr>
+</table>
+
+<h3>This one plays the beautiful object — with one difference that keeps it honest</h3>
+<p><b>The object's coming-apart is the finding.</b> Nothing else in the portfolio has a mark whose structural
+failure <i>is</i> the claim. It also borrows the <i>timing</i> of the scale gasp — one instant, no interaction
+required — while the gasp itself is about pattern, not size.</p>
+<table>
+  <tr><th>Not a rerun of</th><th>Because</th></tr>
+  <tr><td>Climate Fingerprint</td><td>that is an atlas of 30+ posters, one per city, and it is parameterised by you;
+      the comparison happens <i>across</i> objects. Here there is one object and the comparison is <i>inside</i> it —
+      3 a.m. and noon are in the same frame.</td></tr>
+  <tr><td>Where America Moves</td><td>that chord means nothing until you click a metro. Explore-first. Here the
+      untouched view is already the claim.</td></tr>
+  <tr><td>Why Do They</td><td>its punch is words you read. This one is wordless; the punch is texture.</td></tr>
+  <tr><td>Deep Time</td><td>its gasp is magnitude. Here both ends of the frame hold the <i>same</i> 7,669 threads —
+      nothing gets bigger, it comes apart.</td></tr>
+  <tr><td>Namesake / By Example</td><td>both need input before anything happens. This needs none.</td></tr>
+</table>
+
+<h2>3 · The three constraints the wall has to respect</h2>
+<p class="lede">Everything else about the visual language is open. These three are frozen and bind any design:</p>
+<div class="warn">
+  <p><b>C3 — the mark must ship a fine activity partition</b> (12 published majors, or 13 with sleep split out).
+  A coarse 3–5 colour "simplified" palette is forbidden: under a three-way scale the loosest hour moves to 6 p.m.
+  and <b>the headline becomes false</b>.</p>
+  <p><b>C10 — one mandatory source line, one place:</b>
+  <i>"7,669 real diary days · American Time Use Survey 2024 · each on its own local clock, 4 a.m. to 4 a.m."</i>
+  It is the attribution and it is the no-simultaneity defence. No live-clock or "right now" framing anywhere.</p>
+  <p style="margin-bottom:0"><b>C11 — "Nobody's" is safe over the mark and unsafe without it.</b> The picture has
+  to show that noon is <i>stratified</i>, not scattered. Any surface that quotes the claim without the picture
+  uses the standing replacement sentence instead.</p>
+</div>
+
+<h2>4 · The wall</h2>
+<p class="lede">22 real references, grouped by the problem each one speaks to. One line each on what specifically
+is worth stealing. Click any image for the full-page capture.</p>
+
+<div class="zone">
+<h3>A · A rope made of individual records</h3>
+<p class="why">Thousands of real units drawn at once, where the eye reads order and disorder before it reads a chart.</p>
+<div class="grid">
+
+  <div class="card"><a class="shot" href="img/tnb-peakspotting.jpg"><img src="img/tnb-peakspotting.jpg" alt=""></a>
+    <div class="body"><p class="title">Peak Spotting</p>
+    <p class="src">Truth &amp; Beauty / Deutsche Bahn · <a href="https://truth-and-beauty.net/projects/peakspotting">source</a></p>
+    <p class="steal"><b>Steal:</b> a wall of day-shapes where every small mark is one real unit (a train run), so
+    density reads as texture first and as data second. Also the chrome — near-black UI, the marks are the only colour.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-flights.jpg"><img src="img/vc-flights.jpg" alt=""></a>
+    <div class="body"><p class="title">A Year in Flights</p>
+    <p class="src">Nadieh Bremer / Transavia · <a href="https://www.visualcinnamon.com/portfolio/a-year-in-flights/">source</a></p>
+    <p class="steal"><b>Steal:</b> per-unit marks tiled on black, each a spiky coloured strand-cluster — and it survives
+    as a printed poster, which is the bar for "the mark carries it with nothing else on screen".</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-sonymusic.jpg"><img src="img/vc-sonymusic.jpg" alt=""></a>
+    <div class="body"><p class="title">Re-imagining music's 'Gold Record'</p>
+    <p class="src">Nadieh Bremer / Sony Music · <a href="https://www.visualcinnamon.com/portfolio/sony-music-data-art/">source</a></p>
+    <p class="steal"><b>Steal:</b> a rope wound into a circle. Thousands of fine strands where the <i>bundling</i> is the
+    image, on two colours — proof that density alone can carry a piece.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/ext-nullschool.jpg"><img src="img/ext-nullschool.jpg" alt=""></a>
+    <div class="body"><p class="title">earth</p>
+    <p class="src">Cameron Beccario · <a href="https://earth.nullschool.net/">source</a></p>
+    <p class="steal"><b>Steal:</b> hairline particle strands on black where laminar and turbulent regions sit side by side
+    and read instantly. This is the closest existing thing to the 3 a.m./noon event, and its UI is one word in a corner.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/ext-windmap.jpg"><img src="img/ext-windmap.jpg" alt=""></a>
+    <div class="body"><p class="title">Wind Map</p>
+    <p class="src">Fernanda Viégas &amp; Martin Wattenberg · <a href="http://hint.fm/wind/">source</a></p>
+    <p class="steal"><b>Steal:</b> the same coherent-versus-turbulent read, in greyscale on white — the contrast is
+    doing the work, not the palette. And its legend is a swatch of the texture itself rather than a key beside it.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-figures.jpg"><img src="img/vc-figures.jpg" alt=""></a>
+    <div class="body"><p class="title">Figures in the Sky</p>
+    <p class="src">Nadieh Bremer · <a href="https://www.visualcinnamon.com/portfolio/figures-in-the-stars/">source</a></p>
+    <p class="steal"><b>Steal:</b> thin luminous linework over a deep navy ground that stays legible at hairline width —
+    how a dark ground buys you fine strands that a white ground would swallow.</p></div></div>
+
+</div></div>
+
+<div class="zone">
+<h3>B · One record pulled out of the mass</h3>
+<p class="why">The exploration layer (C11) has to be discoverable without instruction, and a single thread has to be
+worth landing on.</p>
+<div class="grid">
+
+  <div class="card"><a class="shot" href="img/vc-olympic.jpg"><img src="img/vc-olympic.jpg" alt=""></a>
+    <div class="body"><p class="title">Olympic Feathers</p>
+    <p class="src">Nadieh Bremer · <a href="https://www.visualcinnamon.com/portfolio/olympic-feathers/">source</a></p>
+    <p class="steal"><b>Steal:</b> a per-record mark that is beautiful in aggregate and still individually inspectable.
+    That is the exploration layer's entire job.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/pud-lovestory.jpg"><img src="img/pud-lovestory.jpg" alt=""></a>
+    <div class="body"><p class="title">A Love Story</p>
+    <p class="src">The Pudding · <a href="https://pudding.cool/2026/06/love-story">source</a></p>
+    <p class="steal"><b>Steal:</b> the entry frame — two tiny figures on a near-black field, small title, nothing else.
+    It shows you something before it asks you for anything.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-top2000.jpg"><img src="img/vc-top2000.jpg" alt=""></a>
+    <div class="body"><p class="title">The Top 2000 ❤ the 70s &amp; 80s</p>
+    <p class="src">Nadieh Bremer · <a href="https://www.visualcinnamon.com/portfolio/top2000/">source</a></p>
+    <p class="steal"><b>Steal:</b> thousands of individually-sized units packed into one field where the eye still finds
+    one unit to land on — and time is the layout, not an axis.</p></div></div>
+
+</div></div>
+
+<div class="zone">
+<h3>C · Twelve categories that stay separable</h3>
+<p class="why">C3 forbids simplifying the palette. These are four different answers to "many categories, still legible".</p>
+<div class="grid">
+
+  <div class="card"><a class="shot" href="img/vc-heritage.jpg"><img src="img/vc-heritage.jpg" alt=""></a>
+    <div class="body"><p class="title">Intangible Cultural Heritage</p>
+    <p class="src">Nadieh Bremer / UNESCO · <a href="https://www.visualcinnamon.com/portfolio/intangible-cultural-heritage/">source</a></p>
+    <p class="steal"><b>Steal:</b> a large category set kept separable by hue family <i>plus</i> position, on a light ground.
+    Proof a fine partition need not turn to mud.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-recitac.jpg"><img src="img/vc-recitac.jpg" alt=""></a>
+    <div class="body"><p class="title">RéciTAC</p>
+    <p class="src">Nadieh Bremer · <a href="https://www.visualcinnamon.com/portfolio/recitac/">source</a></p>
+    <p class="steal"><b>Steal:</b> many-category colour that stays <i>calm</i> — close-valued, slightly muted hues that
+    still separate cleanly at small size.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/tnb-oecd.jpg"><img src="img/tnb-oecd.jpg" alt=""></a>
+    <div class="body"><p class="title">OECD Better Life Index</p>
+    <p class="src">Truth &amp; Beauty · <a href="https://truth-and-beauty.net/projects/oecd-better-life-index">source</a></p>
+    <p class="steal"><b>Steal:</b> the legend and the mark are the same object — each petal <i>is</i> its category.
+    Nothing stands in for the mark.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-pesticides.jpg"><img src="img/vc-pesticides.jpg" alt=""></a>
+    <div class="body"><p class="title">Highly Hazardous Pesticides</p>
+    <p class="src">Nadieh Bremer / Greenpeace · <a href="https://www.visualcinnamon.com/portfolio/highly-hazardous-pesticides/">source</a></p>
+    <p class="steal"><b>Steal:</b> flat saturated blocks at poster scale — a fine partition is allowed to be loud,
+    not only tasteful.</p></div></div>
+
+</div></div>
+
+<div class="zone">
+<h3>D · Ground, ink and density</h3>
+<p class="why">The ground is a real decision here, not a default: translucent overdraw is the entire render budget, and
+blend mode behaves differently on black than on paper.</p>
+<div class="grid">
+
+  <div class="card"><a class="shot" href="img/vc-royal.jpg"><img src="img/vc-royal.jpg" alt=""></a>
+    <div class="body"><p class="title">Royal Constellations</p>
+    <p class="src">Nadieh Bremer · <a href="https://www.visualcinnamon.com/portfolio/royal-constellations/">source</a></p>
+    <p class="steal"><b>Steal:</b> how little ink a near-black ground needs. Sparse points at low density still read as
+    one continuous field.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-urbanization.jpg"><img src="img/vc-urbanization.jpg" alt=""></a>
+    <div class="body"><p class="title">Visualizing Millions of People on the Move</p>
+    <p class="src">Nadieh Bremer / World Bank · <a href="https://www.visualcinnamon.com/portfolio/urbanization/">source</a></p>
+    <p class="steal"><b>Steal:</b> density as ink on cream — overlapping translucent blots that stay readable instead of
+    compounding to sludge.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-magic.jpg"><img src="img/vc-magic.jpg" alt=""></a>
+    <div class="body"><p class="title">Magic is Everywhere</p>
+    <p class="src">Nadieh Bremer · <a href="https://www.visualcinnamon.com/portfolio/magic/">source</a></p>
+    <p class="steal"><b>Steal:</b> soft glow fields on white — colour used as atmosphere rather than as a key,
+    on the ground where that is hardest.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/vc-powerflows.jpg"><img src="img/vc-powerflows.jpg" alt=""></a>
+    <div class="body"><p class="title">Landscape of Power Flows</p>
+    <p class="src">Nadieh Bremer / Swissgrid · <a href="https://www.visualcinnamon.com/portfolio/landscape-of-power-flows/">source</a></p>
+    <p class="steal"><b>Steal:</b> a saturated non-white ground carrying an entire piece. Black and white are not the
+    only two options on the table.</p></div></div>
+
+</div></div>
+
+<div class="zone">
+<h3>E · The first five seconds</h3>
+<p class="why">The spine has to land before any interaction. These are entry frames and page chrome that refuse to
+compete with the graphic.</p>
+<div class="grid">
+
+  <div class="card"><a class="shot" href="img/tnb-spun.jpg"><img src="img/tnb-spun.jpg" alt=""></a>
+    <div class="body"><p class="title">A Hidden Infrastructure</p>
+    <p class="src">Truth &amp; Beauty / SPUN · <a href="https://truth-and-beauty.net/projects/spun-a-hidden-infrastructure">source</a></p>
+    <p class="steal"><b>Steal:</b> one object, full-bleed, almost no words above the fold — the page trusts the image
+    to hold you.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/tnb-ccvi.jpg"><img src="img/tnb-ccvi.jpg" alt=""></a>
+    <div class="body"><p class="title">Climate—Conflict—Vulnerability Index</p>
+    <p class="src">Truth &amp; Beauty · <a href="https://truth-and-beauty.net/projects/ccvi">source</a></p>
+    <p class="steal"><b>Steal:</b> premium restraint in the chrome — small type, generous air, one mark. The site
+    never raises its voice over the graphic.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/pud-motifs.jpg"><img src="img/pud-motifs.jpg" alt=""></a>
+    <div class="body"><p class="title">Musical Motifs</p>
+    <p class="src">The Pudding · <a href="https://pudding.cool/2025/12/motifs">source</a></p>
+    <p class="steal"><b>Steal:</b> a wordless entry frame that sets a mood before a single number appears.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/pud-standup.jpg"><img src="img/pud-standup.jpg" alt=""></a>
+    <div class="body"><p class="title">The Structure of Stand-up</p>
+    <p class="src">The Pudding · <a href="https://pudding.cool/2018/02/stand-up">source</a></p>
+    <p class="steal"><b>Steal:</b> the opposite ground — cream, illustrated, one instruction. The entry frame is its own
+    design decision and it does not have to be dark.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/ext-rhythmoffood.jpg"><img src="img/ext-rhythmoffood.jpg" alt=""></a>
+    <div class="body"><p class="title">The Rhythm of Food</p>
+    <p class="src">Truth &amp; Beauty / Google News Lab · <a href="http://rhythm-of-food.net/">source</a></p>
+    <p class="steal"><b>Steal:</b> the year-clock in the masthead — a cycle drawn so the <i>shape of the cycle</i> is the
+    mark. The only structural cousin the spine has: a bounded, repeating unit of time as a whole object.</p></div></div>
+
+</div></div>
+
+<h2>5 · Mood frames</h2>
+<p class="lede">Four frames generated with gpt-image-1 for the one thing no existing reference shows: a rope of
+individual day-threads that is tight at one hour and frayed at another. <b>These are texture and feeling only.</b>
+They are not mockups, they encode no data, and every caption states what the frame gets wrong so it cannot be
+read as a spec.</p>
+
+<figure>
+  <img src="gen/m1-dark-braid.jpg" alt="">
+  <figcaption><b>M1 · The braid on black.</b> What thousands of hairline threads feel like when a solid band opens
+  into a fray. <b>What it gets wrong:</b> the colours run as a continuous left-to-right spectrum, which is a ramp,
+  not the 12 separable majors C3 requires; and the fray is ordered by horizontal position rather than by activity.</figcaption>
+</figure>
+
+<figure>
+  <img src="gen/m2-light-braid.jpg" alt="">
+  <figcaption><b>M2 · The braid on paper.</b> The same event on a warm ground, with the paper visible between strands
+  and pigment rather than light. <b>What it gets wrong:</b> the "solid" band became a filled slab. In the real mark
+  agreement is still 7,669 separate threads that happen to align — every thread must stay a thread everywhere.</figcaption>
+</figure>
+
+<figure>
+  <img src="gen/m3-phone-braid.jpg" alt="">
+  <figcaption><b>M3 · The braid in a phone frame.</b> Portrait, tight at both ends, open through the middle. Mobile
+  parity is a hard gate, so what the mark does when the aspect flips is a first-class question, not a later squeeze.
+  <b>What it gets wrong:</b> the threads bow outward like a spindle, which reads as a shape imposed on the data rather
+  than one the data produced.</figcaption>
+</figure>
+
+<figure>
+  <img src="gen/m4-fray-macro.jpg" alt="">
+  <figcaption><b>M4 · Fray, close up.</b> What overlapping translucent strands do at the pixel level, with twelve
+  distinguishable hues. <b>It shows the payoff and the risk in one frame:</b> additive blending makes density visible
+  as brightness, and then compounds to white where many strands cross. On a light ground the same move compounds to
+  mud. Overdraw is the entire render budget.</figcaption>
+</figure>
+
+<h2>6 · Anti-references</h2>
+<p class="lede">Three things it must not look like. Each is here for a reason that traces to a locked decision,
+not to taste.</p>
+<div class="grid anti">
+
+  <div class="card"><a class="shot" href="img/ext-flowingdata-sim.jpg"><img src="img/ext-flowingdata-sim.jpg" alt=""></a>
+    <div class="body"><p class="title">A Day in the Life of Americans — the dot simulation</p>
+    <p class="src">Nathan Yau / FlowingData, 2015 · <a href="https://flowingdata.com/2015/12/15/a-day-in-the-life-of-americans/">source</a></p>
+    <p class="steal"><b>Why not:</b> same dataset, and the most-shared piece in this space — a remake reads as a remake.
+    Structurally it also fails this spine: it makes you <i>wait</i> for the day to play, while the claim has to land in
+    five seconds and hold still; and each dot is a token in a simulation, not a real diary day you can pull out.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/ext-flowingdata-atus.jpg"><img src="img/ext-flowingdata-atus.jpg" alt=""></a>
+    <div class="body"><p class="title">The activity-transition hairball</p>
+    <p class="src">Nathan Yau / FlowingData · <a href="https://flowingdata.com/2015/12/15/a-day-in-the-life-of-americans/">source</a></p>
+    <p class="steal"><b>Why not:</b> tangle without structure reads as noise. This piece fails the wordless test on
+    sight — you cannot tell the ordered end from the disordered end, which is the only thing the viewer has to see.</p></div></div>
+
+  <div class="card"><a class="shot" href="img/ext-nyt-atus.jpg"><img src="img/ext-nyt-atus.jpg" alt=""></a>
+    <div class="body"><p class="title">How Different Groups Spend Their Day</p>
+    <p class="src">The New York Times, 2009 · <a href="https://archive.nytimes.com/www.nytimes.com/interactive/2009/07/31/business/20080801-metrics-graphic.html">source</a></p>
+    <p class="steal"><b>Why not:</b> the canonical ATUS chart — a stacked area that aggregates every person into smooth
+    bands, which destroys the fray (the claim) and the single thread (the exploration layer) in one move.
+    The screenshot is also the honest part: the interactive is a dead Flash object today. That is the expected chart's
+    afterlife.</p></div></div>
+
+</div>
+<p style="margin-top:18px"><b>And one with no image:</b> a decorative neon particle field — glow, swirl, no data mapping.
+It is the AI-artifact tell, and here every strand on screen has to be one real diary day.</p>
+
+<h2>7 · What this wall does not say</h2>
+<ul>
+  <li>It prescribes <b>no mark, no palette, no ground, no layout, no type, no technology</b>, and takes no position on
+      whether the piece is 2D or 3D.</li>
+  <li>Fable may reject all 22 references and all 4 mood frames. They are gravity, not gravity's direction.</li>
+  <li>Impeccable and Intent were not used to assemble this and must not shape the design. A late mobile / a11y / perf
+      QA pass is the only role they may have.</li>
+  <li>The render budget, the data shape and the full constraint set are <b>not</b> here — they travel in the ticket 09
+      brief. The three constraints quoted above are the only ones that touch what the wall is allowed to suggest.</li>
+</ul>
+
+<p class="foot">Ticket 08 · One Day in America · sources captured 2026-08-10 with headless Chrome; images are
+screenshots of the linked pages, held here for design reference only. Mood frames M1–M4 generated with
+gpt-image-1 — synthetic, no data.</p>
+
+</div>
+</body>
+</html>

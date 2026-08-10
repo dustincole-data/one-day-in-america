@@ -1,8 +1,38 @@
 # 08 · Build the reference wall and the honest positioning
 
 Type: research
-Status: open
+Status: **resolved 2026-08-10** · claude (opus) — wall built, positioning ruled, thin anchor intact
 Blocked by: 06
+
+## Resolution
+
+**The anchor exists and it points at nothing.** 22 real references in five zones, 4 generated mood frames, 3
+anti-references, and a positioning statement — with no mark, palette, ground, layout, type or dimensionality
+prescribed anywhere in it. Fable may reject all of it.
+
+Page: [`research/08-reference-wall/wall.html`](../../../research/08-reference-wall/wall.html) ·
+record: [findings](../../../research/08-reference-wall/findings.md) · images in `img/` and `gen/`.
+
+**The positioning ruling: this plays the beautiful object, and the difference is that the object's coming-apart
+*is* the finding.** No shipped project has a mark whose structural failure carries the claim. It borrows the
+*timing* of the scale gasp (one instant, no interaction) while the gasp itself is about pattern, not size. Not a
+rerun of Climate Fingerprint (an atlas of per-city posters, parameterised by you; comparison across objects, not
+inside one), Where America Moves (explore-first — the chord is mute until you click), Why Do They (its punch is
+words), Deep Time (its gasp is magnitude; here nothing grows, it comes apart), or Namesake / By Example (both
+need input; this needs none).
+
+**Zones, chosen as problems rather than styles:** a rope made of individual records · one record pulled out of
+the mass (C11) · twelve categories that stay separable (C3) · ground, ink and density · the first five seconds.
+Only C3, C10 and C11 are quoted on the page; the render budget and data shape stay in the ticket-09 brief.
+
+**The mood frames are labelled synthetic and each carries a defect line** — m1's colours run as a continuous
+spectrum, which would silently violate C3 if the frame were read as a spec. Anti-references are justified by
+locked decisions, not taste: the FlowingData dot simulation (same dataset, and it makes you wait), its
+transition hairball (fails the wordless test — you cannot tell the ordered end from the disordered one), and the
+2009 NYT stacked area, which aggregates away both the fray and the thread — **and is a dead Flash object today,
+captured as dead**.
+
+6 decisions W1–W6 bind ticket 09.
 
 ## Question
 
