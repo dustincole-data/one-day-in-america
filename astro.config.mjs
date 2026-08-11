@@ -7,6 +7,8 @@ export default defineConfig({
   base: '/',
   output: 'static',
   trailingSlash: 'ignore',
+  // /fray is the URL already shared; the other two grounds are retired.
+  redirects: { '/fray': '/', '/daylight': '/', '/ember': '/' },
   build: {
     format: 'directory',
   },

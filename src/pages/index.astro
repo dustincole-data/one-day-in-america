@@ -1,20 +1,45 @@
 ---
+// One Day in America — the whole site. Night is the ground; the piece lives at
+// the root and there is no chooser.
 import '@fontsource-variable/schibsted-grotesk';
 import '@fontsource/fragment-mono';
 import stats from '../gen/stats.json';
-import { SKINS, SKIN_ORDER, SKIN_PATH } from '../lib/atus/skins.js';
+import { MAJORS, LABELS, BAND_ORDER } from '../lib/atus/meta.js';
+import { GROUND } from '../lib/atus/ground.js';
+import Findings from '../components/Findings.astro';
+import Explorer from '../components/Explorer.astro';
+import DcdMark from '../components/DcdMark.astro';
+import '../styles/piece.css';
+
+const fmtAvg = (min) => {
+  const r = Math.round(min), hh = Math.floor(r / 60), mm = r % 60;
+  return hh ? `${hh}h ${String(mm).padStart(2, '0')}m` : `${mm}m`;
+};
+const avg = Object.fromEntries(stats.ledger.byMajor.map((r) => [r.major, r.y2024]));
+const h = Object.fromEntries(stats.headline.hourly.map((r) => [r.hour, r]));
+const hw = Object.fromEntries(stats.headline.hourlyWorkers.map((r) => [r.hour, r]));
+
+// The rail shows the five largest bands by default — enough to read the fabric
+// without a wall of text — and opens to all twelve on demand.
+const byShare = [...stats.ledger.byMajor].sort((a, b) => b.y2024 - a.y2024).map((r) => r.major);
+const RAIL = byShare.slice(0, 5);
 
 const title = 'One Day in America';
-const desc = `How ${stats.meta.n2024.toLocaleString()} Americans actually spent a day. In the 3 a.m. hour the most common single activity holds ${stats.headline.at3am}% of the country; at noon, ${stats.headline.atNoon}%.`;
+// C11: away from the graphic the claim is stated as the modal share, never as
+// "no two days are alike".
+const desc = `Every American day, drawn from ${stats.meta.n2024.toLocaleString()} real diary days. ` +
+  `In the 3 a.m. hour the most common single activity holds ${stats.headline.at3am}% of the country; at noon, ${stats.headline.atNoon}%.`;
 
-const grounds = SKIN_ORDER.map((k) => ({
-  key: k, name: SKINS[k].name, blurb: SKINS[k].blurb,
-  href: SKIN_PATH[k], img: `/previews/${k}.webp`,
-}));
+const cssVars = [
+  `--bg:${GROUND.bg}`, `--ink:${GROUND.ink}`, `--muted:${GROUND.muted}`, `--hair:${GROUND.hair}`,
+  `--card:${GROUND.card}`, `--card-solid:${GROUND.cardSolid}`, `--well:${GROUND.well}`,
+  `--strong:${GROUND.strong}`,
+  ...MAJORS.map((m) => `--c-${m}:${GROUND.palette[m]}`),
+].join(';');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style={cssVars}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,101 +48,172 @@ const grounds = SKIN_ORDER.map((k) => ({
     <meta property="og:title" content={title} />
     <meta property="og:description" content={desc} />
     <meta property="og:image" content="/og/night.png" />
-    <meta name="theme-color" content="#0b0d16" />
+    <meta name="theme-color" content={GROUND.bg} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style set:html={':root{color-scheme:dark}'}></style>
   </head>
+
   <body>
-    <main>
-      <header>
-        <h1>One Day in America</h1>
-        <p>
-          In 2024, {stats.meta.n2024.toLocaleString()} Americans wrote down one whole day for the
-          Bureau of Labor Statistics — what they were doing, minute by minute, 4&nbsp;a.m. to
-          4&nbsp;a.m. This is that day: the weave, seven findings, and an explorer that will answer
-          questions nobody has asked it yet.
-        </p>
-        <p class="choose">One piece, three grounds. Same data, same structure.</p>
-      </header>
+    <div class="scrolly" id="fray">
+      <div class="stage">
+        <canvas aria-label="2,600 real diary days drawn as horizontal threads across one day, grouped by activity"></canvas>
+        <p class="loading">weaving 2,600 days…</p>
+        <div class="hairline" aria-hidden="true"></div>
+        <div class="readout" aria-hidden="true"></div>
+        <div class="axis" aria-hidden="true"></div>
+        <header class="brand">One Day in America</header>
 
-      {grounds.map((g) => (
-        <a class="piece" href={g.href}>
-          <img src={g.img} alt={`Preview of the ${g.name} ground`} loading="lazy" />
-          <span class="veil" aria-hidden="true"></span>
-          <span class="meta">
-            <b>{g.name}</b>
-            <span class="line">{g.blurb}</span>
-          </span>
-        </a>
-      ))}
+        <!-- the key, on the page rather than behind a corner button -->
+        <div class="keyrail">
+          <div class="keyrail-list">
+            {RAIL.map((m) => (
+              <button data-major={m}><i style={`background:var(--c-${m})`}></i><span>{LABELS[m]}</span></button>
+            ))}
+          </div>
+          <button class="keyrail-more" aria-expanded="false" aria-controls="keypanel">all 12</button>
+        </div>
+        <div class="keypanel" id="keypanel" hidden>
+          <p class="kp-head">average day, 2024</p>
+          <div class="kp-grid">
+            {BAND_ORDER.map((m) => (
+              <button data-major={m}>
+                <i style={`background:var(--c-${m})`}></i><span>{LABELS[m]}</span><b>{fmtAvg(avg[m])}</b>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-      <footer>
-        <p class="source">{stats.meta.sourceLine}</p>
-        <p class="fine">
-          Civilian, noninstitutional population age 15 and over, living in households, 50 states
-          and D.C. All figures weighted with BLS person-day weights over the 12 published ATUS
-          activity categories.
-        </p>
-        <p class="sig"><a href="https://dustincoledata.com">Dustin Cole Data</a></p>
-      </footer>
+      <section class="step hero" data-galpha="0.42">
+        <div class="card">
+          <h1>Everyone’s 3&nbsp;a.m. looks the same.<br />Nobody’s noon does.</h1>
+          <p>
+            In 2024, {stats.meta.n2024.toLocaleString()} Americans wrote down one whole day for the
+            Bureau of Labor Statistics. 2,600 of those days are drawn here.
+          </p>
+          <p class="cue" aria-hidden="true">scroll ↓</p>
+        </div>
+      </section>
+
+      <section class="step step-trace" data-trace>
+        <div class="card">
+          <h2>Every line is one person</h2>
+          <p>One real day, 4&nbsp;a.m. to 4&nbsp;a.m. Colour is what they were doing.</p>
+          <div class="trace-day" aria-live="off"></div>
+        </div>
+      </section>
+
+      <section class="step">
+        <div class="card">
+          <h2>Read it like this</h2>
+          <p>
+            Lines stack into bands by activity. How thick a band is, is how many people are in it.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-dim="1320,1439">
+        <div class="card">
+          <h2>The quietest hour</h2>
+          <p>
+            In the 3&nbsp;a.m. hour <b>{stats.headline.at3am}%</b> of the country is on one
+            activity — {stats.headline.asleepAt3am}% simply asleep.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-dim="480,540">
+        <div class="card">
+          <h2>Noon is the loosest</h2>
+          <p>
+            By 8&nbsp;a.m. no single activity holds even 30%. At noon the largest — work — holds
+            <b>{stats.headline.atNoon}%</b>, <b>{stats.headline.gapPp} points</b> below 3&nbsp;a.m.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-dim="960,1200">
+        <div class="card">
+          <h2>Evening pulls it back</h2>
+          <p>
+            At 8&nbsp;p.m. leisure is the biggest band, <b>{h[20].share}%</b>. By 11&nbsp;p.m.
+            <b>{h[23].share}%</b> agree again.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-filter="workers6wd" data-dim="540,960">
+        <div class="card">
+          <h2>Filter it and the fabric changes</h2>
+          <p>
+            Only people who worked six hours or more on a weekday: <b>{hw[14].share}%</b> are at
+            work at 2&nbsp;p.m.
+          </p>
+        </div>
+      </section>
+
+      <section class="step" data-filter="everyone" data-explore>
+        <div class="card">
+          <h2>Try it yourself</h2>
+          <p>Re-weave the fabric, or tap a thread to follow one whole day.</p>
+          <div class="chips">
+            <button class="chip on" data-filter="everyone">Everyone</button>
+            <button class="chip" data-filter="worked">Worked that day</button>
+            <button class="chip" data-filter="weekend">Weekend</button>
+            <button class="chip" data-filter="kids">Kids at home</button>
+            <button class="chip" data-filter="age65">65 and over</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="daycard" inert></aside>
+    </div>
+
+    <main class="findings">
+      <div class="findings-intro">
+        <p class="f-kicker">The rest of the day</p>
+        <p>Six findings, then a way to ask your own question.</p>
+      </div>
+
+      <Findings />
+      <Explorer />
     </main>
 
-    <style is:global>
-      :root {
-        color-scheme: dark;
-        --bg: #0b0d16;
-        --ink: #e9eaf2;
-        --muted: #9ea1b6;
-        --hair: rgba(233, 234, 242, 0.14);
-        --mono: 'Fragment Mono', ui-monospace, monospace;
-        --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
-      }
-      * { box-sizing: border-box; }
-      html, body { margin: 0; background: var(--bg); color: var(--ink); overflow-x: clip; }
-      body { font: 400 1rem/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+    <footer>
+      <p class="source">{stats.meta.sourceLine}</p>
 
-      main { max-width: 1060px; margin: 0 auto; padding: 0 5vw; }
-      header { padding: 11vh 0 7vh; }
-      h1 { margin: 0 0 0.4em; font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 560; letter-spacing: -0.014em; }
-      header p { margin: 0; color: var(--muted); max-width: 54ch; }
-      .choose {
-        margin-top: 1.8em !important; font: 11px var(--mono); letter-spacing: 0.14em;
-        text-transform: uppercase; color: var(--muted);
-      }
+      <details class="method">
+        <summary>Method</summary>
+        <p>
+          Civilian, noninstitutional population age 15 and over, living in households, 50 states and
+          D.C. Activities are the 12 published ATUS categories; every share is weighted with BLS
+          person-day weights. The 2,600 drawn days are a systematic probability-proportional-to-size
+          sample of all {stats.meta.n2024.toLocaleString()} — so equal ink per thread draws an
+          honest picture. Hour figures are the share of that clock hour spent on the most common
+          single activity. Sections 03 through 07 pool {stats.explore.years[0]} and
+          {' '}{stats.explore.years[1]} for sample size. 2020 is excluded: the survey was suspended
+          for part of that year and BLS publishes no annual estimate for it. The photographs are
+          generated atmosphere and carry no data.
+        </p>
+      </details>
 
-      .piece {
-        position: relative; display: block; margin: 0 0 34px; border-radius: 14px; overflow: hidden;
-        border: 1px solid var(--hair); text-decoration: none; color: inherit;
-        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s;
-      }
-      .piece:hover { transform: translateY(-3px); border-color: rgba(233, 234, 242, 0.32); }
-      .piece img { display: block; width: 100%; aspect-ratio: 16 / 8.4; object-fit: cover; }
-      .veil {
-        position: absolute; inset: 0;
-        background: linear-gradient(to top, rgba(11, 13, 22, 0.9) 0%, rgba(11, 13, 22, 0.34) 38%, transparent 62%);
-      }
-      .meta { position: absolute; left: 22px; right: 22px; bottom: 18px; display: block; }
-      .meta b { display: block; font-size: 1.25rem; font-weight: 580; letter-spacing: -0.008em; }
-      .meta .line { display: block; margin-top: 4px; color: #c9ccdd; font-size: 0.92rem; max-width: 62ch; }
+      <DcdMark />
+    </footer>
 
-      footer { padding: 30px 0 70px; }
-      .source { font: 12.5px var(--mono); letter-spacing: 0.02em; margin: 0 0 12px; }
-      .fine { color: var(--muted); font-size: 0.84rem; max-width: 66ch; margin: 0; }
-      .sig {
-        margin: 30px 0 0; padding-top: 20px; border-top: 1px solid var(--hair);
-        font: 11px var(--mono); letter-spacing: 0.16em; text-transform: uppercase;
-      }
-      .sig a { color: var(--muted); text-decoration: none; }
-      .sig a:hover { color: var(--ink); }
+    <script>
+      import { boot } from '../lib/fray/main.js';
+      import { boot as bootExplorer } from '../lib/explore/main.js';
 
-      @media (max-width: 719px) {
-        header { padding: 9vh 0 5vh; }
-        .piece img { aspect-ratio: 4 / 3.4; }
-        .meta { left: 14px; right: 14px; bottom: 12px; }
-        .meta .line { font-size: 0.85rem; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .piece { transition: none; }
-      }
-    </style>
+      boot(document.getElementById('fray'));
+
+      const ex = document.querySelector('[data-explorer]');
+      // the explorer payload is 190 KB — only fetch it once it is close to view
+      const exIo = new IntersectionObserver((entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        exIo.disconnect();
+        bootExplorer(ex);
+      }, { rootMargin: '400px' });
+      exIo.observe(ex);
+    </script>
   </body>
 </html>

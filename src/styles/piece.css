@@ -1,6 +1,6 @@
-/* One Day in America — the shared structure.
-   Every colour here is a token supplied by the skin (src/lib/atus/skins.js) and
-   injected on <html>, so this file never names a ground. */
+/* One Day in America — the structure.
+   Every colour here is a token supplied by src/lib/atus/ground.js and injected
+   on <html>, so this file never names a colour. */
 
 :root {
   --mono: 'Fragment Mono', ui-monospace, monospace;
@@ -26,12 +26,9 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 }
 
 .brand {
-  position: absolute; top: 14px; left: 18px; display: flex; gap: 8px; align-items: baseline;
+  position: absolute; top: 14px; left: 18px; margin: 0;
   font: 12px var(--mono); letter-spacing: 0.04em; color: var(--muted); z-index: 3;
 }
-.brand a { text-decoration: none; opacity: 0.75; }
-.brand a:hover { opacity: 1; }
-.brand b { color: var(--ink); font-weight: 400; }
 
 .axis { position: absolute; left: 0; right: 0; bottom: calc(14% - 30px); height: 20px; z-index: 2; pointer-events: none; }
 .axis span {
@@ -57,29 +54,46 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 .readout.show { opacity: 1; }
 .readout b { font-weight: 400; color: var(--strong); }
 
-.keybtn {
-  position: absolute; top: 12px; right: 16px; z-index: 4;
-  font: 11px var(--mono); letter-spacing: 0.08em; color: var(--muted);
-  background: var(--card); border: 1px solid var(--hair); border-radius: 999px; padding: 5px 12px;
-  cursor: pointer;
+/* The key sits on the page under the drawing, not behind a corner button: five
+   bands always legible, all twelve one tap away. */
+.keyrail {
+  position: absolute; left: 0; right: 0; bottom: 14px; z-index: 3;
+  display: flex; align-items: center; gap: 8px; padding: 0 var(--gutter);
 }
-.keybtn:hover { color: var(--ink); }
-.legend {
-  position: absolute; right: 16px; top: 52px; z-index: 3; display: none;
-  flex-direction: column; gap: 7px; padding: 14px 16px;
-  background: var(--card-solid); border: 1px solid var(--hair); border-radius: 8px;
-  font: 11px var(--mono); color: var(--muted); letter-spacing: 0.02em;
+.keyrail-list {
+  display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px 0;
+  -webkit-overflow-scrolling: touch;
+}
+.keyrail-list::-webkit-scrollbar { display: none; }
+.keyrail button {
+  display: inline-flex; align-items: center; gap: 7px; flex: none; cursor: pointer;
+  font: 11px var(--mono); letter-spacing: 0.02em; color: var(--muted); white-space: nowrap;
+  background: var(--card); border: 1px solid var(--hair); border-radius: 999px; padding: 5px 11px;
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
-.legend.show { display: flex; }
-.legend .lhead { margin: 0 0 2px; font-size: 10px; letter-spacing: 0.1em; opacity: 0.6; }
-.legend button {
-  display: flex; gap: 8px; align-items: baseline; background: none; border: none;
-  font: inherit; color: inherit; padding: 1px 0; cursor: pointer; text-align: left;
+.keyrail button:hover, .keyrail button.iso { color: var(--ink); border-color: var(--ink); }
+.keyrail i { width: 12px; height: 3px; border-radius: 2px; flex: none; }
+.keyrail-more { margin-left: auto; letter-spacing: 0.08em !important; }
+
+/* clears the axis, which owns the strip at 14% of the stage height */
+.keypanel {
+  position: absolute; left: var(--gutter); right: var(--gutter); bottom: calc(14% + 6px); z-index: 4;
+  padding: 14px 16px; background: var(--card-solid); border: 1px solid var(--hair);
+  border-radius: 10px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
-.legend button:hover, .legend button.iso { color: var(--ink); }
-.legend i { width: 14px; height: 3px; border-radius: 2px; flex: none; align-self: center; }
-.legend b { font-weight: 400; color: var(--ink); opacity: 0.75; margin-left: auto; padding-left: 12px; }
+.keypanel[hidden] { display: none; }
+.kp-head {
+  margin: 0 0 10px; font: 10px var(--mono); letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+}
+.kp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 4px 1.6rem; }
+.kp-grid button {
+  display: flex; gap: 9px; align-items: center; background: none; border: none; padding: 2px 0;
+  font: 11.5px var(--mono); color: var(--muted); cursor: pointer; text-align: left;
+}
+.kp-grid button:hover, .kp-grid button.iso { color: var(--ink); }
+.kp-grid i { width: 13px; height: 3px; border-radius: 2px; flex: none; }
+.kp-grid b { font-weight: 400; color: var(--ink); opacity: 0.72; margin-left: auto; padding-left: 12px; }
 
 .step { position: relative; min-height: 108vh; display: flex; align-items: center; padding: 0 var(--gutter); z-index: 1; pointer-events: none; }
 .step.hero { margin-top: -100dvh; min-height: 130vh; align-items: flex-start; padding-top: 24vh; }
@@ -92,8 +106,8 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 .step.hero .card::before {
   content: ''; position: absolute; inset: -22% -12%; z-index: -1; pointer-events: none;
   background: radial-gradient(ellipse 70% 60% at 38% 42%,
-    color-mix(in srgb, var(--bg) 88%, transparent),
-    color-mix(in srgb, var(--bg) 55%, transparent) 55%, transparent 78%);
+    color-mix(in srgb, var(--bg) 95%, transparent),
+    color-mix(in srgb, var(--bg) 72%, transparent) 55%, transparent 78%);
 }
 h1 {
   margin: 0 0 0.7em; font-size: clamp(1.65rem, 4.2vw, 2.5rem); line-height: 1.16;
@@ -101,22 +115,34 @@ h1 {
   text-shadow: 0 1px 22px var(--bg), 0 1px 4px var(--bg);
 }
 .hero p { color: var(--ink); opacity: 0.86; max-width: 44ch; text-shadow: 0 1px 14px var(--bg), 0 1px 3px var(--bg); }
-.cue { font: 11px var(--mono); letter-spacing: 0.14em; color: var(--muted); margin-top: 2.4em; }
-.cue-down { margin-top: 1.4em; }
 .step h2 { margin: 0 0 0.45em; font-size: 1.06rem; font-weight: 560; letter-spacing: 0.002em; }
 .step p { margin: 0; font-size: 0.94rem; color: var(--muted); }
+/* after `.step p`, or the reset there wins and the cue collides with the lede */
+.step .cue { font: 11px var(--mono); letter-spacing: 0.14em; color: var(--muted); margin-top: 2.6em; }
 .step .card b { color: var(--ink); font-weight: 560; }
 
-.chips {
-  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14% + 16px);
-  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; z-index: 3;
-  opacity: 0; transition: opacity 0.4s; max-width: min(94vw, 720px);
+/* The trace act — one whole day, swapped as the reader scrolls. Its step runs
+   long so the parade has room, so the card is pinned: a centred card would
+   drift off screen for most of the act it is narrating. */
+.step-trace { min-height: 190vh; align-items: flex-start; }
+.step-trace .card { position: sticky; top: 26vh; }
+.trace-day {
+  margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--hair);
+  opacity: 0; transition: opacity 0.25s;
 }
-.chips.show { opacity: 1; }
+.trace-day.show { opacity: 1; }
+.trace-day svg { width: 100%; height: 14px; border-radius: 3px; display: block; }
+.trace-tags {
+  margin: 8px 0 0 !important; font: 10.5px var(--mono) !important;
+  letter-spacing: 0.04em; color: var(--muted);
+}
+
+/* filters live inside the card, so nothing floats over the drawing */
+.chips { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 14px; }
 .chip {
-  font: 12px var(--mono); letter-spacing: 0.03em; color: var(--muted);
-  background: var(--card-solid); border: 1px solid var(--hair); border-radius: 999px;
-  padding: 7px 14px; cursor: pointer;
+  font: 11.5px var(--mono); letter-spacing: 0.03em; color: var(--muted);
+  background: none; border: 1px solid var(--hair); border-radius: 999px;
+  padding: 6px 12px; cursor: pointer;
 }
 .chip:hover { color: var(--ink); }
 .chip.on { color: var(--bg); background: var(--ink); border-color: var(--ink); }
@@ -158,6 +184,25 @@ h1 {
 .finding {
   max-width: 64rem; margin: 0 auto; padding: 0 var(--gutter) 16vh;
 }
+
+/* Atmosphere, not evidence: these photographs are generated and carry no
+   quantity. They open a finding; the marks below them do the arguing. */
+.f-band {
+  position: relative; height: clamp(200px, 32vh, 340px); margin-bottom: 2.8rem;
+  border-radius: 10px; overflow: hidden; background: var(--well);
+}
+/* the source frames are graded almost to black; lifted here so the subject
+   survives the crop without leaving the ground's register */
+.f-band img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: brightness(1.35) contrast(1.06) saturate(0.9);
+}
+.f-band::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, transparent 62%,
+    color-mix(in srgb, var(--bg) 80%, transparent) 100%);
+}
+
 .f-head { max-width: var(--measure); margin-bottom: 3rem; }
 .f-num {
   font: 11px var(--mono); letter-spacing: 0.14em; color: var(--muted); margin: 0 0 1.2em;
@@ -178,7 +223,7 @@ h1 {
   position: relative; height: 64px; border-radius: 6px; overflow: hidden;
   background: var(--well);
 }
-.ledger-seg { position: absolute; top: 0; bottom: 0; opacity: var(--fill-a, 1); }
+.ledger-seg { position: absolute; top: 0; bottom: 0; }
 .ledger-key {
   list-style: none; margin: 1.6rem 0 0; padding: 0;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem 2rem;
@@ -285,7 +330,6 @@ h1 {
   width: 100%; height: clamp(200px, 32vh, 320px); display: block;
   border-radius: 6px; background: var(--well); transition: opacity 0.2s;
 }
-.ex-shape svg path { opacity: var(--fill-a, 1); }
 .ex-thin .ex-shape svg { opacity: 0.25; }
 .ex-tick { stroke: var(--bg); stroke-width: 1.5; opacity: 0.45; }
 .ex-axis {
@@ -338,18 +382,17 @@ footer {
   position: relative; z-index: 2; background: var(--bg);
   border-top: 1px solid var(--hair); padding: 46px var(--gutter) 60px;
 }
-.source { font: 12.5px var(--mono); letter-spacing: 0.02em; color: var(--ink); margin: 0 0 14px; }
-.fine { color: var(--muted); font-size: 0.85rem; max-width: 68ch; margin: 0 0 26px; }
-.skinnav { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.9rem; align-items: baseline; }
-.skinnav span { color: var(--muted); font-size: 0.85rem; }
-.skinnav a { text-decoration-color: var(--hair); text-underline-offset: 4px; }
-.skinnav a[aria-current] { text-decoration: none; color: var(--muted); }
-.sig {
-  margin: 34px 0 0; padding-top: 22px; border-top: 1px solid var(--hair);
-  font: 11px var(--mono); letter-spacing: 0.16em; text-transform: uppercase;
+.source { font: 12.5px var(--mono); letter-spacing: 0.02em; color: var(--ink); margin: 0 0 18px; }
+.method summary {
+  font: 11px var(--mono); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer; list-style: none; width: max-content;
 }
-.sig a { color: var(--muted); text-decoration: none; }
-.sig a:hover { color: var(--ink); }
+.method summary::marker, .method summary::-webkit-details-marker { display: none; }
+.method summary::after { content: ' +'; }
+.method[open] summary::after { content: ' −'; }
+.method summary:hover { color: var(--ink); }
+.method p { color: var(--muted); font-size: 0.85rem; max-width: 68ch; margin: 1.2rem 0 0; }
+footer > :last-child { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--hair); }
 
 /* ---------------------------------------------------------------- mobile */
 
@@ -362,25 +405,27 @@ footer {
      clip off the left edge — left-align it and let the drawing's edge be its tick */
   .axis span:first-child { transform: none; }
   .axis span:first-child::before { display: none; }
-  .step { padding: 0 var(--gutter); align-items: flex-end; }
-  .step .card { padding: 16px 16px; margin-bottom: 24vh; }
+  /* Cards clear the axis and the key rail, which own the bottom ~20% of the
+     stage. Anchoring to the top instead of the bottom keeps them off both. */
+  .step { padding: 0 var(--gutter); align-items: flex-start; padding-top: 15vh; }
+  .step .card { padding: 15px 16px; }
   .step .card p { font-size: 0.88rem; }
   .step h2 { font-size: 1rem; }
-  .step.hero { padding-top: 19vh; align-items: flex-start; }
-  .step.hero .card { margin-bottom: 0; }
-  /* the explore step is the one that shares the screen with the fixed filter
-     chips and the axis; centre its card so the three never collide */
-  .step[data-explore] { align-items: center; }
-  .step[data-explore] .card { margin-bottom: 0; }
-  .daycard { right: var(--gutter); left: var(--gutter); width: auto; top: auto; bottom: calc(14% + 12px); }
-  .chips.show ~ .daycard.show { bottom: calc(14% + 62px); }
-  .chips {
-    flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
-    left: var(--gutter); right: var(--gutter); transform: none; max-width: none;
-    padding-bottom: 4px; scrollbar-width: none;
+  .step.hero { padding-top: 17vh; }
+  .step-trace { min-height: 210vh; padding-top: 0; }
+  .step-trace .card { top: 14vh; }
+  /* five labels cannot fit 390px; the list scrolls, and the fade says so */
+  .keyrail-list {
+    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 26px), transparent 100%);
   }
-  .chip { flex: none; }
-  .legend { right: 12px; top: 48px; }
+  .daycard {
+    right: var(--gutter); left: var(--gutter); width: auto; top: auto;
+    bottom: calc(14% + 14px);
+  }
+  .keyrail { bottom: 10px; gap: 6px; }
+  .keyrail button { font-size: 10.5px; padding: 5px 10px; }
+  .keypanel { bottom: 50px; padding: 12px 14px; }
+  .kp-grid { grid-template-columns: 1fr; gap: 2px; }
 
   .findings-intro { padding: 12vh var(--gutter) 8vh; }
   .finding { padding-bottom: 12vh; }

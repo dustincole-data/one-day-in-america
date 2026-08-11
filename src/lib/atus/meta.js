@@ -36,7 +36,7 @@ export const SHORT = {
   other_nec: 'other',
 };
 
-// Dark-ground palette (the fray). Sleep is moonlight; the day is full-spectrum.
+// The ground's palette. Sleep is moonlight; the day is full-spectrum.
 export const DARK = {
   personal_care: '#cfc9f2',
   eating_drinking: '#ff5a70',
@@ -50,22 +50,6 @@ export const DARK = {
   leisure_sports: '#ffb648',
   phone_mail_email: '#47c8e8',
   other_nec: '#7f8698',
-};
-
-// Light-ground palette (the ledger) — same hue identities, ink-heavier.
-export const LIGHT = {
-  personal_care: '#8f86d8',
-  eating_drinking: '#e23a52',
-  household: '#c85a28',
-  care_household: '#3d9e4b',
-  care_nonhousehold: '#158f7c',
-  work: '#2f6fe4',
-  education: '#7d55e0',
-  purchasing: '#c344b6',
-  org_civic_religious: '#8fa32e',
-  leisure_sports: '#d99a1e',
-  phone_mail_email: '#1ba3c4',
-  other_nec: '#6b7280',
 };
 
 // Vertical band order for the weave (top → bottom). Sleep sits center so the

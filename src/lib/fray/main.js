@@ -5,7 +5,7 @@ import { loadDays, FLAG, AGE_BANDS } from './data.js';
 import { makeWeaver, texY } from './weave.js';
 import { createRenderer } from './gl.js';
 import { MAJORS, SHORT, hexToRgb, hourLabel } from '../atus/meta.js';
-import { SKINS } from '../atus/skins.js';
+import { GROUND } from '../atus/ground.js';
 import stats from '../../gen/stats.json';
 
 const PAD = { l: 0.045, r: 0.045, t: 0.10, b: 0.14 };
@@ -21,9 +21,8 @@ const FILTERS = {
 };
 
 export async function boot(root) {
-  const skin = SKINS[root.dataset.skin] ?? SKINS.night;
-  const PAL = skin.palette;
-  const BG = hexToRgb(skin.bg);
+  const PAL = GROUND.palette;
+  const BG = hexToRgb(GROUND.bg);
   const canvas = root.querySelector('canvas');
   const stage = root.querySelector('.stage');
   const readout = root.querySelector('.readout');
@@ -69,11 +68,13 @@ export async function boot(root) {
   const state = {
     tex0: null, tex1: null, t: 1,
     dim: [0, 1, 1], dimTarget: [0, 1, 1],
-    gAlpha: 0.55, gAlphaTarget: 0.55,
+    // the hero holds its own copy over the drawing, so open at the hero's dim
+    // rather than flashing full strength before the observer first fires
+    gAlpha: 0.42, gAlphaTarget: 0.42,
     reveal: REDUCED ? 1 : 0,
     selected: -1,
     samples: phone ? 241 : 361,
-    alpha: skin.threadAlpha,
+    alpha: GROUND.threadAlpha,
     onlyMajor: -1,
     dirty: true,
   };
@@ -223,7 +224,7 @@ export async function boot(root) {
     const p = pointerToData(ev);
     if (!p || p.y01 < -0.05 || p.y01 > 1.05) { clearSelection(); return; }
     const hit = pickThread(p.minute, p.y01);
-    if (hit >= 0) select(hit); else clearSelection();
+    if (hit >= 0) openDay(hit); else clearSelection();
   });
   addEventListener('keydown', (ev) => { if (ev.key === 'Escape') clearSelection(); });
 
@@ -231,31 +232,47 @@ export async function boot(root) {
     const h = Math.floor(min / 60), m = min % 60;
     return h ? (m ? `${h}h ${m}m` : `${h}h`) : `${m}m`;
   }
-  function select(i) {
-    state.selected = i;
-    state.dirty = true;
-    const d = days[i];
+  // consecutive episodes of the same major read as one span
+  function mergeEps(eps) {
+    const merged = [];
+    for (const e of eps) {
+      const last = merged[merged.length - 1];
+      if (last && last.mi === e.mi) last.dur += e.dur;
+      else merged.push({ start: e.start, dur: e.dur, mi: e.mi });
+    }
+    return merged;
+  }
+  function dayTags(d) {
     const f = d.flags;
-    const tags = [
+    return [
       f & FLAG.holiday ? 'holiday' : f & FLAG.weekend ? 'weekend' : 'weekday',
       f & FLAG.worked ? 'worked' : 'didn’t work',
       f & FLAG.female ? 'woman' : 'man',
       AGE_BANDS[d.ageBand],
       f & FLAG.kids ? 'kids at home' : null,
     ].filter(Boolean);
-    const merged = [];
-    for (const e of d.eps) {
-      const last = merged[merged.length - 1];
-      if (last && last.mi === e.mi) last.dur += e.dur;
-      else merged.push({ start: e.start, dur: e.dur, mi: e.mi });
-    }
+  }
+  const ribbon = (merged, h) =>
+    `<svg viewBox="0 0 1440 ${h}" preserveAspectRatio="none" aria-hidden="true">${merged
+      .map((e) => `<rect x="${e.start}" width="${e.dur}" y="0" height="${h}" fill="${PAL[MAJORS[e.mi]]}"/>`)
+      .join('')}</svg>`;
+
+  // highlight is the GL half of selection; the day card is the DOM half. The
+  // trace act wants the first without the second.
+  function setHighlight(i) {
+    if (state.selected === i) return;
+    state.selected = i;
+    state.dirty = true;
+  }
+  function openDay(i) {
+    setHighlight(i);
+    const d = days[i];
+    const merged = mergeEps(d.eps);
     const top = [...merged].sort((a, b) => b.dur - a.dur).slice(0, 3);
     dayCard.innerHTML = `
       <button class="close" aria-label="Close">×</button>
-      <div class="tags">${tags.map((t) => `<span>${t}</span>`).join('')}</div>
-      <svg viewBox="0 0 1440 26" preserveAspectRatio="none" aria-hidden="true">
-        ${merged.map((e) => `<rect x="${e.start}" width="${e.dur}" y="0" height="26" fill="${PAL[MAJORS[e.mi]]}"/>`).join('')}
-      </svg>
+      <div class="tags">${dayTags(d).map((t) => `<span>${t}</span>`).join('')}</div>
+      ${ribbon(merged, 26)}
       <div class="spans">${top.map((e) => `<span><i style="background:${PAL[MAJORS[e.mi]]}"></i>${SHORT[MAJORS[e.mi]]} ${fmtDur(e.dur)}</span>`).join('')}</div>
       <div class="note">one of ${K.toLocaleString()} drawn days</div>`;
     dayCard.querySelector('.close').addEventListener('click', clearSelection);
@@ -263,9 +280,7 @@ export async function boot(root) {
     dayCard.inert = false;
   }
   function clearSelection() {
-    if (state.selected < 0) return;
-    state.selected = -1;
-    state.dirty = true;
+    setHighlight(-1);
     dayCard.classList.remove('show');
     dayCard.inert = true;
   }
@@ -274,18 +289,26 @@ export async function boot(root) {
   root.querySelectorAll('.chip').forEach((c) =>
     c.addEventListener('click', () => setFilter(c.dataset.filter)));
 
-  // ---- legend: hover (or tap) a category to isolate its threads
-  root.querySelectorAll('.legend [data-major]').forEach((el) => {
+  // ---- the key: hover (or tap) a category to isolate its threads
+  const keyBtns = [...root.querySelectorAll('.keyrail [data-major], .keypanel [data-major]')];
+  keyBtns.forEach((el) => {
     const mi = MAJORS.indexOf(el.dataset.major);
-    const on = () => { state.onlyMajor = mi; state.dirty = true; el.classList.add('iso'); };
-    const off = () => { state.onlyMajor = -1; state.dirty = true; el.classList.remove('iso'); };
+    const mark = () => keyBtns.forEach((o) => o.classList.toggle('iso', o.dataset.major === el.dataset.major));
+    const on = () => { state.onlyMajor = mi; state.dirty = true; mark(); };
+    const off = () => { state.onlyMajor = -1; state.dirty = true; keyBtns.forEach((o) => o.classList.remove('iso')); };
     el.addEventListener('pointerenter', (ev) => { if (ev.pointerType !== 'touch') on(); });
     el.addEventListener('pointerleave', off);
     el.addEventListener('pointercancel', off);
-    el.addEventListener('click', () => {
-      if (state.onlyMajor === mi) off();
-      else { root.querySelectorAll('.legend .iso').forEach((o) => o.classList.remove('iso')); on(); }
-    });
+    el.addEventListener('click', () => (state.onlyMajor === mi ? off() : on()));
+  });
+
+  const moreBtn = root.querySelector('.keyrail-more');
+  const keyPanel = root.querySelector('.keypanel');
+  moreBtn.addEventListener('click', () => {
+    const open = moreBtn.getAttribute('aria-expanded') !== 'true';
+    moreBtn.setAttribute('aria-expanded', String(open));
+    keyPanel.hidden = !open;
+    moreBtn.textContent = open ? 'close' : 'all 12';
   });
 
   // ---- scroll narrative
@@ -298,22 +321,54 @@ export async function boot(root) {
       setDim(dim);
       state.gAlphaTarget = el.dataset.galpha ? +el.dataset.galpha : 1;
       if (el.dataset.filter) setFilter(el.dataset.filter);
-      const explore = el.dataset.explore !== undefined;
-      const chips = root.querySelector('.chips');
-      chips.classList.toggle('show', explore);
-      chips.inert = !explore;
     }
   }, { rootMargin: '-45% 0px -45% 0px' });
   steps.forEach((s) => io.observe(s));
 
-  // The chips and the day card are position:fixed, so once the weave scrolls away
-  // they would hang over the sections below it. Retire them with the stage.
-  const chips = root.querySelector('.chips');
+  // ---- the trace act: scrolling walks the highlight down a parade of single
+  // days, so "every line is one person" is demonstrated before it is claimed.
+  // PPS order is effectively random with respect to traits, so an even stride
+  // over it is a fair parade.
+  const traceStep = root.querySelector('[data-trace]');
+  const traceDay = root.querySelector('.trace-day');
+  const TRACE_N = Math.min(44, K);
+  const TRACE = Array.from({ length: TRACE_N }, (_, j) => Math.floor((j + 0.5) * K / TRACE_N));
+  let traceIdx = -1;
+
+  // The act runs only while the sticky card is wholly on screen: it engages
+  // once the card has reached its pinned position and ends before the step's
+  // bottom edge starts pushing it back off. Outside that window there is
+  // nothing to read the highlight against, so the highlight is released.
+  const ACT_IN = 0.18, ACT_OUT = 0.82;
+  function updateTrace() {
+    const r = traceStep.getBoundingClientRect();
+    const raw = (innerHeight - r.top) / (r.height + innerHeight);
+    if (raw < ACT_IN || raw > ACT_OUT) {
+      if (traceIdx >= 0) { traceIdx = -1; setHighlight(-1); traceDay.classList.remove('show'); }
+      return;
+    }
+    const p = Math.min(1, Math.max(0, (raw - ACT_IN) / (ACT_OUT - ACT_IN)));
+    const i = Math.min(TRACE_N - 1, Math.floor(p * TRACE_N));
+    if (i === traceIdx) return;
+    traceIdx = i;
+    const d = days[TRACE[i]];
+    setHighlight(TRACE[i]);
+    traceDay.innerHTML = `${ribbon(mergeEps(d.eps), 14)}
+      <p class="trace-tags">${dayTags(d).join(' · ')}</p>`;
+    traceDay.classList.add('show');
+  }
+
+  // The day card is position:fixed, so once the weave scrolls away it would hang
+  // over the sections below. Retire it with the stage.
   const stageIo = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) return;
-    chips.classList.remove('show');
-    chips.inert = true;
-    clearSelection();
+    if (!entry.isIntersecting) clearSelection();
   }, { threshold: 0 });
   stageIo.observe(stage);
+
+  let scrollRaf = 0;
+  addEventListener('scroll', () => {
+    cancelAnimationFrame(scrollRaf);
+    scrollRaf = requestAnimationFrame(updateTrace);
+  }, { passive: true });
+  updateTrace();
 }
