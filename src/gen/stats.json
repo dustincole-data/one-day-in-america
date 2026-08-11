@@ -646,5 +646,75 @@
    "free": 428.1,
    "obligated": 309.5
   }
+ },
+ "explore": {
+  "years": [
+   2023,
+   2024
+  ],
+  "nDays": 16217,
+  "cells": 48,
+  "bins": 144,
+  "binMinutes": 10,
+  "channels": [
+   "personal_care",
+   "eating_drinking",
+   "household",
+   "care_household",
+   "care_nonhousehold",
+   "work",
+   "education",
+   "purchasing",
+   "org_civic_religious",
+   "leisure_sports",
+   "phone_mail_email",
+   "other_nec",
+   "asleep",
+   "television"
+  ],
+  "dims": [
+   {
+    "key": "sex",
+    "label": "Sex",
+    "values": [
+     "Men",
+     "Women"
+    ]
+   },
+   {
+    "key": "worked",
+    "label": "Worked that day",
+    "values": [
+     "Didn’t work",
+     "Worked"
+    ]
+   },
+   {
+    "key": "day",
+    "label": "Day",
+    "values": [
+     "Weekday",
+     "Weekend"
+    ]
+   },
+   {
+    "key": "kids",
+    "label": "Children under 18 at home",
+    "values": [
+     "No children",
+     "Children"
+    ]
+   },
+   {
+    "key": "age",
+    "label": "Age",
+    "values": [
+     "15–24",
+     "25–54",
+     "55 and over"
+    ]
+   }
+  ],
+  "minDays": 200
  }
 }

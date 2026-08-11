@@ -1,0 +1,293 @@
+---
+// The six findings the fray itself cannot carry. Every graphic here is built at
+// build time from src/gen/stats.json and public/data/grid.bin — no client JS, no
+// layout shift, and the numbers cannot drift from the payload builder's checks.
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import stats from '../gen/stats.json';
+import { MAJORS, LABELS, SHORT } from '../lib/atus/meta.js';
+
+const fmt = (min) => {
+  const r = Math.round(min), h = Math.floor(r / 60), m = r % 60;
+  return h ? `${h}h ${String(m).padStart(2, '0')}m` : `${m}m`;
+};
+const cvar = (m) => `var(--c-${m})`;
+
+// ---- 1 · the 1,440-minute ledger -------------------------------------------
+const ledger = [...stats.ledger.byMajor].sort((a, b) => b.y2024 - a.y2024);
+let acc = 0;
+const ledgerSegs = ledger.map((r) => {
+  const seg = { ...r, x: (acc / 1440) * 100, w: (r.y2024 / 1440) * 100 };
+  acc += r.y2024;
+  return seg;
+});
+// movers worth naming: household and personal care gained, work fell. Leisure's
+// move sits inside its own floor, so it is described as "did not gain" in copy,
+// never drawn as a fall.
+const movers = ['household', 'personal_care', 'work'].map((m) => ledger.find((r) => r.major === m));
+
+// ---- 2 · the workday moved indoors -----------------------------------------
+// project root, not import.meta.url — this component is bundled into dist/ before
+// it runs, so a module-relative path would resolve inside the build output
+const rawGrid = readFileSync(join(process.cwd(), 'public', 'data', 'grid.bin'));
+const G = new Uint16Array(rawGrid.buffer, rawGrid.byteOffset, rawGrid.length / 2);
+const CH = 14, MIN = 1440, WORK = MAJORS.indexOf('work'), AT_HOME = 13;
+const at = (yearBlock, ch, m) => G[yearBlock * CH * MIN + ch * MIN + m] / 65535;
+
+const IW = 1000, IH = 190, STEP = 5;
+// both years share one scale so the two panels are directly comparable
+const peak = Math.max(...[0, 1].flatMap((y) => Array.from({ length: MIN }, (_, m) => at(y, WORK, m))));
+const areaPath = (yearBlock, ch) => {
+  let d = '';
+  for (let m = 0; m < MIN; m += STEP) {
+    const x = (m / (MIN - 1)) * IW;
+    const y = IH - (at(yearBlock, ch, m) / peak) * IH;
+    d += `${m ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`;
+  }
+  return `${d}L${IW} ${IH}L0 ${IH}Z`;
+};
+const indoors = [
+  { year: 2019, block: 0, share: stats.indoors.homeMinuteShare2019, commuters: stats.indoors.commutersM2019, commute: stats.indoors.commuteLen2019 },
+  { year: 2024, block: 1, share: stats.indoors.homeMinuteShare2024, commuters: stats.indoors.commutersM2024, commute: stats.indoors.commuteLen2024 },
+].map((y) => ({ ...y, work: areaPath(y.block, WORK), home: areaPath(y.block, AT_HOME) }));
+
+// ---- 3 · who actually has time ---------------------------------------------
+const GROUP_LABELS = {
+  noWorkNoKids: 'Didn’t work, no children',
+  age65: 'Age 65 and over',
+  weekend: 'On a weekend day',
+  everyone: 'Everyone',
+  men: 'Men',
+  women: 'Women',
+  weekday: 'On a weekday',
+  worked: 'Worked that day',
+  workedKids: 'Worked · children under 18',
+  workedKidsU6: 'Worked · children under 6',
+};
+const groups = Object.entries(GROUP_LABELS)
+  .map(([k, label]) => ({ key: k, label, ...stats.freeTime[k] }))
+  .sort((a, b) => b.free - a.free);
+const freeMax = groups[0].free;
+const spread = groups[0].free - groups[groups.length - 1].free;
+
+// ---- 4 · television --------------------------------------------------------
+const tvRows = [
+  { label: 'Television', v: stats.tv.mean, key: 'leisure_sports' },
+  { label: 'Socialising and communicating', v: stats.tv.socialMean, key: 'org_civic_religious' },
+];
+const zeroRows = [
+  ['a day with no socialising', stats.tv.zeroDays.social],
+  ['no exercise', stats.tv.zeroDays.exercise],
+  ['no care for a household member', stats.tv.zeroDays.careHH],
+  ['no paid work', stats.tv.zeroDays.work],
+  ['no free time at all', stats.tv.zeroDays.free],
+];
+
+// ---- 5 · the 48 minutes ----------------------------------------------------
+const gapMax = Math.max(stats.gap.menLeisure, stats.gap.womenLeisure);
+// the estimate is 48.5, which rounds ambiguously; the project has called this
+// finding "the 48 minutes" since it was mined, so keep that one name everywhere
+const gapWhole = Math.floor(stats.gap.gapMin);
+
+// ---- 6 · weekday against weekend -------------------------------------------
+const weekRows = [
+  { label: 'Sleep', wd: stats.week.weekday.sleep, we: stats.week.weekend.sleep, key: 'personal_care' },
+  { label: 'Free time', wd: stats.week.weekday.free, we: stats.week.weekend.free, key: 'leisure_sports' },
+  { label: 'Obligated time', wd: stats.week.weekday.obligated, we: stats.week.weekend.obligated, key: 'work' },
+];
+const weekMax = Math.max(...weekRows.flatMap((r) => [r.wd, r.we]));
+---
+
+<section class="finding" id="ledger">
+  <div class="f-head">
+    <p class="f-num">01</p>
+    <h2>Where the 1,440 minutes go</h2>
+    <p class="f-lede">
+      The day is a fixed budget. Averaged over everyone age 15 and over, this is how 2024 spent it.
+    </p>
+  </div>
+
+  <div class="ledger-bar" role="img" aria-label="One day of 1,440 minutes divided into the twelve published activity categories">
+    {ledgerSegs.map((s) => (
+      <span class="ledger-seg" style={`left:${s.x}%;width:${s.w}%;background:${cvar(s.major)}`} data-major={s.major}></span>
+    ))}
+  </div>
+  <ol class="ledger-key">
+    {ledgerSegs.map((s) => (
+      <li>
+        <i style={`background:${cvar(s.major)}`}></i>
+        <span>{LABELS[s.major]}</span>
+        <b>{fmt(s.y2024)}</b>
+      </li>
+    ))}
+  </ol>
+
+  <div class="f-note">
+    <p>
+      Against 2019, three categories moved further than measurement noise can explain:
+      household work {fmt(movers[0].delta)} more, sleep and personal care {fmt(movers[1].delta)} more,
+      paid work {fmt(Math.abs(movers[2].delta))} less. Leisure looks lower, but its move is small
+      enough that the honest reading is that it did not gain.
+    </p>
+  </div>
+</section>
+
+<section class="finding" id="indoors">
+  <div class="f-head">
+    <p class="f-num">02</p>
+    <h2>The workday didn’t move. It moved indoors.</h2>
+    <p class="f-lede">
+      Share of everyone at work through the day. The filled part underneath is the share working
+      from home.
+    </p>
+  </div>
+
+  <div class="indoors-grid">
+    {indoors.map((y) => (
+      <figure class="indoors-panel">
+        <figcaption><b>{y.year}</b><span>{y.share}% of all paid work done at home</span></figcaption>
+        <svg viewBox={`0 0 ${IW} ${IH}`} preserveAspectRatio="none" aria-hidden="true">
+          <path d={y.work} fill={cvar('work')} opacity="0.28" />
+          <path d={y.home} fill={cvar('work')} />
+        </svg>
+        <p class="indoors-axis"><span>4 a.m.</span><span>noon</span><span>4 a.m.</span></p>
+      </figure>
+    ))}
+  </div>
+
+  <div class="f-note">
+    <p>
+      The peak is in the same place and almost the same height: about a third of the country is at
+      work late morning in both years. What changed is where. Commuters fell from
+      {' '}{stats.indoors.commutersM2019} million a day to {stats.indoors.commutersM2024} million,
+      out of a population that grew — and the ones still commuting travel longer,
+      {' '}{stats.indoors.commuteLen2019} minutes to {stats.indoors.commuteLen2024}.
+    </p>
+  </div>
+</section>
+
+<section class="finding" id="time">
+  <div class="f-head">
+    <p class="f-num">03</p>
+    <h2>Who actually has time</h2>
+    <p class="f-lede">
+      Leisure and sports — the published free-time category — by group. The distance from top to
+      bottom is {fmt(spread)} a day, the widest gap in this data.
+    </p>
+  </div>
+
+  <ol class="lolli">
+    {groups.map((g) => (
+      <li class={g.key === 'everyone' ? 'is-ref' : ''}>
+        <p class="lolli-label">{g.label}</p>
+        <div class="lolli-track">
+          <span class="lolli-fill" style={`width:${(g.free / freeMax) * 100}%;background:${cvar('leisure_sports')}`}></span>
+        </div>
+        <b class="lolli-val">{fmt(g.free)}</b>
+        <span class="lolli-sub">{g.under3h}% under 3h</span>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<section class="finding" id="television">
+  <div class="f-head">
+    <p class="f-num">04</p>
+    <h2>Television against everything else</h2>
+    <p class="f-lede">
+      The most lopsided thing in the data. {stats.tv.shareOfFree}% of all free time in America is
+      television.
+    </p>
+  </div>
+
+  <ol class="versus">
+    {tvRows.map((r) => (
+      <li>
+        <p class="versus-label">{r.label}</p>
+        <div class="versus-track">
+          <span style={`width:${(r.v / tvRows[0].v) * 100}%;background:${cvar(r.key)}`}></span>
+        </div>
+        <b>{fmt(r.v)}</b>
+      </li>
+    ))}
+  </ol>
+
+  <ul class="zeroes">
+    {zeroRows.map(([label, pct]) => (
+      <li><b>{pct}%</b><span>of days contain {label}</span></li>
+    ))}
+  </ul>
+
+  <div class="f-note">
+    <p>
+      {stats.tv.watchedShare}% of people watched something on the day they were asked, for
+      {' '}{fmt(stats.tv.amongWatchers)} among those who did.
+    </p>
+  </div>
+</section>
+
+<section class="finding" id="gap">
+  <div class="f-head">
+    <p class="f-num">05</p>
+    <h2>The {gapWhole} minutes</h2>
+    <p class="f-lede">
+      Men record more free time than women, and the gap survives every condition tested. Most of it
+      is one activity.
+    </p>
+  </div>
+
+  <ol class="versus versus-gap">
+    <li>
+      <p class="versus-label">Men · leisure and sports</p>
+      <div class="versus-track">
+        <span style={`width:${(stats.gap.menLeisure / gapMax) * 100}%;background:${cvar('leisure_sports')}`}></span>
+        <span class="versus-inner" style={`width:${(stats.gap.menTv / gapMax) * 100}%`}>television</span>
+      </div>
+      <b>{fmt(stats.gap.menLeisure)}</b>
+    </li>
+    <li>
+      <p class="versus-label">Women · leisure and sports</p>
+      <div class="versus-track">
+        <span style={`width:${(stats.gap.womenLeisure / gapMax) * 100}%;background:${cvar('leisure_sports')}`}></span>
+        <span class="versus-inner" style={`width:${(stats.gap.womenTv / gapMax) * 100}%`}>television</span>
+      </div>
+      <b>{fmt(stats.gap.womenLeisure)}</b>
+    </li>
+  </ol>
+
+  <div class="f-note">
+    <p>
+      {fmt(stats.gap.tvPortion)} of the {gapWhole}-minute gap is television
+      alone. And total work — paid and unpaid together — comes out level:
+      {' '}{fmt(stats.gap.menTotal)} for men against {fmt(stats.gap.womenTotal)} for women. Women
+      record more unpaid work and less paid work, and the two nearly cancel.
+    </p>
+  </div>
+</section>
+
+<section class="finding" id="week">
+  <div class="f-head">
+    <p class="f-num">06</p>
+    <h2>Weekday against weekend</h2>
+    <p class="f-lede">
+      Weighted the way a week actually runs — five weekdays to two weekend days, not the sample's
+      even split.
+    </p>
+  </div>
+
+  <ol class="weekrows">
+    {weekRows.map((r) => (
+      <li>
+        <p class="week-label">{r.label}</p>
+        <div class="week-pair">
+          <div class="week-track"><span style={`width:${(r.wd / weekMax) * 100}%;background:${cvar(r.key)}`}></span></div>
+          <b>{fmt(r.wd)}</b><em>weekday</em>
+        </div>
+        <div class="week-pair">
+          <div class="week-track"><span style={`width:${(r.we / weekMax) * 100}%;background:${cvar(r.key)}`}></span></div>
+          <b>{fmt(r.we)}</b><em>weekend</em>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>

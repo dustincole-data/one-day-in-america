@@ -2,27 +2,15 @@
 import '@fontsource-variable/schibsted-grotesk';
 import '@fontsource/fragment-mono';
 import stats from '../gen/stats.json';
+import { SKINS, SKIN_ORDER, SKIN_PATH } from '../lib/atus/skins.js';
 
 const title = 'One Day in America';
-const desc = `How ${stats.meta.n2024.toLocaleString()} Americans actually spent a day, read three ways. At 3 a.m. the most common single activity holds ${stats.headline.at3am}% of the country; at noon, ${stats.headline.atNoon}%.`;
+const desc = `How ${stats.meta.n2024.toLocaleString()} Americans actually spent a day. In the 3 a.m. hour the most common single activity holds ${stats.headline.at3am}% of the country; at noon, ${stats.headline.atNoon}%.`;
 
-const pieces = [
-  {
-    href: '/fray', name: 'The Fray', img: '/previews/fray.webp',
-    line: '2,600 real diary days woven into one fabric. The country agrees at 3 a.m.; by noon the most common single activity holds a quarter of it.',
-    tags: ['every thread is a real person', 'tap to follow one day'],
-  },
-  {
-    href: '/ledger', name: 'The Ledger', img: '/previews/ledger.webp',
-    line: 'Every day is exactly 1,440 minutes. Watch the budget re-balance — across five years, and between the people who have time and the people who don’t.',
-    tags: ['minute tiles', 'who has time'],
-  },
-  {
-    href: '/terrain', name: 'The Terrain', img: '/previews/terrain.webp',
-    line: 'The day as a landscape: a night massif, a work plateau, a television ridge — and the five-year shift of work moving indoors.',
-    tags: ['3D', 'rewind to 2019'],
-  },
-];
+const grounds = SKIN_ORDER.map((k) => ({
+  key: k, name: SKINS[k].name, blurb: SKINS[k].blurb,
+  href: SKIN_PATH[k], img: `/previews/${k}.webp`,
+}));
 ---
 
 <!doctype html>
@@ -34,7 +22,7 @@ const pieces = [
     <meta name="description" content={desc} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={desc} />
-    <meta property="og:image" content="/og/fray.png" />
+    <meta property="og:image" content="/og/night.png" />
     <meta name="theme-color" content="#0b0d16" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
@@ -45,18 +33,19 @@ const pieces = [
         <p>
           In 2024, {stats.meta.n2024.toLocaleString()} Americans wrote down one whole day for the
           Bureau of Labor Statistics — what they were doing, minute by minute, 4&nbsp;a.m. to
-          4&nbsp;a.m. This is that day, read three ways.
+          4&nbsp;a.m. This is that day: the weave, seven findings, and an explorer that will answer
+          questions nobody has asked it yet.
         </p>
+        <p class="choose">One piece, three grounds. Same data, same structure.</p>
       </header>
 
-      {pieces.map((p) => (
-        <a class="piece" href={p.href}>
-          <img src={p.img} alt={`Preview of ${p.name}`} loading="lazy" />
+      {grounds.map((g) => (
+        <a class="piece" href={g.href}>
+          <img src={g.img} alt={`Preview of the ${g.name} ground`} loading="lazy" />
           <span class="veil" aria-hidden="true"></span>
           <span class="meta">
-            <b>{p.name}</b>
-            <span class="line">{p.line}</span>
-            <span class="tags">{p.tags.map((t) => <i>{t}</i>)}</span>
+            <b>{g.name}</b>
+            <span class="line">{g.blurb}</span>
           </span>
         </a>
       ))}
@@ -68,6 +57,7 @@ const pieces = [
           and D.C. All figures weighted with BLS person-day weights over the 12 published ATUS
           activity categories.
         </p>
+        <p class="sig"><a href="https://dustincoledata.com">Dustin Cole Data</a></p>
       </footer>
     </main>
 
@@ -88,7 +78,11 @@ const pieces = [
       main { max-width: 1060px; margin: 0 auto; padding: 0 5vw; }
       header { padding: 11vh 0 7vh; }
       h1 { margin: 0 0 0.4em; font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 560; letter-spacing: -0.014em; }
-      header p { margin: 0; color: var(--muted); max-width: 52ch; }
+      header p { margin: 0; color: var(--muted); max-width: 54ch; }
+      .choose {
+        margin-top: 1.8em !important; font: 11px var(--mono); letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--muted);
+      }
 
       .piece {
         position: relative; display: block; margin: 0 0 34px; border-radius: 14px; overflow: hidden;
@@ -99,21 +93,21 @@ const pieces = [
       .piece img { display: block; width: 100%; aspect-ratio: 16 / 8.4; object-fit: cover; }
       .veil {
         position: absolute; inset: 0;
-        background: linear-gradient(to top, rgba(11, 13, 22, 0.88) 0%, rgba(11, 13, 22, 0.32) 38%, transparent 62%);
+        background: linear-gradient(to top, rgba(11, 13, 22, 0.9) 0%, rgba(11, 13, 22, 0.34) 38%, transparent 62%);
       }
       .meta { position: absolute; left: 22px; right: 22px; bottom: 18px; display: block; }
       .meta b { display: block; font-size: 1.25rem; font-weight: 580; letter-spacing: -0.008em; }
       .meta .line { display: block; margin-top: 4px; color: #c9ccdd; font-size: 0.92rem; max-width: 62ch; }
-      .meta .tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-      .meta .tags i {
-        font: 10.5px var(--mono); font-style: normal; letter-spacing: 0.05em; color: var(--muted);
-        border: 1px solid var(--hair); border-radius: 999px; padding: 3px 10px;
-        background: rgba(11, 13, 22, 0.5);
-      }
 
       footer { padding: 30px 0 70px; }
       .source { font: 12.5px var(--mono); letter-spacing: 0.02em; margin: 0 0 12px; }
       .fine { color: var(--muted); font-size: 0.84rem; max-width: 66ch; margin: 0; }
+      .sig {
+        margin: 30px 0 0; padding-top: 20px; border-top: 1px solid var(--hair);
+        font: 11px var(--mono); letter-spacing: 0.16em; text-transform: uppercase;
+      }
+      .sig a { color: var(--muted); text-decoration: none; }
+      .sig a:hover { color: var(--ink); }
 
       @media (max-width: 719px) {
         header { padding: 9vh 0 5vh; }

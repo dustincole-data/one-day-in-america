@@ -4,10 +4,10 @@
 import { loadDays, FLAG, AGE_BANDS } from './data.js';
 import { makeWeaver, texY } from './weave.js';
 import { createRenderer } from './gl.js';
-import { MAJORS, SHORT, DARK, hexToRgb, hourLabel } from '../atus/meta.js';
+import { MAJORS, SHORT, hexToRgb, hourLabel } from '../atus/meta.js';
+import { SKINS } from '../atus/skins.js';
 import stats from '../../gen/stats.json';
 
-const BG = [11 / 255, 13 / 255, 22 / 255];
 const PAD = { l: 0.045, r: 0.045, t: 0.10, b: 0.14 };
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -21,6 +21,9 @@ const FILTERS = {
 };
 
 export async function boot(root) {
+  const skin = SKINS[root.dataset.skin] ?? SKINS.night;
+  const PAL = skin.palette;
+  const BG = hexToRgb(skin.bg);
   const canvas = root.querySelector('canvas');
   const stage = root.querySelector('.stage');
   const readout = root.querySelector('.readout');
@@ -38,7 +41,7 @@ export async function boot(root) {
   const K = days.length;
   const weaver = makeWeaver(days);
 
-  const renderer = createRenderer(canvas, K, MAJORS.map((m) => hexToRgb(DARK[m])), BG);
+  const renderer = createRenderer(canvas, K, MAJORS.map((m) => hexToRgb(PAL[m])), BG);
   if (!renderer) { loading.textContent = 'This piece needs WebGL2.'; return; }
 
   // ---- weave cache (bytes + GPU texture), LRU of 4, everyone pinned
@@ -70,7 +73,7 @@ export async function boot(root) {
     reveal: REDUCED ? 1 : 0,
     selected: -1,
     samples: phone ? 241 : 361,
-    alpha: 0.97,
+    alpha: skin.threadAlpha,
     onlyMajor: -1,
     dirty: true,
   };
@@ -251,9 +254,9 @@ export async function boot(root) {
       <button class="close" aria-label="Close">×</button>
       <div class="tags">${tags.map((t) => `<span>${t}</span>`).join('')}</div>
       <svg viewBox="0 0 1440 26" preserveAspectRatio="none" aria-hidden="true">
-        ${merged.map((e) => `<rect x="${e.start}" width="${e.dur}" y="0" height="26" fill="${DARK[MAJORS[e.mi]]}"/>`).join('')}
+        ${merged.map((e) => `<rect x="${e.start}" width="${e.dur}" y="0" height="26" fill="${PAL[MAJORS[e.mi]]}"/>`).join('')}
       </svg>
-      <div class="spans">${top.map((e) => `<span><i style="background:${DARK[MAJORS[e.mi]]}"></i>${SHORT[MAJORS[e.mi]]} ${fmtDur(e.dur)}</span>`).join('')}</div>
+      <div class="spans">${top.map((e) => `<span><i style="background:${PAL[MAJORS[e.mi]]}"></i>${SHORT[MAJORS[e.mi]]} ${fmtDur(e.dur)}</span>`).join('')}</div>
       <div class="note">one of ${K.toLocaleString()} drawn days</div>`;
     dayCard.querySelector('.close').addEventListener('click', clearSelection);
     dayCard.classList.add('show');
@@ -302,4 +305,15 @@ export async function boot(root) {
     }
   }, { rootMargin: '-45% 0px -45% 0px' });
   steps.forEach((s) => io.observe(s));
+
+  // The chips and the day card are position:fixed, so once the weave scrolls away
+  // they would hang over the sections below it. Retire them with the stage.
+  const chips = root.querySelector('.chips');
+  const stageIo = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) return;
+    chips.classList.remove('show');
+    chips.inert = true;
+    clearSelection();
+  }, { threshold: 0 });
+  stageIo.observe(stage);
 }

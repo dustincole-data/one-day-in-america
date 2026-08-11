@@ -1,0 +1,48 @@
+---
+// The explorer shell. All numbers are computed in the browser from
+// public/data/explore.bin — see src/lib/explore/main.js.
+import stats from '../gen/stats.json';
+const { nDays, years } = stats.explore;
+---
+
+<section class="finding explorer" id="explore">
+  <div class="f-head">
+    <p class="f-num">07</p>
+    <h2>Build your own slice</h2>
+    <p class="f-lede">
+      Everything above is one reading of this data. Pick any combination below and the day redraws
+      against it — including combinations nobody has looked at.
+    </p>
+  </div>
+
+  <div class="ex" data-explorer>
+    <div class="ex-controls"></div>
+
+    <div class="ex-actions">
+      <button type="button" class="ex-pin">compare against this slice</button>
+      <button type="button" class="ex-reset">reset</button>
+    </div>
+
+    <div class="ex-result">
+      <div class="ex-meta"></div>
+      <p class="ex-warn" hidden></p>
+
+      <div class="ex-shape">
+        <svg preserveAspectRatio="none" role="img"
+             aria-label="The chosen group's day from 4 a.m. to 4 a.m., stacked by activity"></svg>
+        <div class="ex-readout" aria-hidden="true"></div>
+      </div>
+      <p class="ex-axis" aria-hidden="true"></p>
+
+      <p class="ex-callout" hidden></p>
+      <p class="ex-baseline"></p>
+      <div class="ex-rows"></div>
+    </div>
+
+    <p class="ex-basis">
+      {nDays.toLocaleString()} diary days, {years[0]} and {years[1]} pooled, weighted with BLS
+      person-day weights. Pooling two years keeps a five-way slice from thinning out; the piece
+      above is 2024 alone.
+    </p>
+  </div>
+</section>

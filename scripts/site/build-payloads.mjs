@@ -116,7 +116,7 @@ function load(year) {
     if (social) rec.social += dur;
     if (exercise) rec.exercise += dur;
     if (sleeping) rec.sleep += dur;
-    rec.episodes.push({ start, dur, mi, home: atHome ? 1 : 0 });
+    rec.episodes.push({ start, dur, mi, home: atHome ? 1 : 0, sleep: sleeping ? 1 : 0, tv: tv ? 1 : 0 });
   }
 
   // 1440 invariant re-asserted
@@ -499,6 +499,109 @@ const daysBuf = new Uint8Array(parts.reduce((a, p) => a + p.length, 0));
 writeFileSync(join(ROOT, 'public', 'data', 'days.bin'), daysBuf);
 console.log(`days.bin ${(daysBuf.length / 1024).toFixed(1)} KB (${sampled.length} PPS days)`);
 
+// ---------------------------------------------------------------- explore.bin
+//
+// The explorer lets a reader build their own slice, so it cannot ship a fixed set
+// of pre-baked groups. Instead it ships a full cross-tabulation: every respondent
+// lands in exactly one of 48 cells, and any slice the reader can express is a sum
+// over cells. Because each cell carries its own summed BLS weight, the union is
+// exactly weighted — the same estimate the pre-baked numbers above use.
+//
+//   dims (index order): sex 2 · worked that day 2 · day type 2 · kids <18 2 · age 3
+//   cell = ((((sex * 2 + worked) * 2 + weekend) * 2 + kids) * 3 + age
+//   channels 14 = 12 majors + asleep + television  (the two leaves worth slicing)
+//   bins 144 = 10 minutes each, 4 a.m. → 4 a.m.
+//
+// Pooled 2023+2024: a reader can cross five dimensions at once, and one year's
+// sample thins out faster than the cells do. The mandatory 2024 source line still
+// governs the piece; the explorer states its own pooled basis in the UI.
+
+const EX_BINS = 144, EX_BINMIN = 10, EX_CH = 14, EX_CELLS = 48;
+const exAgeBand = (a) => (a < 25 ? 0 : a < 55 ? 1 : 2);
+const exCell = (r) =>
+  ((((r.sex === 2 ? 1 : 0) * 2 + (r.work > 0 ? 1 : 0)) * 2 + (isWeekend(r) ? 1 : 0)) * 2 +
+    (r.hhChild === 1 ? 1 : 0)) * 3 + exAgeBand(r.age);
+
+const exW = new Float64Array(EX_CELLS);
+const exN = new Uint32Array(EX_CELLS);
+const exAcc = new Float64Array(EX_CELLS * EX_BINS * EX_CH); // weight × minutes
+
+for (const r of pooled) {
+  const c = exCell(r);
+  exW[c] += r.w;
+  exN[c] += 1;
+  const base = c * EX_BINS * EX_CH;
+  for (const e of r.episodes) {
+    const end = e.start + e.dur;
+    for (let m = e.start; m < end; m++) {
+      const o = base + ((m / EX_BINMIN) | 0) * EX_CH;
+      exAcc[o + e.mi] += r.w;
+      if (e.sleep) exAcc[o + 12] += r.w;
+      if (e.tv) exAcc[o + 13] += r.w;
+    }
+  }
+}
+
+// share of the cell's population in that channel, averaged over the bin's minutes
+const exShare = new Uint16Array(EX_CELLS * EX_BINS * EX_CH);
+for (let c = 0; c < EX_CELLS; c++) {
+  const denom = exW[c] * EX_BINMIN;
+  if (denom <= 0) throw new Error(`explore cell ${c} is empty — the cross-tabulation has a hole`);
+  for (let i = c * EX_BINS * EX_CH, e = i + EX_BINS * EX_CH; i < e; i++) {
+    const s = exAcc[i] / denom;
+    exShare[i] = Math.round(Math.min(1, s) * 65535);
+  }
+}
+
+{
+  const head = new Uint32Array([EX_CELLS, EX_BINS, EX_CH, EX_BINMIN]);
+  const buf = new Uint8Array(head.byteLength + exW.byteLength + exN.byteLength + exShare.byteLength);
+  let o = 0;
+  for (const part of [head, exW, exN, exShare]) {
+    buf.set(new Uint8Array(part.buffer, part.byteOffset, part.byteLength), o);
+    o += part.byteLength;
+  }
+  writeFileSync(join(ROOT, 'public', 'data', 'explore.bin'), buf);
+  console.log(`explore.bin ${(buf.length / 1024).toFixed(1)} KB (${EX_CELLS} cells × ${EX_BINS} bins × ${EX_CH} ch)`);
+}
+
+// Decode exactly as the browser will, then re-derive published numbers from it.
+// This is the gate on the cross-tabulation: if the cell decomposition or the
+// weighted union is wrong, these miss.
+function exMean(pred, ch) {
+  let W = 0;
+  const acc = new Float64Array(EX_BINS);
+  for (let c = 0; c < EX_CELLS; c++) {
+    const sex = (c / 24) | 0, worked = ((c / 12) | 0) % 2, weekend = ((c / 6) | 0) % 2,
+      kids = ((c / 3) | 0) % 2, age = c % 3;
+    if (!pred({ sex, worked, weekend, kids, age })) continue;
+    W += exW[c];
+    const base = c * EX_BINS * EX_CH;
+    for (let b = 0; b < EX_BINS; b++) acc[b] += exW[c] * (exShare[base + b * EX_CH + ch] / 65535);
+  }
+  let min = 0;
+  for (let b = 0; b < EX_BINS; b++) min += (acc[b] / W) * EX_BINMIN;
+  return min;
+}
+const exAll = () => true;
+expect('explore: everyone television', exMean(exAll, 13), tvMean, 0.4);
+expect('explore: everyone asleep', exMean(exAll, 12), wMean(pooled, (r) => r.sleep), 0.4);
+expect('explore: everyone work', exMean(exAll, MI.work), wMean(pooled, (r) => r.maj[MI.work]), 0.4);
+expect('explore: everyone leisure', exMean(exAll, MI.leisure_sports), wMean(pooled, (r) => r.maj[MI.leisure_sports]), 0.4);
+expect('explore: everyone household', exMean(exAll, MI.household), wMean(pooled, (r) => r.maj[MI.household]), 0.4);
+expect('explore: men leisure', exMean((d) => d.sex === 0, MI.leisure_sports), menLeis, 0.4);
+expect('explore: women leisure', exMean((d) => d.sex === 1, MI.leisure_sports), womenLeis, 0.4);
+expect('explore: men television', exMean((d) => d.sex === 0, 13), menTv, 0.4);
+expect('explore: workers work', exMean((d) => d.worked === 1, MI.work), wMean(pooled, (r) => r.maj[MI.work], (r) => r.work > 0), 0.4);
+expect('explore: weekday asleep', exMean((d) => d.weekend === 0, 12), wkSleep, 0.4);
+expect('explore: weekend asleep', exMean((d) => d.weekend === 1, 12), weSleep, 0.4);
+// the day is 1,440 minutes in every slice — the partition must stay exhaustive
+for (const [label, pred] of [['everyone', exAll], ['women who worked', (d) => d.sex === 1 && d.worked === 1]]) {
+  let total = 0;
+  for (let ch = 0; ch < 12; ch++) total += exMean(pred, ch);
+  expect(`explore: ${label} sums to 1,440 minutes`, total, 1440, 0.5);
+}
+
 // ---------------------------------------------------------------- stats.json
 
 const stats = {
@@ -548,6 +651,20 @@ const stats = {
   week: {
     weekday: { sleep: +wkSleep.toFixed(1), free: +wkFree.toFixed(1), obligated: +wkObl.toFixed(1) },
     weekend: { sleep: +weSleep.toFixed(1), free: +weFree.toFixed(1), obligated: +weObl.toFixed(1) },
+  },
+  explore: {
+    years: [2023, 2024], nDays: pooled.length, cells: EX_CELLS, bins: EX_BINS, binMinutes: EX_BINMIN,
+    channels: [...MAJORS, 'asleep', 'television'],
+    // index order must match exCell() above
+    dims: [
+      { key: 'sex', label: 'Sex', values: ['Men', 'Women'] },
+      { key: 'worked', label: 'Worked that day', values: ['Didn’t work', 'Worked'] },
+      { key: 'day', label: 'Day', values: ['Weekday', 'Weekend'] },
+      { key: 'kids', label: 'Children under 18 at home', values: ['No children', 'Children'] },
+      { key: 'age', label: 'Age', values: ['15–24', '25–54', '55 and over'] },
+    ],
+    // below this many pooled diary days a slice is too thin to read
+    minDays: 200,
   },
 };
 mkdirSync(join(ROOT, 'src', 'gen'), { recursive: true });
