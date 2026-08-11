@@ -69,6 +69,7 @@ export async function boot(root) {
 
   let baseline = everyone;
   let baselineLabel = 'everyone';
+  let baselineTitle = 'Everyone';
   let pinned = false;
   let currentAgg = everyone;
 
@@ -89,9 +90,12 @@ export async function boot(root) {
 
   // ---- DOM
   const controls = root.querySelector('.ex-controls');
-  const chartSvg = root.querySelector('.ex-shape svg');
+  const chartSvg = root.querySelector('.ex-panel .ex-shape svg');
+  const panelB = root.querySelector('.ex-panel-b');
+  const chartSvgB = panelB.querySelector('svg');
   const rowsEl = root.querySelector('.ex-rows');
   const metaEl = root.querySelector('.ex-meta');
+  const metaElB = root.querySelector('.ex-meta-b');
   const calloutEl = root.querySelector('.ex-callout');
   const warnEl = root.querySelector('.ex-warn');
   const baseEl = root.querySelector('.ex-baseline');
@@ -110,9 +114,13 @@ export async function boot(root) {
     const b = ev.target.closest('button[data-d]');
     if (!b) return;
     const d = +b.dataset.d, v = +b.dataset.v;
-    if (sel[d].has(v)) sel[d].delete(v); else sel[d].add(v);
-    // picking every value of a dimension is the same as picking none
-    if (sel[d].size === DIMS[d].values.length) sel[d].clear();
+    // One value per dimension, the way a filter is expected to behave: a second
+    // pick inside the same dimension switches to it rather than widening the
+    // slice, and picking the value already on clears that dimension to "any".
+    // Nothing is lost — every dimension but age has two values, where picking
+    // both was already identical to picking neither.
+    if (sel[d].has(v)) sel[d].clear();
+    else { sel[d].clear(); sel[d].add(v); }
     syncButtons();
     update();
   });
@@ -124,72 +132,97 @@ export async function boot(root) {
   }
 
   pinBtn.addEventListener('click', () => {
-    if (pinned) { baseline = everyone; baselineLabel = 'everyone'; pinned = false; }
-    else { baseline = currentAgg; baselineLabel = sliceLabel().toLowerCase(); pinned = true; }
+    if (pinned) stopComparing();
+    else {
+      baseline = currentAgg;
+      baselineLabel = sliceLabel().toLowerCase();
+      baselineTitle = sliceLabel();
+      pinned = true;
+      // the pinned slice is frozen, so it is painted once here rather than on
+      // every update
+      shapeB.set(baseline.share);
+    }
     update();
   });
   resetBtn.addEventListener('click', () => {
     sel.forEach((s) => s.clear());
-    baseline = everyone; baselineLabel = 'everyone'; pinned = false;
+    stopComparing();
     syncButtons();
     update();
   });
+  function stopComparing() {
+    baseline = everyone; baselineLabel = 'everyone'; baselineTitle = 'Everyone'; pinned = false;
+  }
 
-  // ---- stacked day shape, drawn as 12 SVG areas over 144 ten-minute bins
+  // ---- stacked day shape, drawn as 12 SVG areas over 144 ten-minute bins.
+  // Two of these exist when comparing — the live slice and the frozen pinned
+  // one — so the shape is a factory rather than one set of module-level paths.
   const STACK = BAND_ORDER.map((m) => MAJORS.indexOf(m));
   const W = 1000, H = 260;
-  let drawn = new Float64Array(bins * ch);   // what is on screen now
-  let target = new Float64Array(bins * ch);  // what it should become
-  let animRaf = 0, animFrom = null, animStart = 0;
-
-  chartSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  chartSvg.innerHTML = STACK.map((mi) =>
-    `<path data-mi="${mi}" fill="var(--c-${MAJORS[mi]})" />`).join('') +
-    `<g class="ex-ticks"></g>`;
-  const paths = new Map([...chartSvg.querySelectorAll('path')].map((p) => [+p.dataset.mi, p]));
 
   // rules stay in the drawing; the labels live in the DOM underneath it, where
   // they are legible against the ground instead of against the stack
   const TICKS = [[0, '4 a.m.'], [4, '8 a.m.'], [8, 'noon'], [12, '4 p.m.'], [16, '8 p.m.'], [20, 'midnight']];
-  chartSvg.querySelector('.ex-ticks').innerHTML = TICKS.map(([hr]) => {
-    const x = (hr * 6 / bins) * W;
-    return `<line x1="${x}" x2="${x}" y1="0" y2="${H}" class="ex-tick" />`;
-  }).join('');
+
+  function makeShape(svg) {
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.innerHTML = STACK.map((mi) =>
+      `<path data-mi="${mi}" fill="var(--c-${MAJORS[mi]})" />`).join('') +
+      `<g class="ex-ticks">${TICKS.map(([hr]) => {
+        const x = (hr * 6 / bins) * W;
+        return `<line x1="${x}" x2="${x}" y1="0" y2="${H}" class="ex-tick" />`;
+      }).join('')}</g>`;
+    const paths = new Map([...svg.querySelectorAll('path')].map((p) => [+p.dataset.mi, p]));
+
+    let drawn = new Float64Array(bins * ch);
+    let animRaf = 0;
+
+    function paint(arr) {
+      const tops = new Float64Array(bins);
+      for (const mi of STACK) {
+        let up = '', down = '';
+        for (let b = 0; b < bins; b++) {
+          const x = (b / (bins - 1)) * W;
+          const y0 = tops[b] * H;
+          const y1 = (tops[b] + arr[b * ch + mi]) * H;
+          up += `${b ? 'L' : 'M'}${x.toFixed(1)} ${y1.toFixed(1)}`;
+          down = `L${x.toFixed(1)} ${y0.toFixed(1)}` + down;
+          tops[b] += arr[b * ch + mi];
+        }
+        paths.get(mi).setAttribute('d', `${up}${down}Z`);
+      }
+    }
+
+    function set(next) {
+      cancelAnimationFrame(animRaf);
+      drawn = next.slice();
+      paint(drawn);
+    }
+
+    function animateTo(target) {
+      if (REDUCED) return set(target);
+      const animFrom = drawn.slice();
+      let animStart = 0;
+      cancelAnimationFrame(animRaf);
+      const step = (ts) => {
+        if (!animStart) animStart = ts;
+        const u = Math.min(1, (ts - animStart) / 280);
+        const e = 1 - Math.pow(1 - u, 3);
+        for (let i = 0; i < drawn.length; i++) drawn[i] = animFrom[i] + (target[i] - animFrom[i]) * e;
+        paint(drawn);
+        if (u < 1) animRaf = requestAnimationFrame(step);
+      };
+      animRaf = requestAnimationFrame(step);
+    }
+
+    return { set, animateTo, current: () => drawn };
+  }
+
+  const shapeA = makeShape(chartSvg);
+  const shapeB = makeShape(chartSvgB);
+
   root.querySelector('.ex-axis').innerHTML = TICKS.map(([hr, label]) =>
     `<span style="left:${((hr * 6) / bins * 100).toFixed(2)}%">${label}</span>`).join('');
-
-  function paint(arr) {
-    const tops = new Float64Array(bins);
-    for (const mi of STACK) {
-      let up = '', down = '';
-      for (let b = 0; b < bins; b++) {
-        const x = (b / (bins - 1)) * W;
-        const y0 = tops[b] * H;
-        const y1 = (tops[b] + arr[b * ch + mi]) * H;
-        up += `${b ? 'L' : 'M'}${x.toFixed(1)} ${y1.toFixed(1)}`;
-        down = `L${x.toFixed(1)} ${y0.toFixed(1)}` + down;
-        tops[b] += arr[b * ch + mi];
-      }
-      paths.get(mi).setAttribute('d', `${up}${down}Z`);
-    }
-  }
-
-  function animateTo(next) {
-    target = next;
-    if (REDUCED) { drawn = next.slice(); paint(drawn); return; }
-    animFrom = drawn.slice();
-    animStart = 0;
-    cancelAnimationFrame(animRaf);
-    const step = (ts) => {
-      if (!animStart) animStart = ts;
-      const u = Math.min(1, (ts - animStart) / 280);
-      const e = 1 - Math.pow(1 - u, 3);
-      for (let i = 0; i < drawn.length; i++) drawn[i] = animFrom[i] + (target[i] - animFrom[i]) * e;
-      paint(drawn);
-      if (u < 1) animRaf = requestAnimationFrame(step);
-    };
-    animRaf = requestAnimationFrame(step);
-  }
 
   // ---- hover / tap readout on the shape
   function shapeReadout(ev) {
@@ -199,6 +232,7 @@ export async function boot(root) {
     const b = Math.min(bins - 1, Math.max(0, Math.round(u * (bins - 1))));
     const minute = b * binMinutes;
     const hour = Math.floor(((minute + 240) % 1440) / 60);
+    const drawn = shapeA.current();
     let best = -1, bv = 0;
     for (let k = 0; k < 12; k++) if (drawn[b * ch + k] > bv) { bv = drawn[b * ch + k]; best = k; }
     if (best < 0) return hideReadout();
@@ -251,12 +285,20 @@ export async function boot(root) {
     calloutEl.hidden = false;
   }
 
+  // ---- one panel's caption: which slice it is, how many diary days it rests on
+  function renderMeta(el, agg, title, tag) {
+    el.innerHTML = `${tag ? `<em class="ex-tag">${tag}</em>` : ''}<b>${title}</b><span>${
+      agg.N.toLocaleString()} diary days · ${
+      (agg.W / totalW * 100).toFixed(agg.W / totalW < 0.1 ? 1 : 0)}% of the population age 15 and over</span>`;
+  }
+
   function update() {
     const agg = aggregate(matchesSel);
     currentAgg = agg;
     const thin = agg.N < MIN_DAYS;
 
     root.classList.toggle('ex-thin', thin);
+    root.classList.toggle('ex-comparing', pinned);
     warnEl.hidden = !thin;
     if (thin) {
       warnEl.textContent = agg.N === 0
@@ -264,20 +306,20 @@ export async function boot(root) {
         : `Only ${agg.N.toLocaleString()} diary days match — too few to read as a group. Widen the slice.`;
     }
 
-    metaEl.innerHTML = `<b>${sliceLabel()}</b><span>${agg.N.toLocaleString()} diary days · ${
-      (agg.W / totalW * 100).toFixed(agg.W / totalW < 0.1 ? 1 : 0)}% of the population age 15 and over</span>`;
+    renderMeta(metaEl, agg, sliceLabel(), pinned ? 'this slice' : '');
+    panelB.hidden = !pinned;
+    if (pinned) renderMeta(metaElB, baseline, baselineTitle, 'compared with');
 
     baseEl.textContent = `minutes a day · against ${baselineLabel}`;
     pinBtn.textContent = pinned ? 'stop comparing' : 'compare against this slice';
     pinBtn.disabled = thin && !pinned;
 
-    if (!thin || agg.N > 0) animateTo(agg.share);
+    if (!thin || agg.N > 0) shapeA.animateTo(agg.share);
     renderRows(agg, baseline);
     renderCallout(agg, baseline, thin);
   }
 
-  drawn = everyone.share.slice();
-  paint(drawn);
+  shapeA.set(everyone.share);
   syncButtons();
   update();
   root.classList.add('ex-ready');

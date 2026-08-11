@@ -66,7 +66,7 @@ export async function boot(root) {
   // ---- state
   const current = { key: 'everyone' };
   const state = {
-    tex0: null, tex1: null, t: 1,
+    tex0: null, tex1: null, t: 1, tEased: 1,
     dim: [0, 1, 1], dimTarget: [0, 1, 1],
     // the hero holds its own copy over the drawing, so open at the hero's dim
     // rather than flashing full strength before the observer first fires
@@ -99,22 +99,48 @@ export async function boot(root) {
   }
 
   // ---- sizing
-  let cssW = 0, cssH = 0, thick = 1;
+  //
+  // Assigning canvas.width/height reallocates the drawing buffer and blanks it.
+  // iOS animates its URL bar through a scroll, which walks 100dvh up and down by
+  // 60–90 px, so a literal resync reallocates on almost every scroll frame and
+  // each fresh buffer can reach the compositor before anything is drawn into it
+  // — the canvas flashing near-black while the reader scrolls. A width change or
+  // an orientation change is a real resize and refits exactly; height alone only
+  // ever grows, and the canvas is CSS-stretched across the few percent it is
+  // short by, which is invisible on an abstract fabric.
+  let thick = 1, storeW = 0, storeH = 0;
   const ro = new ResizeObserver((entries) => {
     const r = entries[0].contentRect;
-    cssW = r.width; cssH = r.height;
+    if (!r.width || !r.height) return;
     const dpr = Math.min(devicePixelRatio || 1, 2);
-    canvas.width = Math.round(cssW * dpr);
-    canvas.height = Math.round(cssH * dpr);
-    const fabricPx = canvas.height * (1 - PAD.t - PAD.b);
+    const w = Math.round(r.width * dpr), h = Math.round(r.height * dpr);
+    if (w !== storeW) { storeW = w; storeH = h; }
+    else if (h > storeH) storeH = h;
+    else return;
+    canvas.width = storeW;
+    canvas.height = storeH;
+    const fabricPx = storeH * (1 - PAD.t - PAD.b);
     thick = Math.max(fabricPx / weaver.H * 0.92, 0.9);
-    state.dirty = true;
+    // synchronous, not next-frame: the new buffer is empty until it is drawn
+    drawNow();
   });
   ro.observe(canvas);
 
   // ---- render loop
   const lerp = (a, b, k) => a + (b - a) * k;
   let revealStart = 0;
+  function drawNow() {
+    renderer.draw({
+      tex0: state.tex0, tex1: state.tex1,
+      t: state.t >= 1 ? 1 : state.tEased,
+      samples: state.samples, thickPx: thick,
+      pad: [PAD.l, PAD.r, PAD.t, PAD.b],
+      dim: state.dim, reveal: state.reveal,
+      globalDim: 0.22, alpha: state.alpha * state.gAlpha,
+      selected: state.selected, drawCount: K, onlyMajor: state.onlyMajor,
+    });
+    state.dirty = false;
+  }
   function frame(ts) {
     if (!revealStart) revealStart = ts;
     let moving = false;
@@ -125,8 +151,7 @@ export async function boot(root) {
     }
     if (state.t < 1) {
       state.t = REDUCED ? 1 : Math.min(1, state.t + 0.035);
-      const e = 1 - Math.pow(1 - state.t, 3);
-      var tEased = e;
+      state.tEased = 1 - Math.pow(1 - state.t, 3);
       if (state.t < 1) moving = true;
     }
     for (let i = 0; i < 3; i++) {
@@ -138,18 +163,7 @@ export async function boot(root) {
       state.gAlpha = lerp(state.gAlpha, state.gAlphaTarget, 0.1);
       moving = true;
     } else state.gAlpha = state.gAlphaTarget;
-    if (state.dirty || moving) {
-      renderer.draw({
-        tex0: state.tex0, tex1: state.tex1,
-        t: state.t >= 1 ? 1 : (tEased ?? state.t),
-        samples: state.samples, thickPx: thick,
-        pad: [PAD.l, PAD.r, PAD.t, PAD.b],
-        dim: state.dim, reveal: state.reveal,
-        globalDim: 0.22, alpha: state.alpha * state.gAlpha,
-        selected: state.selected, drawCount: K, onlyMajor: state.onlyMajor,
-      });
-      state.dirty = false;
-    }
+    if (state.dirty || moving) drawNow();
     requestAnimationFrame(frame);
   }
   loading.remove();
@@ -360,7 +374,9 @@ export async function boot(root) {
 
   // The day card is position:fixed, so once the weave scrolls away it would hang
   // over the sections below. Retire it with the stage.
+  let stageVisible = true;
   const stageIo = new IntersectionObserver(([entry]) => {
+    stageVisible = entry.isIntersecting;
     if (!entry.isIntersecting) clearSelection();
   }, { threshold: 0 });
   stageIo.observe(stage);
@@ -368,7 +384,15 @@ export async function boot(root) {
   let scrollRaf = 0;
   addEventListener('scroll', () => {
     cancelAnimationFrame(scrollRaf);
-    scrollRaf = requestAnimationFrame(updateTrace);
+    scrollRaf = requestAnimationFrame(() => {
+      // Redraw on every scroll frame the stage is on screen. The resize
+      // hysteresis above is the fix for the flashing; this is the belt to its
+      // braces — if the compositor drops the canvas layer mid-scroll it is
+      // repainted within a frame rather than staying blank until something
+      // else happens to move.
+      if (stageVisible) state.dirty = true;
+      updateTrace();
+    });
   }, { passive: true });
   updateTrace();
 }

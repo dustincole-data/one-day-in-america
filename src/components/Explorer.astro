@@ -24,14 +24,27 @@ const { nDays, years } = stats.explore;
     </div>
 
     <div class="ex-result">
-      <div class="ex-meta"></div>
       <p class="ex-warn" hidden></p>
 
-      <div class="ex-shape">
-        <svg preserveAspectRatio="none" role="img"
-             aria-label="The chosen group's day from 4 a.m. to 4 a.m., stacked by activity"></svg>
-        <div class="ex-readout" aria-hidden="true"></div>
+      <div class="ex-panel">
+        <div class="ex-meta"></div>
+        <div class="ex-shape">
+          <svg preserveAspectRatio="none" role="img"
+               aria-label="The chosen group's day from 4 a.m. to 4 a.m., stacked by activity"></svg>
+          <div class="ex-readout" aria-hidden="true"></div>
+        </div>
       </div>
+
+      <!-- Comparing draws the pinned slice as its own shape underneath, on the
+           same scale. One shape that morphs cannot be compared with itself. -->
+      <div class="ex-panel ex-panel-b" hidden>
+        <div class="ex-meta ex-meta-b"></div>
+        <div class="ex-shape">
+          <svg preserveAspectRatio="none" role="img"
+               aria-label="The pinned comparison group's day, drawn to the same scale"></svg>
+        </div>
+      </div>
+
       <p class="ex-axis" aria-hidden="true"></p>
 
       <p class="ex-callout" hidden></p>
