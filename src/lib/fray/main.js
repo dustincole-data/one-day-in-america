@@ -38,6 +38,14 @@ export async function boot(root) {
   const stride = Math.max(1, Math.ceil(days.length / fabricCss));
   if (stride > 1) days = days.filter((_, i) => i % stride === 0);
   const K = days.length;
+  // The count is only true once the stride is known, so the page ships without
+  // it and the renderer fills it in. Both readings stand on their own: the
+  // sentence is complete before this runs.
+  const drawn = K.toLocaleString();
+  const drawnSlot = document.querySelector('[data-drawn]');
+  if (drawnSlot) drawnSlot.textContent = `, ${drawn} in all`;
+  canvas.setAttribute('aria-label',
+    `${drawn} real diary days drawn as horizontal threads across one day, grouped by activity`);
   const weaver = makeWeaver(days);
 
   const renderer = createRenderer(canvas, K, MAJORS.map((m) => hexToRgb(PAL[m])), BG);

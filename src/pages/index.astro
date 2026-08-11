@@ -56,8 +56,11 @@ const cssVars = [
   <body>
     <div class="scrolly" id="fray">
       <div class="stage">
-        <canvas aria-label="2,600 real diary days drawn as horizontal threads across one day, grouped by activity"></canvas>
-        <p class="loading">weaving 2,600 days…</p>
+        <!-- the label takes its exact count from the renderer: the drawing thins
+             the payload to about one thread per pixel of fabric, so how many
+             threads there are follows the size of the screen -->
+        <canvas aria-label="Real diary days drawn as horizontal threads across one day, grouped by activity"></canvas>
+        <p class="loading">weaving the fabric…</p>
         <div class="hairline" aria-hidden="true"></div>
         <div class="readout" aria-hidden="true"></div>
         <div class="axis" aria-hidden="true"></div>
@@ -90,7 +93,8 @@ const cssVars = [
           <h1>Everyone’s 3&nbsp;a.m. looks the same.<br />Nobody’s noon does.</h1>
           <p>
             In 2024, {stats.meta.n2024.toLocaleString()} Americans wrote down one whole day for the
-            Bureau of Labor Statistics. 2,600 of those days are drawn here.
+            Bureau of Labor Statistics. Every thread in this drawing is one of them<span data-drawn
+            ></span>.
           </p>
           <p class="cue" aria-hidden="true">scroll ↓</p>
         </div>
@@ -188,9 +192,12 @@ const cssVars = [
         <p>
           Civilian, noninstitutional population age 15 and over, living in households, 50 states and
           D.C. Activities are the 12 published ATUS categories; every share is weighted with BLS
-          person-day weights. The 2,600 drawn days are a systematic probability-proportional-to-size
-          sample of all {stats.meta.n2024.toLocaleString()} — so equal ink per thread draws an
-          honest picture. Hour figures are the share of that clock hour spent on the most common
+          person-day weights. The drawing is built from a systematic probability-proportional-to-size
+          sample of 2,600 of those {stats.meta.n2024.toLocaleString()} days — so equal ink per thread
+          draws an honest picture. It is thinned once more before it is drawn, by a systematic stride
+          that keeps that ordering, to about one thread per pixel of fabric; the thread count in the
+          opening line is the number that actually reached this screen. Hour figures are the share
+          of that clock hour spent on the most common
           single activity. Sections 03 through 07 pool {stats.explore.years[0]} and
           {' '}{stats.explore.years[1]} for sample size. 2020 is excluded: the survey was suspended
           for part of that year and BLS publishes no annual estimate for it. The drawings are
