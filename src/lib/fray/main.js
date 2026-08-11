@@ -120,7 +120,12 @@ export async function boot(root) {
     canvas.width = storeW;
     canvas.height = storeH;
     const fabricPx = storeH * (1 - PAD.t - PAD.b);
-    thick = Math.max(fabricPx / weaver.H * 0.92, 0.9);
+    // On a phone a thread lands near a single device pixel, and with antialias
+    // off it rasterises into a broken dotted line — the fabric reads as grain
+    // rather than as threads. One extra CSS pixel closes the gaps. Only the
+    // stroke widens; every thread's y is untouched, so a band's thickness still
+    // reads as how many people are in it.
+    thick = Math.max(fabricPx / weaver.H * 0.92, 0.9) + (phone ? dpr : 0);
     // synchronous, not next-frame: the new buffer is empty until it is drawn
     drawNow();
   });
