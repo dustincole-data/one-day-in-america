@@ -137,8 +137,8 @@ export async function boot(root) {
     // The lit thread is sized in CSS pixels, not in threads: it has to stay
     // legible while scrolling past at speed, so it does not shrink with the
     // fabric. The halo is the same mark, wider, in the ground colour.
-    hi = 7 * dpr;
-    halo = hi + 6 * dpr;
+    hi = 4 * dpr;
+    halo = hi + 3 * dpr;
     // synchronous, not next-frame: the new buffer is empty until it is drawn
     drawNow();
   });
