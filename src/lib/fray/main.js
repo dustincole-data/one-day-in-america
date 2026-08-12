@@ -8,7 +8,13 @@ import { MAJORS, SHORT, hexToRgb, hourLabel } from '../atus/meta.js';
 import { GROUND } from '../atus/ground.js';
 import stats from '../../gen/stats.json';
 
-const PAD = { l: 0.045, r: 0.045, t: 0.10, b: 0.14 };
+const phone = Math.min(innerWidth, innerHeight) < 720;
+// The stage is one screen tall and the card narrating the trace act is pinned
+// over the top of it for the whole act. At full height that puts the very
+// thread the reader is being asked to follow underneath the card, so on a phone
+// the drawing gives up its top third and the card sits in the gap instead of
+// on the picture. The bottom is untouched — the axis is anchored to it.
+const PAD = { l: 0.045, r: 0.045, t: phone ? 0.34 : 0.10, b: 0.14 };
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const FILTERS = {
@@ -33,7 +39,6 @@ export async function boot(root) {
   let days = await loadDays('/data/days.bin');
   // Subsample to roughly one thread per fabric pixel (the traceability ceiling —
   // render-budget §7). Systematic stride over the PPS ordering stays PPS.
-  const phone = Math.min(innerWidth, innerHeight) < 720;
   const fabricCss = stage.clientHeight * (1 - PAD.t - PAD.b);
   const stride = Math.max(1, Math.ceil(days.length / fabricCss));
   if (stride > 1) days = days.filter((_, i) => i % stride === 0);
@@ -137,7 +142,7 @@ export async function boot(root) {
     // The lit thread is sized in CSS pixels, not in threads: it has to stay
     // legible while scrolling past at speed, so it does not shrink with the
     // fabric. The halo is the same mark, wider, in the ground colour.
-    hi = 4 * dpr;
+    hi = 3 * dpr;
     halo = hi + 3 * dpr;
     // synchronous, not next-frame: the new buffer is empty until it is drawn
     drawNow();

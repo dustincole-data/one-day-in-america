@@ -422,7 +422,17 @@ footer {
   .step h2 { font-size: 1rem; }
   .step.hero { padding-top: 17vh; }
   .step-trace { min-height: 210vh; padding-top: 0; }
-  .step-trace .card { top: 14vh; }
+  /* This card is pinned over the drawing for the whole act, so on a phone it is
+     trimmed to what the act actually needs and pushed up into the band the
+     drawing gives back (PAD.t in fray/main.js). Anything it does not shed here
+     it takes out of the picture it is narrating. */
+  /* 8vh, not less: the piece's own name and the dc mark sit at the top of the
+     stage on a higher layer, and a card tucked under them paints through */
+  .step-trace .card { top: 8vh; padding: 12px 14px; }
+  .step-trace h2 { font-size: 0.95rem; margin-bottom: 0.3em; }
+  .step-trace .card p { font-size: 0.82rem; line-height: 1.35; }
+  .trace-day { margin-top: 10px; padding-top: 9px; }
+  .trace-tags { font-size: 9.5px !important; }
   /* five labels cannot fit 390px; the list scrolls, and the fade says so */
   .keyrail-list {
     mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 26px), transparent 100%);
