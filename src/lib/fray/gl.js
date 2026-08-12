@@ -11,8 +11,17 @@ uniform vec3 uDim;      // xNorm0, xNorm1, outside-factor
 uniform int uForceRow;
 uniform int uOnlyMajor;
 uniform float uForceThick, uForceAlpha;
+uniform float uHalo;    // 1 = paint the ground colour instead of the activity's
+uniform vec3 uBg;
 uniform vec3 uPal[12];
 out vec4 vColor;
+
+float yAt(int row, int minute) {
+  vec4 a = texelFetch(uTex0, ivec2(row, minute), 0);
+  vec4 b = texelFetch(uTex1, ivec2(row, minute), 0);
+  return mix((a.r * 65280.0 + a.g * 255.0) / 65535.0,
+             (b.r * 65280.0 + b.g * 255.0) / 65535.0, uT);
+}
 
 void main() {
   int s = gl_VertexID >> 1;
@@ -32,8 +41,26 @@ void main() {
   float x01 = uPad.x + xNorm * (1.0 - uPad.x - uPad.y);
   float yS = uPad.z + y01 * (1.0 - uPad.z - uPad.w);
   float thick = uForceRow >= 0 ? uForceThick : uThickPx;
-  float yClip = 1.0 - 2.0 * yS + side * (thick / uCanvasH);
-  gl_Position = vec4(x01 * 2.0 - 1.0, yClip, 0.0, 1.0);
+
+  // A fabric thread is a hair, so offsetting it straight up and down costs
+  // nothing. The lit thread is a ribbon, and where a person changes activity it
+  // runs nearly vertical — offset that straight up and it collapses to a
+  // hairline, so the bold horizontal runs end up joined by threads of gaps.
+  // Expanding along the segment normal keeps one width the whole way round.
+  // Only the forced row pays for the two extra fetches; the fabric skips them.
+  vec2 nrm = vec2(0.0, 1.0);
+  if (uForceRow >= 0) {
+    int step = int(uMinStep + 0.5) + 1;
+    int mA = clamp(minute - step, 0, 1439);
+    int mB = clamp(minute + step, 0, 1439);
+    float dxPx = (float(mB - mA) / 1439.0) * (1.0 - uPad.x - uPad.y) * uCanvasW;
+    float dyPx = (yAt(row, mB) - yAt(row, mA)) * (1.0 - uPad.z - uPad.w) * uCanvasH;
+    vec2 dir = normalize(vec2(max(dxPx, 0.001), dyPx));
+    nrm = vec2(-dir.y, dir.x);
+  }
+  vec2 offPx = nrm * (side * thick * 0.5);
+  gl_Position = vec4((x01 * 2.0 - 1.0) + offPx.x * 2.0 / uCanvasW,
+                     (1.0 - 2.0 * yS) - offPx.y * 2.0 / uCanvasH, 0.0, 1.0);
 
   float f = 0.014;
   float inside = smoothstep(uDim.x - f, uDim.x + f, xNorm) * (1.0 - smoothstep(uDim.y - f, uDim.y + f, xNorm));
@@ -41,7 +68,7 @@ void main() {
   float reveal = smoothstep(xNorm, xNorm + 0.10, uReveal * 1.10);
   float alpha = (uForceRow >= 0 ? uForceAlpha : uAlpha) * a * dimF * reveal * uGlobalDim;
   if (uOnlyMajor >= 0 && major != uOnlyMajor) alpha *= 0.08;
-  vColor = vec4(uPal[major], alpha);
+  vColor = vec4(mix(uPal[major], uBg, uHalo), alpha);
 }`;
 
 const FS = `#version 300 es
@@ -68,8 +95,10 @@ export function createRenderer(canvas, K, palette, bg) {
 
   const U = {};
   for (const name of ['uTex0', 'uTex1', 'uT', 'uMinStep', 'uThickPx', 'uCanvasW', 'uCanvasH', 'uReveal',
-    'uGlobalDim', 'uAlpha', 'uPad', 'uDim', 'uForceRow', 'uForceThick', 'uForceAlpha', 'uPal', 'uOnlyMajor'])
+    'uGlobalDim', 'uAlpha', 'uPad', 'uDim', 'uForceRow', 'uForceThick', 'uForceAlpha', 'uPal', 'uOnlyMajor',
+    'uHalo', 'uBg'])
     U[name] = gl.getUniformLocation(prog, name);
+  gl.uniform3fv(U.uBg, bg);
 
   const palFlat = new Float32Array(36);
   palette.forEach((rgb, i) => palFlat.set(rgb, i * 3));
@@ -99,7 +128,7 @@ export function createRenderer(canvas, K, palette, bg) {
   }
 
   function draw(state) {
-    const { tex0, tex1, t, samples, thickPx, pad, dim, reveal, globalDim, alpha, selected, drawCount, onlyMajor = -1 } = state;
+    const { tex0, tex1, t, samples, thickPx, hiPx, haloPx, pad, dim, reveal, globalDim, alpha, selected, drawCount, onlyMajor = -1 } = state;
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.activeTexture(gl.TEXTURE0);
@@ -118,18 +147,23 @@ export function createRenderer(canvas, K, palette, bg) {
     gl.uniform3fv(U.uDim, dim);
     gl.uniform1i(U.uForceRow, -1);
     gl.uniform1i(U.uOnlyMajor, onlyMajor);
+    gl.uniform1f(U.uHalo, 0.0);
     gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, samples * 2, drawCount);
 
     if (selected >= 0) {
-      // halo pass then the thread itself, forced to one row
+      // The lit thread is a mark, not a thread: it has to read over a fabric of
+      // its own colour, so it is drawn last, at a fixed width, over a ground-
+      // coloured halo that cuts it out of whatever band it is passing through.
+      // Without the halo a lavender sleeper vanishes inside the lavender band.
       gl.uniform1f(U.uGlobalDim, 1.0);
       gl.uniform1i(U.uOnlyMajor, -1);
       gl.uniform1i(U.uForceRow, selected);
-      gl.uniform1f(U.uForceThick, thickPx * 7 + 6);
-      gl.uniform1f(U.uForceAlpha, 0.0);
-      // halo: draw bg-colored ribbon (palette trick: use alpha 0 → skip; halo via widened dark pass)
-      gl.uniform1f(U.uForceAlpha, 0.9);
-      gl.uniform1f(U.uForceThick, Math.max(2.5, thickPx * 3));
+      gl.uniform1f(U.uForceAlpha, 1.0);
+      gl.uniform1f(U.uHalo, 1.0);
+      gl.uniform1f(U.uForceThick, haloPx);
+      gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, samples * 2, 1);
+      gl.uniform1f(U.uHalo, 0.0);
+      gl.uniform1f(U.uForceThick, hiPx);
       gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, samples * 2, 1);
     }
   }

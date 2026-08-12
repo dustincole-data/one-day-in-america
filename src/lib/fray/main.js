@@ -116,7 +116,7 @@ export async function boot(root) {
   // an orientation change is a real resize and refits exactly; height alone only
   // ever grows, and the canvas is CSS-stretched across the few percent it is
   // short by, which is invisible on an abstract fabric.
-  let thick = 1, storeW = 0, storeH = 0;
+  let thick = 1, hi = 6, halo = 12, storeW = 0, storeH = 0;
   const ro = new ResizeObserver((entries) => {
     const r = entries[0].contentRect;
     if (!r.width || !r.height) return;
@@ -134,6 +134,11 @@ export async function boot(root) {
     // stroke widens; every thread's y is untouched, so a band's thickness still
     // reads as how many people are in it.
     thick = Math.max(fabricPx / weaver.H * 0.92, 0.9) + (phone ? dpr : 0);
+    // The lit thread is sized in CSS pixels, not in threads: it has to stay
+    // legible while scrolling past at speed, so it does not shrink with the
+    // fabric. The halo is the same mark, wider, in the ground colour.
+    hi = 7 * dpr;
+    halo = hi + 6 * dpr;
     // synchronous, not next-frame: the new buffer is empty until it is drawn
     drawNow();
   });
@@ -146,7 +151,7 @@ export async function boot(root) {
     renderer.draw({
       tex0: state.tex0, tex1: state.tex1,
       t: state.t >= 1 ? 1 : state.tEased,
-      samples: state.samples, thickPx: thick,
+      samples: state.samples, thickPx: thick, hiPx: hi, haloPx: halo,
       pad: [PAD.l, PAD.r, PAD.t, PAD.b],
       dim: state.dim, reveal: state.reveal,
       globalDim: 0.22, alpha: state.alpha * state.gAlpha,
