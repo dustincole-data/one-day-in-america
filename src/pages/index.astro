@@ -4,7 +4,7 @@
 import '@fontsource-variable/schibsted-grotesk';
 import '@fontsource/fragment-mono';
 import stats from '../gen/stats.json';
-import { MAJORS, LABELS, BAND_ORDER } from '../lib/atus/meta.js';
+import { MAJORS, LABELS, SHORT, BAND_ORDER } from '../lib/atus/meta.js';
 import { GROUND } from '../lib/atus/ground.js';
 import Findings from '../components/Findings.astro';
 import Explorer from '../components/Explorer.astro';
@@ -76,12 +76,15 @@ const cssVars = [
           </div>
           <button class="keyrail-more" aria-expanded="false" aria-controls="keypanel">all 12</button>
         </div>
+        <!-- On a phone this is not a panel: the rail above is hidden and this is
+             the key itself, laid flat under the axis with the short labels. -->
         <div class="keypanel" id="keypanel" hidden>
           <p class="kp-head">average day, 2024</p>
           <div class="kp-grid">
             {BAND_ORDER.map((m) => (
               <button data-major={m}>
-                <i style={`background:var(--c-${m})`}></i><span>{LABELS[m]}</span><b>{fmtAvg(avg[m])}</b>
+                <i style={`background:var(--c-${m})`}></i><span>{LABELS[m]}</span
+                ><span class="kp-short">{SHORT[m]}</span><b>{fmtAvg(avg[m])}</b>
               </button>
             ))}
           </div>

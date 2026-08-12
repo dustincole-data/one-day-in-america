@@ -13,8 +13,11 @@ const phone = Math.min(innerWidth, innerHeight) < 720;
 // over the top of it for the whole act. At full height that puts the very
 // thread the reader is being asked to follow underneath the card, so on a phone
 // the drawing gives up its top third and the card sits in the gap instead of
-// on the picture. The bottom is untouched — the axis is anchored to it.
-const PAD = { l: 0.045, r: 0.045, t: phone ? 0.34 : 0.10, b: 0.14 };
+// on the picture. The phone's bottom band carries the twelve-band key as well
+// as the axis, so it takes 3 points more — and the top gives the same 3 back,
+// which leaves the picture exactly as tall as it was. `--padb` in piece.css is
+// the same number: the axis, the hairline and the key are anchored to it.
+const PAD = { l: 0.045, r: 0.045, t: phone ? 0.31 : 0.10, b: phone ? 0.17 : 0.14 };
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const FILTERS = {
@@ -341,6 +344,9 @@ export async function boot(root) {
 
   const moreBtn = root.querySelector('.keyrail-more');
   const keyPanel = root.querySelector('.keypanel');
+  // On a phone the rail and this button are hidden and the panel is the key
+  // itself, open under the drawing for good (see the mobile block in piece.css).
+  if (phone) keyPanel.hidden = false;
   moreBtn.addEventListener('click', () => {
     const open = moreBtn.getAttribute('aria-expanded') !== 'true';
     moreBtn.setAttribute('aria-expanded', String(open));

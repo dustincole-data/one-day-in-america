@@ -7,6 +7,9 @@
   --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
   --gutter: 6vw;
   --measure: 34rem;
+  /* the band the drawing leaves free at the bottom of the stage — the axis and
+     the key live in it. Must track PAD.b in fray/main.js. */
+  --padb: 14%;
 }
 
 * { box-sizing: border-box; }
@@ -30,7 +33,7 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
   font: 12px var(--mono); letter-spacing: 0.04em; color: var(--muted); z-index: 3;
 }
 
-.axis { position: absolute; left: 0; right: 0; bottom: calc(14% - 30px); height: 20px; z-index: 2; pointer-events: none; }
+.axis { position: absolute; left: 0; right: 0; bottom: calc(var(--padb) - 30px); height: 20px; z-index: 2; pointer-events: none; }
 .axis span {
   position: absolute; transform: translateX(-50%);
   font: 10.5px var(--mono); color: var(--muted); letter-spacing: 0.05em;
@@ -40,7 +43,7 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 }
 
 .hairline {
-  position: absolute; top: 10%; bottom: 14%; width: 1px;
+  position: absolute; top: 10%; bottom: var(--padb); width: 1px;
   background: color-mix(in srgb, var(--ink) 28%, transparent);
   opacity: 0; transition: opacity 0.15s; pointer-events: none; z-index: 2;
 }
@@ -75,9 +78,9 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 .keyrail i { width: 12px; height: 3px; border-radius: 2px; flex: none; }
 .keyrail-more { margin-left: auto; letter-spacing: 0.08em !important; }
 
-/* clears the axis, which owns the strip at 14% of the stage height */
+/* clears the axis, which owns the strip the drawing leaves free at the bottom */
 .keypanel {
-  position: absolute; left: var(--gutter); right: var(--gutter); bottom: calc(14% + 6px); z-index: 4;
+  position: absolute; left: var(--gutter); right: var(--gutter); bottom: calc(var(--padb) + 6px); z-index: 4;
   padding: 14px 16px; background: var(--card-solid); border: 1px solid var(--hair);
   border-radius: 10px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
@@ -93,6 +96,8 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
 }
 .kp-grid button:hover, .kp-grid button.iso { color: var(--ink); }
 .kp-grid i { width: 13px; height: 3px; border-radius: 2px; flex: none; }
+/* the short labels are the phone key's; on a desktop the panel has the room */
+.kp-short { display: none; }
 .kp-grid b { font-weight: 400; color: var(--ink); opacity: 0.72; margin-left: auto; padding-left: 12px; }
 
 .step { position: relative; min-height: 108vh; display: flex; align-items: center; padding: 0 var(--gutter); z-index: 1; pointer-events: none; }
@@ -397,7 +402,10 @@ footer {
 /* ---------------------------------------------------------------- mobile */
 
 @media (max-width: 719px) {
-  :root { --gutter: 5vw; }
+  /* the key is twelve wrapped rows under the axis now, so the drawing hands the
+     bottom of the stage a wider band — and takes the same amount back off the
+     top, so the picture keeps its height. --padb tracks PAD.b in fray/main.js. */
+  :root { --gutter: 5vw; --padb: 17%; }
 
   /* Every backdrop-filter on this page sits over the WebGL canvas, and blurring
      a live canvas backdrop is the other half of the iOS black-flash: WebKit
@@ -433,20 +441,33 @@ footer {
   .step-trace .card p { font-size: 0.82rem; line-height: 1.35; }
   .trace-day { margin-top: 10px; padding-top: 9px; }
   .trace-tags { font-size: 9.5px !important; }
-  /* five labels cannot fit 390px; the list scrolls, and the fade says so */
-  .keyrail-list {
-    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 26px), transparent 100%);
-  }
   .daycard {
     right: var(--gutter); left: var(--gutter); width: auto; top: auto;
-    bottom: calc(14% + 14px);
+    bottom: calc(var(--padb) + 14px);
   }
-  .keyrail { bottom: 10px; gap: 6px; }
-  .keyrail button { font-size: 10.5px; padding: 5px 10px; }
-  .keypanel { bottom: 50px; padding: 12px 14px; }
-  .kp-grid { grid-template-columns: 1fr; gap: 2px; }
 
-  .findings-intro { padding: 12vh var(--gutter) 8vh; }
+  /* A scrolling rail can only ever show two of twelve bands at 390px, and the
+     "all 12" panel opened over the drawing it was there to explain. On a phone
+     the rail goes and the panel *is* the key: every band at once, short labels,
+     wrapped flat under the axis, in the drawing's own top-to-bottom order.
+     main.js unhides it (the button that used to is gone). */
+  .keyrail { display: none; }
+  .keypanel {
+    top: auto; bottom: 7px; z-index: 3;
+    padding: 0; background: none; border: none; border-radius: 0;
+  }
+  .kp-head, .kp-grid b, .kp-grid button > span:first-of-type { display: none; }
+  .kp-short { display: inline; }
+  .kp-grid { display: flex; flex-wrap: wrap; gap: 4px 11px; }
+  /* four rows is what the band under the axis holds; the type gives way with the
+     screen so a 320px phone wraps to four rows too, rather than five */
+  .kp-grid button { gap: 5px; padding: 0; font-size: clamp(8.2px, 2.45vw, 9.5px); line-height: 1.2; }
+  .kp-grid i { width: 10px; height: 3px; }
+
+  /* 40vh of run-out under the stage is a beat on a desktop and a screenful of
+     black on a phone: the drawing leaves, then nothing, then the findings. */
+  .scrolly { padding-bottom: 6vh; }
+  .findings-intro { padding: 9vh var(--gutter) 8vh; }
   .finding { padding-bottom: 12vh; }
   /* a spot beside a headline leaves nothing for the headline at 390px, so it
      goes above — it is first in the DOM, so auto-placement puts it there */
